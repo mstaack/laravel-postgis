@@ -1,0 +1,36 @@
+<?php
+
+use Phaza\LaravelPostgis\Geometries\Geometry;
+
+class GeometryTest extends BaseTestCase {
+	public function testGetWKTArgument() {
+		$this->assertEquals(
+      '0 0',
+      Geometry::getWKTArgument('POINT(0 0)')
+    );
+    $this->assertEquals(
+      '0 0,1 1,1 2',
+      Geometry::getWKTArgument('LINESTRING(0 0,1 1,1 2)')
+    );
+    $this->assertEquals(
+      '(0 0,4 0,4 4,0 4,0 0),(1 1, 2 1, 2 2, 1 2,1 1)',
+      Geometry::getWKTArgument('POLYGON((0 0,4 0,4 4,0 4,0 0),(1 1, 2 1, 2 2, 1 2,1 1))')
+    );
+    $this->assertEquals(
+      '(0 0),(1 2)',
+      Geometry::getWKTArgument('MULTIPOINT((0 0),(1 2))')
+    );
+    $this->assertEquals(
+      '(0 0,1 1,1 2),(2 3,3 2,5 4)',
+      Geometry::getWKTArgument('MULTILINESTRING((0 0,1 1,1 2),(2 3,3 2,5 4))')
+    );
+    $this->assertEquals(
+      '((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1))',
+      Geometry::getWKTArgument('MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))')
+    );
+    $this->assertEquals(
+      'POINT(2 3),LINESTRING(2 3,3 4)',
+      Geometry::getWKTArgument('GEOMETRYCOLLECTION(POINT(2 3),LINESTRING(2 3,3 4))')
+    );
+	}
+}
