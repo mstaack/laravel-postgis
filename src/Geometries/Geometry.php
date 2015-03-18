@@ -11,10 +11,10 @@ abstract class Geometry implements GeometryInterface {
 		return substr( $value, $left + 1, $right - $left - 1 );
 	}
 
-	public static function getWKTType( $value )
+	public static function getWKTClass( $value )
 	{
 		$left = strpos( $value, '(' );
-		$type = trim(substr( $value, $left ));
+		$type = trim(substr( $value, 0, $left ));
 
 		switch( strtoupper( $type ) ) {
 			case 'POINT':
@@ -22,7 +22,7 @@ abstract class Geometry implements GeometryInterface {
 			case 'LINESTRING':
 				return LineString::class;
 			case 'POLYGON':
-				return MultiLineString::class;
+				return Polygon::class;
 			case 'MULTIPOINT':
 				return MultiPoint::class;
 			case 'MULTILINESTRING':

@@ -3,5 +3,4 @@
 use Phaza\LaravelPostgres\PostgresConnection;
 
 class PostgisConnection extends PostgresConnection {
-
 }
