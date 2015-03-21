@@ -95,4 +95,23 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 		return $this->addCommand( 'geometrycollection', compact( 'column', 'srid', 'dimensions', 'typmod' ) );
 	}
 
+	/**
+	 * Enable postgis on this database.
+	 * Will create the extension in the database.
+	 *
+	 * @return \Illuminate\Support\Fluent
+	 */
+	public function enablePostgis() {
+		return $this->addCommand('enablePostgis');
+	}
+
+	/**
+	 * Disable postgis on this database.
+	 * WIll drop the extension in the database.
+	 * @return \Illuminate\Support\Fluent
+	 */
+	public function disablePostgis() {
+		return $this->addCommand('disablePostgis');
+	}
+
 }

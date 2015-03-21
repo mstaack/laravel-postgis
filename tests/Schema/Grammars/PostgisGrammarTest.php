@@ -83,6 +83,26 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$this->assertContains( 'GEOMETRYCOLLECTION', $statements[0] );
 	}
 
+	public function testEnablePostgis()
+	{
+		$blueprint = new Blueprint( 'test' );
+		$blueprint->enablePostgis();
+		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
+
+		$this->assertEquals( 1, count( $statements ) );
+		$this->assertContains( 'CREATE EXTENSION postgis', $statements[0] );
+	}
+
+	public function testDisablePostgis()
+	{
+		$blueprint = new Blueprint( 'test' );
+		$blueprint->disablePostgis();
+		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
+
+		$this->assertEquals( 1, count( $statements ) );
+		$this->assertContains( 'DROP EXTENSION postgis', $statements[0] );
+	}
+
 	/**
 	 * @return Connection
 	 */
