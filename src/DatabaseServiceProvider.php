@@ -2,7 +2,7 @@
 
 use Illuminate\Database\DatabaseManager;
 use Phaza\LaravelPostgis\Connectors\ConnectionFactory;
-use Phaza\LaravelPostgres\DatabaseServiceProvider as PostgresDatabaseServiceProvider;
+use Bosnadev\Database\DatabaseServiceProvider as PostgresDatabaseServiceProvider;
 
 /**
  * Class DatabaseServiceProvider

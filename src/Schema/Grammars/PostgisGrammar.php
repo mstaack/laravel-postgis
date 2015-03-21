@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Fluent;
 use Phaza\LaravelPostgis\Schema\Blueprint;
-use Phaza\LaravelPostgres\Schema\Grammars\PostgresGrammar;
+use Bosnadev\Database\Schema\Grammars\PostgresGrammar;
 
 class PostgisGrammar extends PostgresGrammar {
 	/**

@@ -3,7 +3,7 @@
 use PDO;
 use Phaza\LaravelPostgis\PostgisConnection;
 
-class ConnectionFactory extends \Phaza\LaravelPostgres\Connectors\ConnectionFactory {
+class ConnectionFactory extends \Bosnadev\Database\Connectors\ConnectionFactory {
 	/**
 	 * @param string $driver
 	 * @param PDO    $connection

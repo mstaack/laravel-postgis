@@ -1,6 +1,6 @@
 <?php namespace Phaza\LaravelPostgis;
 
-use Phaza\LaravelPostgres\PostgresConnection;
+use Bosnadev\Database\PostgresConnection;
 
 class PostgisConnection extends PostgresConnection {
 }

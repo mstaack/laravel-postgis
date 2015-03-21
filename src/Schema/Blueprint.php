@@ -1,6 +1,6 @@
 <?php namespace Phaza\LaravelPostgis\Schema;
 
-class Blueprint extends \Phaza\LaravelPostgres\Schema\Blueprint {
+class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	/**
 	 * Add a point column on the table
 	 *

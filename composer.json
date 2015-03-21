@@ -1,16 +1,10 @@
 {
     "name": "phaza/laravel-postgis",
     "description": "Postgis extensions for laravel. Aims to make it easy to work with geometries from laravel models",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "../laravel-postgres"
-        }
-    ],
     "require": {
         "php": ">=5.5",
-        "phaza/laravel-postgres": "dev-master",
-        "illuminate/database": "~5.0"
+        "illuminate/database": "~5.0",
+        "bosnadev/database": "0.10.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5",
