@@ -137,7 +137,7 @@ class PostgisGrammar extends PostgresGrammar {
 
 		$dimensions = $command->dimensions ?: 2;
 		$typmod     = $command->typmod ? 'true' : 'false';
-		$srid       = $command->srid ?: 4236;
+		$srid       = $command->srid ?: 4326;
 
 		return sprintf( "SELECT AddGeometryColumn('%s', '%s', %d, '%s', %d, %s)",
 			$blueprint->getTable(),
