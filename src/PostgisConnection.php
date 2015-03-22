@@ -1,8 +1,6 @@
 <?php namespace Phaza\LaravelPostgis;
 
-use Bosnadev\Database\PostgresConnection;
-
-class PostgisConnection extends PostgresConnection {
+class PostgisConnection extends Connection {
 	/**
 	 * Get the default schema grammar instance.
 	 *
