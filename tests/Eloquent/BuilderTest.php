@@ -1,11 +1,12 @@
 <?php namespace Eloquent;
 
 use BaseTestCase;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
 use Mockery as m;
 use Phaza\LaravelPostgis\Eloquent\Builder;
-use Phaza\LaravelPostgis\Eloquent\PostgisModel;
+use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Phaza\LaravelPostgis\Geometries\Polygon;
 
@@ -100,7 +101,9 @@ class BuilderTest extends BaseTestCase {
 	}
 }
 
-class TestBuilderModel extends PostgisModel {
+class TestBuilderModel extends Model {
+	use PostgisTrait;
+
 	protected $postgisFields = [
 		'point'   => Point::class,
 		'polygon' => Polygon::class

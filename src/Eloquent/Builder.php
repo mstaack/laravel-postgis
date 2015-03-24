@@ -28,7 +28,7 @@ class Builder extends EloquentBuilder {
 	{
 
 		/**
-		 * @var PostgisModel $model
+		 * @var PostgisTrait $model
 		 */
 		$model = $this->getModel();
 

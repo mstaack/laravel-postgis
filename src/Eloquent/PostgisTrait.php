@@ -1,11 +1,10 @@
 <?php namespace Phaza\LaravelPostgis\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Eloquent\Model;
 use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
 use Phaza\LaravelPostgis\Geometries\Geometry;
 
-class PostgisModel extends Model {
+trait PostgisTrait {
 	/**
 	 * Create a new Eloquent query builder for the model.
 	 *

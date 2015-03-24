@@ -13,7 +13,6 @@ Laravel postgis extension
 ### Future plans
  
  * Geometry functions on the geometry classes (contains(), equals(), distance(), etc… (HELP!))
- * Move PostgisModel into a trait rather than subclass.
 
 ## Usage
 
@@ -73,13 +72,14 @@ other methods:
 
 ### Models
 
-All models which are to be PostGis enabled **must** inherit from *PostgisModel* rather than *Model*.
+All models which are to be PostGis enabled **must** use the *PostgisTrait*.
 
 You must also define an associative array called `$postgisFields` which defines
 what attributes/columns on your model are to be considered geometry objects.
 
 ```PHP
-class TestModel extends PostgisModel {
+class TestModel extends Model {
+	use PostgisTrait;
 
 	protected $postgisFields = [
 		'point' => Point::class

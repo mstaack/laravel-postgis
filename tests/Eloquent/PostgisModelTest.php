@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
 use Phaza\LaravelPostgis\Connection;
-use Phaza\LaravelPostgis\Eloquent\PostgisModel;
+use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 class PostgisModelTest extends BaseTestCase {
@@ -71,7 +72,8 @@ class PostgisModelTest extends BaseTestCase {
 	}
 }
 
-class TestModel extends PostgisModel {
+class TestModel extends Model {
+	use PostgisTrait;
 
 	protected $postgisFields = [
 		'point' => Point::class
