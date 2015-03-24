@@ -8,7 +8,9 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5",
-        "mockery/mockery": "0.9.*"
+        "mockery/mockery": "0.9.*",
+        "satooshi/php-coveralls": "~0.6",
+        "codeclimate/php-test-reporter": "dev-master"
     },
     "autoload": {
         "psr-4": {
