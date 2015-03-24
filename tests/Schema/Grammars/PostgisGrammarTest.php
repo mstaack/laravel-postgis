@@ -1,6 +1,6 @@
 <?php
 
-use Phaza\LaravelPostgis\Connection;
+use Phaza\LaravelPostgis\PostgisConnection;
 use Phaza\LaravelPostgis\Schema\Blueprint;
 use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
 
@@ -108,7 +108,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 	 */
 	protected function getConnection()
 	{
-		return Mockery::mock( Connection::class );
+		return Mockery::mock( PostgisConnection::class );
 	}
 
 	protected function getGrammar()

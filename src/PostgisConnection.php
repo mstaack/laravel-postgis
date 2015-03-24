@@ -1,6 +1,6 @@
 <?php namespace Phaza\LaravelPostgis;
 
-class PostgisConnection extends Connection {
+class PostgisConnection extends \Bosnadev\Database\PostgresConnection {
 	/**
 	 * Get the default schema grammar instance.
 	 *
@@ -9,5 +9,14 @@ class PostgisConnection extends Connection {
 	protected function getDefaultSchemaGrammar()
 	{
 		return $this->withTablePrefix(new Schema\Grammars\PostgisGrammar);
+	}
+
+
+
+	public function getSchemaBuilder()
+	{
+		if (is_null($this->schemaGrammar)) { $this->useDefaultSchemaGrammar(); }
+
+		return new Schema\Builder($this);
 	}
 }
