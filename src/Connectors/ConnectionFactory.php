@@ -22,6 +22,6 @@ class ConnectionFactory extends \Bosnadev\Database\Connectors\ConnectionFactory 
 			return new PostgisConnection($connection, $database, $prefix, $config);
 		}
 
-		parent::createConnection($driver, $connection, $database, $prefix, $config);
+		return parent::createConnection($driver, $connection, $database, $prefix, $config);
 	}
 }
