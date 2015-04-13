@@ -1,10 +1,12 @@
 <?php namespace Phaza\LaravelPostgis\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Phaza\LaravelPostgis\Eloquent\Relations\BelongsToMany;
 use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
 use Phaza\LaravelPostgis\Geometries\Geometry;
 
 trait PostgisTrait {
+	use PostgisAttributeReplacer;
 	/**
 	 * Create a new Eloquent query builder for the model.
 	 *
@@ -39,6 +41,17 @@ trait PostgisTrait {
 		}
 
 		parent::setRawAttributes( $attributes, $sync );
+	}
+
+	public function belongsToMany($related, $table = null, $foreignKey = null, $otherKey = null, $relation = null) {
+		/**
+		 * Illuminate\Database\Eloquent\Relations\BelongsToMany
+		 */
+		$object = parent::belongsToMany( $related, $table, $foreignKey, $otherKey, $relation );
+
+
+		return new BelongsToMany($object->getQuery(), $object->getParent(), $object->getTable(), $object->getForeignKey()
+			, $object->getOtherKey(), $object->getRelationName());
 	}
 
 

@@ -37,12 +37,6 @@ class Builder extends EloquentBuilder {
 		return $this->getModel()->getPostgisFields();
 	}
 
-	protected function asWKT( Geometry $geometry )
-	{
-		return $this->getQuery()->raw( sprintf( "ST_GeogFromText('%s')", $geometry->toWKT() ) );
-	}
-
-
 	/**
 	 * @param $field
 	 * @return Expression
@@ -52,4 +46,9 @@ class Builder extends EloquentBuilder {
 		return $this->getQuery()->raw( sprintf( 'ST_AsText(%s) AS %s', $field, $field ) );
 	}
 
+
+	protected function asWKT( Geometry $geometry )
+	{
+		return $this->getQuery()->raw( sprintf( "ST_GeogFromText('%s')", $geometry->toWKT() ) );
+	}
 }

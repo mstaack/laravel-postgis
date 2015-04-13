@@ -61,13 +61,40 @@ class PostgisTraitTest extends BaseTestCase {
 		$this->assertEquals( 2, $model->point->getLat() );
 	}
 
-	public function testRelatedModelHasCorrectSql()
+	public function testHasManyHasCorrectSql()
 	{
 		$this->model->exists = true;
 		$this->model->id     = 1;
 		$this->model->testrelatedmodels;
 
 		$this->assertContains( 'AsText(point) AS point', $this->queries[0] );
+		$this->assertContains( 'test_related_models', $this->queries[0] );
+	}
+
+	public function testBelongsToManyHasCorrectSql() {
+		$this->model->exists = true;
+		$this->model->id     = 1;
+		$this->model->testrelatedmodels2;
+
+
+		$this->assertContains( 'AsText(test_related_models.point) AS test_related_models.point', $this->queries[0] );
+		$this->assertContains( 'test_related_models', $this->queries[0] );
+	}
+
+	public function testBelongsToManyFIRSTHasCorrectSql() {
+		$this->model->exists = true;
+		$this->model->id     = 1;
+		$this->model->testrelatedmodels2()->first();
+
+		$this->assertContains( 'AsText(test_related_models.point) AS test_related_models.point', $this->queries[0] );
+		$this->assertContains( 'test_related_models', $this->queries[0] );
+	}
+	public function testBelongsToManyWHEREHasCorrectSql() {
+		$this->model->exists = true;
+		$this->model->id     = 1;
+		$this->model->testrelatedmodels2()->wherePivot('point', '=', 'whatever')->get();
+
+		$this->assertContains( 'AsText(test_related_models.point) AS test_related_models.point', $this->queries[0] );
 		$this->assertContains( 'test_related_models', $this->queries[0] );
 	}
 }
@@ -96,12 +123,20 @@ class TestModel extends Model {
 		return $this->hasMany( TestRelatedModel::class );
 	}
 
+	public function testrelatedmodels2() {
+		return $this->belongsToMany( TestRelatedModel::class );
+	}
+
 }
 
 class TestRelatedModel extends TestModel {
 	public function testmodel()
 	{
 		return $this->belongsTo( TestModel::class );
+	}
+
+	public function testmodels() {
+		return $this->belongsToMany( TestModel::class );
 	}
 }
 
