@@ -6,7 +6,7 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Phaza\LaravelPostgis\PostgisConnection;
 
-class PostgisModelTest extends BaseTestCase {
+class PostgisTraitTest extends BaseTestCase {
 
 	/**
 	 * @var TestModel
