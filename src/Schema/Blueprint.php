@@ -10,8 +10,8 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	 * @param bool $typmod
 	 * @return \Illuminate\Support\Fluent
 	 */
-	public function point($column, $srid = null, $dimensions = 2, $typmod = true) {
-		return $this->addCommand('point', compact('column', 'srid', 'dimensions', 'typmod'));
+	public function point( $column ) {
+		return $this->addColumn('point', $column );
 	}
 
 	/**
@@ -23,8 +23,8 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	 * @param bool $typmod
 	 * @return \Illuminate\Support\Fluent
 	 */
-	public function multipoint($column, $srid = null, $dimensions = 2, $typmod = true) {
-		return $this->addCommand('multipoint', compact('column', 'srid', 'dimensions', 'typmod'));
+	public function multipoint( $column ) {
+		return $this->addColumn('multipoint', $column );
 	}
 
 	/**
@@ -36,8 +36,8 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	 * @param bool $typmod
 	 * @return \Illuminate\Support\Fluent
 	 */
-	public function polygon($column, $srid = null, $dimensions = 2, $typmod = true) {
-		return $this->addCommand('polygon', compact('column', 'srid', 'dimensions', 'typmod'));
+	public function polygon( $column ) {
+		return $this->addColumn('polygon', $column );
 	}
 
 	/**
@@ -49,9 +49,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	 * @param bool $typmod
 	 * @return \Illuminate\Support\Fluent
 	 */
-	public function multipolygon( $column, $srid = null, $dimensions = 2, $typmod = true )
+	public function multipolygon( $column )
 	{
-		return $this->addCommand( 'multipolygon', compact( 'column', 'srid', 'dimensions', 'typmod' ) );
+		return $this->addColumn( 'multipolygon', $column );
 	}
 
 	/**
@@ -63,8 +63,8 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	 * @param bool $typmod
 	 * @return \Illuminate\Support\Fluent
 	 */
-	public function linestring($column, $srid = null, $dimensions = 2, $typmod = true) {
-		return $this->addCommand('linestring', compact('column', 'srid', 'dimensions', 'typmod'));
+	public function linestring( $column ) {
+		return $this->addColumn('linestring', $column );
 	}
 
 	/**
@@ -76,9 +76,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint {
 	 * @param bool $typmod
 	 * @return \Illuminate\Support\Fluent
 	 */
-	public function multilinestring( $column, $srid = null, $dimensions = 2, $typmod = true )
+	public function multilinestring( $column )
 	{
-		return $this->addCommand( 'multilinestring', compact( 'column', 'srid', 'dimensions', 'typmod' ) );
+		return $this->addColumn( 'multilinestring', $column );
 	}
 
 	/**

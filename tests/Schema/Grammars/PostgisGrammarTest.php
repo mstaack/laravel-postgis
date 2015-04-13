@@ -13,8 +13,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
 
 		$this->assertEquals( 1, count( $statements ) );
-		$this->assertContains( 'AddGeometryColumn', $statements[0] );
-		$this->assertContains( 'POINT', $statements[0] );
+		$this->assertContains( 'GEOGRAPHY(POINT, 4326)', $statements[0] );
 	}
 
 	public function testAddingLinestring()
@@ -24,8 +23,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
 
 		$this->assertEquals( 1, count( $statements ) );
-		$this->assertContains( 'AddGeometryColumn', $statements[0] );
-		$this->assertContains( 'LINESTRING', $statements[0] );
+		$this->assertContains( 'GEOGRAPHY(LINESTRING, 4326)', $statements[0] );
 	}
 
 	public function testAddingPolygon()
@@ -35,8 +33,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
 
 		$this->assertEquals( 1, count( $statements ) );
-		$this->assertContains( 'AddGeometryColumn', $statements[0] );
-		$this->assertContains( 'POLYGON', $statements[0] );
+		$this->assertContains( 'GEOGRAPHY(POLYGON, 4326)', $statements[0] );
 	}
 
 	public function testAddingMultipoint()
@@ -46,8 +43,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
 
 		$this->assertEquals( 1, count( $statements ) );
-		$this->assertContains( 'AddGeometryColumn', $statements[0] );
-		$this->assertContains( 'MULTIPOINT', $statements[0] );
+		$this->assertContains( 'GEOGRAPHY(MULTIPOINT, 4326)', $statements[0] );
 	}
 
 	public function testAddingMultiLinestring()
@@ -57,8 +53,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
 
 		$this->assertEquals( 1, count( $statements ) );
-		$this->assertContains( 'AddGeometryColumn', $statements[0] );
-		$this->assertContains( 'MULTILINESTRING', $statements[0] );
+		$this->assertContains( 'GEOGRAPHY(MULTILINESTRING, 4326)', $statements[0] );
 	}
 
 	public function testAddingMultiPolygon()
@@ -68,8 +63,7 @@ class PostgisGrammarBaseTest extends BaseTestCase {
 		$statements = $blueprint->toSql( $this->getConnection(), $this->getGrammar() );
 
 		$this->assertEquals( 1, count( $statements ) );
-		$this->assertContains( 'AddGeometryColumn', $statements[0] );
-		$this->assertContains( 'MULTIPOLYGON', $statements[0] );
+		$this->assertContains( 'GEOGRAPHY(MULTIPOLYGON, 4326)', $statements[0] );
 	}
 
 	public function testAddingGeometryCollection()

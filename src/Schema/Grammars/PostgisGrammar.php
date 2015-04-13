@@ -12,11 +12,9 @@ class PostgisGrammar extends PostgresGrammar {
 	 * @param Fluent    $command
 	 * @return string
 	 */
-	public function compilePoint( Blueprint $blueprint, Fluent $command )
+	public function typePoint( Fluent $column )
 	{
-		$command->type = 'POINT';
-
-		return $this->compileGeometry( $blueprint, $command );
+		return 'GEOGRAPHY(POINT, 4326)';
 	}
 
 	/**
@@ -26,11 +24,9 @@ class PostgisGrammar extends PostgresGrammar {
 	 * @param Fluent    $command
 	 * @return string
 	 */
-	public function compileMultipoint( Blueprint $blueprint, Fluent $command )
+	public function typeMultipoint( Fluent $column )
 	{
-		$command->type = 'MULTIPOINT';
-
-		return $this->compileGeometry( $blueprint, $command );
+		return 'GEOGRAPHY(MULTIPOINT, 4326)';
 	}
 
 	/**
@@ -40,11 +36,9 @@ class PostgisGrammar extends PostgresGrammar {
 	 * @param Fluent    $command
 	 * @return string
 	 */
-	public function compilePolygon( Blueprint $blueprint, Fluent $command )
+	public function typePolygon( Fluent $column )
 	{
-		$command->type = 'POLYGON';
-
-		return $this->compileGeometry( $blueprint, $command );
+		return 'GEOGRAPHY(POLYGON, 4326)';
 	}
 
 	/**
@@ -54,11 +48,9 @@ class PostgisGrammar extends PostgresGrammar {
 	 * @param Fluent    $command
 	 * @return string
 	 */
-	public function compileMultipolygon( Blueprint $blueprint, Fluent $command )
+	public function typeMultipolygon( Fluent $column )
 	{
-		$command->type = 'MULTIPOLYGON';
-
-		return $this->compileGeometry( $blueprint, $command );
+		return 'GEOGRAPHY(MULTIPOLYGON, 4326)';
 	}
 
 	/**
@@ -68,11 +60,9 @@ class PostgisGrammar extends PostgresGrammar {
 	 * @param Fluent    $command
 	 * @return string
 	 */
-	public function compileLinestring( Blueprint $blueprint, Fluent $command )
+	public function typeLinestring( Fluent $column )
 	{
-		$command->type = 'LINESTRING';
-
-		return $this->compileGeometry( $blueprint, $command );
+		return 'GEOGRAPHY(LINESTRING, 4326)';
 	}
 
 	/**
@@ -82,11 +72,9 @@ class PostgisGrammar extends PostgresGrammar {
 	 * @param Fluent    $command
 	 * @return string
 	 */
-	public function compileMultilinestring( Blueprint $blueprint, Fluent $command )
+	public function typeMultilinestring( Fluent $column )
 	{
-		$command->type = 'MULTILINESTRING';
-
-		return $this->compileGeometry( $blueprint, $command );
+		return 'GEOGRAPHY(MULTILINESTRING, 4326)';
 	}
 
 	/**
