@@ -20,7 +20,7 @@ trait PostgisTrait {
 	{
 		foreach( $this->attributes as $key => &$value ) {
 			if( $value instanceof Geometry ) {
-				$value = $this->getConnection()->raw( sprintf( "ST_GeomFromText('%s', 4326)", $value->toWKT() ) );
+				$value = $this->getConnection()->raw( sprintf( "ST_GeogFromText('%s')", $value->toWKT() ) );
 			}
 		}
 

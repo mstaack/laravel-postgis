@@ -61,7 +61,7 @@ class Builder extends EloquentBuilder {
 
 	protected function asWKT( Geometry $geometry )
 	{
-		return $this->getQuery()->raw( sprintf( "ST_GeomFromText('%s', 4326)", $geometry->toWKT() ) );
+		return $this->getQuery()->raw( sprintf( "ST_GeogFromText('%s')", $geometry->toWKT() ) );
 	}
 
 
