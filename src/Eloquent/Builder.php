@@ -22,6 +22,13 @@ class Builder extends EloquentBuilder {
 		return parent::get( $columns );
 	}
 
+	public function paginate($perPage = null, $columns = [ '*' ])
+	{
+		$this->replaceSelectColumns( $this->getPostgisFields(), $columns );
+
+		return parent::paginate( $perPage, $columns );
+	}
+
 	public function update( array $values )
 	{
 		foreach( $values as $key => &$value ) {
