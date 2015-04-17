@@ -44,6 +44,10 @@ class Builder extends EloquentBuilder {
 		return $this->getModel()->getPostgisFields();
 	}
 
+	protected function getTable() {
+		return $this->getModel()->getTable();
+	}
+
 	/**
 	 * @param $field
 	 * @return Expression

@@ -1,4 +1,4 @@
-<?php namespace Phaza\LaravelPostgis\Eloquent; 
+<?php namespace Phaza\LaravelPostgis\Eloquent;
 
 trait PostgisAttributeReplacer {
 	/**
@@ -8,15 +8,19 @@ trait PostgisAttributeReplacer {
 	 */
 	protected function replaceSelectColumns( array $pgisFields, array &$columns )
 	{
-		if( count( $columns ) === 1 and $columns[0] === '*' ) {
-			foreach( $pgisFields as $field => $type ) {
-				$columns[] = $this->toText( $field );
+
+		foreach( $columns as &$column ) {
+			if( in_array( $column, $pgisFields ) ) {
+				$column = $this->toText( $column );
 			}
-		}
-		else {
-			foreach( $columns as &$column ) {
-				if( in_array( $column, $pgisFields ) ) {
-					$column = $this->toText( $column );
+			elseif( $columns === $this->getTable() . '.*' ) {
+				foreach( $pgisFields as $field => $type ) {
+					$columns[] = $this->toText( $this->getTable() . $field );
+				}
+			}
+			elseif( $column === '*' ) {
+				foreach( $pgisFields as $field => $type ) {
+					$columns[] = $this->toText( $field );
 				}
 			}
 		}
