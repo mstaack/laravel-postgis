@@ -40,65 +40,6 @@ class BuilderTest extends BaseTestCase {
 		$this->builder->setModel( new TestBuilderModel() );
 	}
 
-	public function testFirst()
-	{
-		$this->queryBuilder
-			->shouldReceive( 'first' )
-			->with( [ '*', 'ST_AsText(point) AS point', 'ST_AsText(polygon) AS polygon' ] )
-			->andReturn( [ ] );
-
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( 'ST_AsText(point) AS point' )
-			->andReturn( new Expression( 'ST_AsText(point) AS point' ) );
-
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( 'ST_AsText(polygon) AS polygon' )
-			->andReturn( new Expression( 'ST_AsText(polygon) AS polygon' ) );
-
-		$this->builder->first();
-	}
-
-	public function testPaginate() {
-		$this->queryBuilder
-			->shouldReceive( 'first' )
-			->with( [ '*', 'ST_AsText(point) AS point', 'ST_AsText(polygon) AS polygon' ] )
-			->andReturn( [ ] );
-
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( 'ST_AsText(point) AS point' )
-			->andReturn( new Expression( 'ST_AsText(point) AS point' ) );
-
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( 'ST_AsText(polygon) AS polygon' )
-			->andReturn( new Expression( 'ST_AsText(polygon) AS polygon' ) );
-
-		$this->builder->paginate();
-	}
-
-	public function testGet()
-	{
-		$this->queryBuilder
-			->shouldReceive( 'get' )
-			->with( [ '*', 'ST_AsText(point) AS point', 'ST_AsText(polygon) AS polygon' ] )
-			->andReturn( [ ] );
-
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( 'ST_AsText(point) AS point' )
-			->andReturn( new Expression( 'ST_AsText(point) AS point' ) );
-
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( 'ST_AsText(polygon) AS polygon' )
-			->andReturn( new Expression( 'ST_AsText(polygon) AS polygon' ) );
-
-		$this->builder->get();
-	}
-
 	public function testUpdate()
 	{
 		$this->queryBuilder

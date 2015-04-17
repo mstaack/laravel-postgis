@@ -1,8 +1,20 @@
 <?php namespace Phaza\LaravelPostgis\Geometries;
 
+use GeoIO\WKB\Parser\Parser;
 use Phaza\LaravelPostgis\Exceptions\UnknownWKTTypeException;
 
 abstract class Geometry implements GeometryInterface {
+
+	protected static $wkb_types = [
+		1 => Point::class,
+	  2 => LineString::class,
+	  3 => Polygon::class,
+	  4 => MultiPoint::class,
+	  5 => MultiLineString::class,
+	  6 => MultiPolygon::class,
+	  7 => GeometryCollection::class
+	];
+
 	public static function getWKTArgument( $value )
 	{
 		$left  = strpos( $value, '(' );
@@ -34,6 +46,12 @@ abstract class Geometry implements GeometryInterface {
 			default:
 				throw new UnknownWKTTypeException( 'Type was ' . $type );
 		}
+	}
+
+	public static function fromWKB( $wkb )
+	{
+		$parser = new Parser( new Factory() );
+		return $parser->parse( $wkb );
 	}
 
 	public static function fromWKT($wkt) {
