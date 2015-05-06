@@ -1,11 +1,12 @@
 <?php namespace Phaza\LaravelPostgis\Geometries;
 
-interface GeometryInterface {
-	public function toWKT();
+interface GeometryInterface
+{
+    public function toWKT();
 
-	public static function fromWKT( $wkt );
+    public static function fromWKT($wkt);
 
-	public function __toString();
+    public function __toString();
 
-	public static function fromString( $wktArgument );
+    public static function fromString($wktArgument);
 }
