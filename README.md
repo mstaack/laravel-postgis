@@ -14,43 +14,65 @@ Laravel postgis extension
  
  * Geometry functions on the geometry classes (contains(), equals(), distance(), etc… (HELP!))
 
+## Installation
+
+    composer require phaza/laravel-postgis 
+
+Next add the DatabaseServiceProvider to your `config/app.php` file.
+
+    'Phaza\LaravelPostgis\DatabaseServiceProvider',
+
+That's all.
+
 ## Usage
 
 First of all, enable postgis (See note further down)
 
 ### Migrations
 
+Now create a model with a migration by running
+
+    php artisan make:model Location
+
+If you don't want a model and just a migration run
+
+    php artisan make:migration create_locations_table
+
+Open the created migrations with your editor.
+
 ```PHP
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Phaza\LaravelPostgis\Schema\Blueprint;
 
-class CreateTestsTable extends Migration {
+class CreateLocationsTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('tests', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->polygon('myPolygon');
-			$table->point('myPoint');
-			$table->timestamps();
-		});
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('locations', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('address')->unique();
+            $table->point('location');
+            $table->polygon('polygon');
+            $table->timestamps();
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('tests');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('locations');
+    }
 
 }
 ```
@@ -78,20 +100,34 @@ You must also define an associative array called `$postgisFields` which defines
 what attributes/columns on your model are to be considered geometry objects.
 
 ```PHP
-class TestModel extends Model {
-	use PostgisTrait;
+use Illuminate\Database\Eloquent\Model;
+use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
+use Phaza\LaravelPostgis\Geometries\Point;
 
-	protected $postgisFields = [
-		'point' => Point::class
-	];
+class Location extends Model
+{
+    use PostgisTrait;
+
+    protected $fillable = [
+        'name',
+        'address'
+    ];
+
+    protected $postgisFields = [
+        'location' => Point::class,
+        'polygon' => Polygon::class,
+    ];
+
 }
 
-$testModel = new TestModel();
-$testModel->point = new Point(1,2);
-$testModel->save();
+$location1 = new Location();
+$location1->name = 'Googleplex';
+$location1->address = '1600 Amphitheatre Pkwy Mountain View, CA 94043';
+$location1->location = new Point(37.422009, -122.084047);
+$location1->save();
 
-$testModel2 = TestModel::first();
-$testModel2->point instanceof Point // true
+$location2 = Location::first();
+$location2->location instanceof Point // true
 ```
 
 Available geometry classes:
