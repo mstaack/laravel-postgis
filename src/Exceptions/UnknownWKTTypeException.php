@@ -2,4 +2,6 @@
 
 use RuntimeException;
 
-class UnknownWKTTypeException extends RuntimeException { }
+class UnknownWKTTypeException extends RuntimeException
+{
+}

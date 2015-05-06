@@ -2,6 +2,6 @@
 
 use RuntimeException;
 
-class PostgisFieldsNotDefinedException extends RuntimeException {
-
+class PostgisFieldsNotDefinedException extends RuntimeException
+{
 }
