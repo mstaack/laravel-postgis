@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
 use Phaza\LaravelPostgis\Geometries\Geometry;
+use Phaza\LaravelPostgis\Geometries\GeometryInterface;
 
 trait PostgisTrait {
 	/**
@@ -19,7 +20,7 @@ trait PostgisTrait {
 	protected function performInsert( EloquentBuilder $query, array $options = [] )
 	{
 		foreach( $this->attributes as $key => &$value ) {
-			if( $value instanceof Geometry ) {
+			if( $value instanceof GeometryInterface ) {
 				$value = $this->getConnection()->raw( sprintf( "ST_GeogFromText('%s')", $value->toWKT() ) );
 			}
 		}
