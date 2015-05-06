@@ -6,113 +6,117 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Phaza\LaravelPostgis\PostgisConnection;
 
-class PostgisTraitTest extends BaseTestCase {
+class PostgisTraitTest extends BaseTestCase
+{
+    /**
+     * @var TestModel
+     */
+    protected $model;
 
-	/**
-	 * @var TestModel
-	 */
-	protected $model;
+    /**
+     * @var array
+     */
+    protected $queries;
 
-	/**
-	 * @var array
-	 */
-	protected $queries;
+    public function setUp()
+    {
+        $this->model = new TestModel();
+        $this->queries = &$this->model->getConnection()->getPdo()->queries;
+    }
 
-	public function setUp()
-	{
-		$this->model   = new TestModel();
-		$this->queries = &$this->model->getConnection()->getPdo()->queries;
-	}
+    public function tearDown()
+    {
+        $this->model->getConnection()->getPdo()->resetQueries();
+    }
 
-	public function tearDown()
-	{
-		$this->model->getConnection()->getPdo()->resetQueries();
-	}
+    public function testInsertPointHasCorrectSql()
+    {
+        $this->model->point = new Point(1, 2);
+        $this->model->save();
 
-	public function testInsertPointHasCorrectSql()
-	{
-		$this->model->point = new Point( 1, 2 );
-		$this->model->save();
+        $this->assertContains("ST_GeogFromText('POINT(2 1)')", $this->queries[0]);
+    }
 
-		$this->assertContains( "ST_GeogFromText('POINT(2 1)')", $this->queries[0] );
-	}
+    public function testUpdatePointHasCorrectSql()
+    {
+        $this->model->exists = true;
+        $this->model->point = new Point(2, 4);
+        $this->model->save();
 
-	public function testUpdatePointHasCorrectSql()
-	{
-		$this->model->exists = true;
-		$this->model->point  = new Point( 2, 4 );
-		$this->model->save();
-
-		$this->assertContains( "ST_GeogFromText('POINT(4 2)')", $this->queries[0] );
-	}
+        $this->assertContains("ST_GeogFromText('POINT(4 2)')", $this->queries[0]);
+    }
 }
 
-class TestModel extends Model {
-	use PostgisTrait;
+class TestModel extends Model
+{
+    use PostgisTrait;
 
-	protected $postgisFields = [
-		'point' => Point::class
-	];
+    protected $postgisFields = [
+        'point' => Point::class
+    ];
 
 
-	public static $pdo;
+    public static $pdo;
 
-	public static function resolveConnection( $connection = null )
-	{
-		if( is_null( static::$pdo ) ) {
-			static::$pdo = m::mock( 'TestPDO' )->makePartial();
-		}
+    public static function resolveConnection($connection = null)
+    {
+        if (is_null(static::$pdo)) {
+            static::$pdo = m::mock('TestPDO')->makePartial();
+        }
 
-		return new PostgisConnection( static::$pdo );
-	}
+        return new PostgisConnection(static::$pdo);
+    }
 
-	public function testrelatedmodels()
-	{
-		return $this->hasMany( TestRelatedModel::class );
-	}
+    public function testrelatedmodels()
+    {
+        return $this->hasMany(TestRelatedModel::class);
+    }
 
-	public function testrelatedmodels2() {
-		return $this->belongsToMany( TestRelatedModel::class );
-	}
+    public function testrelatedmodels2()
+    {
+        return $this->belongsToMany(TestRelatedModel::class);
+    }
 
 }
 
-class TestRelatedModel extends TestModel {
-	public function testmodel()
-	{
-		return $this->belongsTo( TestModel::class );
-	}
+class TestRelatedModel extends TestModel
+{
+    public function testmodel()
+    {
+        return $this->belongsTo(TestModel::class);
+    }
 
-	public function testmodels() {
-		return $this->belongsToMany( TestModel::class );
-	}
+    public function testmodels()
+    {
+        return $this->belongsToMany(TestModel::class);
+    }
 }
 
-class TestPDO extends PDO {
+class TestPDO extends PDO
+{
 
-	public $queries = [ ];
-	public $counter = 1;
+    public $queries = [];
+    public $counter = 1;
 
-	public function prepare( $statement, $driver_options = NULL )
-	{
-		$this->queries[] = $statement;
+    public function prepare($statement, $driver_options = null)
+    {
+        $this->queries[] = $statement;
 
-		$stmt = m::mock( 'PDOStatement' );
-		$stmt->shouldReceive( 'execute' );
-		$stmt->shouldReceive( 'fetchAll' )->andReturn( [ ['id' => 1, 'point' => 'POINT(1 2)'] ] );
-		$stmt->shouldReceive( 'rowCount' )->andReturn( 1 );
+        $stmt = m::mock('PDOStatement');
+        $stmt->shouldReceive('execute');
+        $stmt->shouldReceive('fetchAll')->andReturn([['id' => 1, 'point' => 'POINT(1 2)']]);
+        $stmt->shouldReceive('rowCount')->andReturn(1);
 
-		return $stmt;
-	}
+        return $stmt;
+    }
 
-	public function lastInsertId( $name = null )
-	{
-		return $this->counter++;;
-	}
+    public function lastInsertId($name = null)
+    {
+        return $this->counter++;
+    }
 
-	public function resetQueries()
-	{
-		$this->queries = [ ];
-	}
-
+    public function resetQueries()
+    {
+        $this->queries = [];
+    }
 }
