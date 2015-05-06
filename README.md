@@ -26,7 +26,8 @@ That's all.
 
 ## Usage
 
-First of all, enable postgis (See note further down)
+A method called enablePostgis() (and disablePostgis()) is included in the Blueprint object.  
+They work on newer postgres installations, but I recommend enabling postgis manually for now.
 
 ### Migrations
 
@@ -139,8 +140,3 @@ Available geometry classes:
  * Polygon
  * MultiPolygon
  * GeometryCollection
-
-## Enabling postgis
-
-A method called enablePostgis() (and disablePostgis()) is included in the Blueprint object.
-They work on newer postgres installations, but I recommend enabling postgis manually for now.
