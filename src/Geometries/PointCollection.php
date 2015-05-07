@@ -7,109 +7,107 @@ use Illuminate\Contracts\Support\Arrayable;
 use InvalidArgumentException;
 use IteratorAggregate;
 
-class PointCollection implements IteratorAggregate, Arrayable, ArrayAccess, Countable {
+class PointCollection implements IteratorAggregate, Arrayable, ArrayAccess, Countable
+{
+    /**
+     * @var Point[]
+     */
+    protected $points;
 
-	/**
-	 * @var Point[]
-	 */
-	protected $points;
+    /**
+     * @param Point[] $points
+     */
+    public function __construct(array $points)
+    {
+        if (count($points) < 2) {
+            throw new InvalidArgumentException('$points must contain at least two entries');
+        }
 
-	/**
-	 * @param Point[] $points
-	 */
-	public function __construct( array $points )
-	{
+        $validated = array_filter($points, function ($value) {
+            return $value instanceof Point;
+        });
 
-		if( count( $points ) < 2 ) {
-			throw new InvalidArgumentException( '$points must contain at least two entries' );
-		}
+        if (count($points) !== count($validated)) {
+            throw new InvalidArgumentException('$points must be an array of Points');
+        }
+        $this->points = $points;
+    }
 
-		$validated = array_filter( $points, function ( $value ) {
-			return $value instanceof Point;
-		} );
+    public function getPoints()
+    {
+        return $this->points;
+    }
 
-		if( count( $points ) !== count( $validated ) ) {
-			throw new InvalidArgumentException( '$points must be an array of Points' );
-		}
-		$this->points = $points;
-	}
+    public function toArray()
+    {
+        return $this->points;
+    }
 
-	public function getPoints()
-	{
-		return $this->points;
-	}
+    public function getIterator()
+    {
+        return new ArrayIterator($this->points);
+    }
 
-	public function toArray()
-	{
-		return $this->points;
-	}
+    public function prependPoint(Point $point)
+    {
+        array_unshift($this->points, $point);
+    }
 
-	public function getIterator() {
-		return new ArrayIterator($this->points);
-	}
+    public function appendPoint(Point $point)
+    {
+        $this->points[] = $point;
+    }
 
-	public function prependPoint( Point $point )
-	{
-		array_unshift( $this->points, $point );
-	}
+    public function insertPoint($index, Point $point)
+    {
+        if (count($this->points) - 1 < $index) {
+            throw new InvalidArgumentException('$index is greater than the size of the array');
+        }
 
-	public function appendPoint( Point $point )
-	{
-		$this->points[] = $point;
-	}
+        array_splice($this->points, $offset, 0, [$point]);
+    }
 
-	public function insertPoint( $index, Point $point )
-	{
-		if( count( $this->points ) - 1 < $index ) {
-			throw new InvalidArgumentException( '$index is greater than the size of the array' );
-		}
+    public function offsetExists($offset)
+    {
+        return isset($this->points[$offset]);
+    }
 
-		array_splice( $this->points, $offset, 0, [ $point ] );
-	}
+    /**
+     * @param mixed $offset
+     * @return null|Point
+     */
+    public function offsetGet($offset)
+    {
+        return $this->offsetExists($offset) ? $this->points[$offset] : null;
+    }
 
-	public function offsetExists( $offset )
-	{
-		return isset( $this->points[ $offset ] );
-	}
+    public function offsetSet($offset, $value)
+    {
+        if (!($value instanceof Point)) {
+            throw new InvalidArgumentException('$value must be an instance of Point');
+        }
 
-	/**
-	 * @param mixed $offset
-	 * @return null|Point
-	 */
-	public function offsetGet( $offset )
-	{
-		return $this->offsetExists( $offset ) ? $this->points[ $offset ] : null;
-	}
+        if (is_null($offset)) {
+            $this->appendPoint($value);
+        } else {
+            $this->points[$offset] = $value;
+        }
+    }
 
-	public function offsetSet( $offset, $value )
-	{
-		if( !( $value instanceof Point ) ) {
-			throw new InvalidArgumentException( '$value must be an instance of Point' );
-		}
+    public function offsetUnset($offset)
+    {
+        unset($this->points[$offset]);
+    }
 
-		if( is_null( $offset ) ) {
-			$this->appendPoint( $value );
-		}
-		else {
-			$this->points[ $offset ] = $value;
-		}
-	}
+    public function count()
+    {
+        return count($this->points);
+    }
 
-	public function offsetUnset( $offset )
-	{
-		unset( $this->points[ $offset ] );
-	}
-
-	public function count()
-	{
-		return count( $this->points );
-	}
-
-	public function toPairList()
-	{
-		return implode( ',', array_map( function ( Point $point ) {
-			return $point->toPair();
-		},
-			$this->points ) );
-	}
+    public function toPairList()
+    {
+        return implode(',', array_map(function (Point $point) {
+            return $point->toPair();
+        }, $this->points));
+    }
 }

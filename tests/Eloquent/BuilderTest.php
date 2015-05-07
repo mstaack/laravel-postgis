@@ -10,62 +10,64 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Phaza\LaravelPostgis\Geometries\Polygon;
 
-class BuilderTest extends BaseTestCase {
-	protected $builder;
+class BuilderTest extends BaseTestCase
+{
+    protected $builder;
 
-	/**
-	 * @var \Mockery\MockInterface $queryBuilder
-	 */
-	protected $queryBuilder;
+    /**
+     * @var \Mockery\MockInterface $queryBuilder
+     */
+    protected $queryBuilder;
 
-	protected function setUp()
-	{
-		$this->queryBuilder = m::mock( QueryBuilder::class );
-		$this->queryBuilder->makePartial();
+    protected function setUp()
+    {
+        $this->queryBuilder = m::mock(QueryBuilder::class);
+        $this->queryBuilder->makePartial();
 
-		$this->queryBuilder
-			->shouldReceive( 'from' )
-			->andReturn( $this->queryBuilder );
+        $this->queryBuilder
+            ->shouldReceive('from')
+            ->andReturn($this->queryBuilder);
 
-		$this->queryBuilder
-			->shouldReceive( 'take' )
-			->with( 1 )
-			->andReturn( $this->queryBuilder );
+        $this->queryBuilder
+            ->shouldReceive('take')
+            ->with(1)
+            ->andReturn($this->queryBuilder);
 
-		$this->queryBuilder
-			->shouldReceive( 'get' )
-			->andReturn( [ ] );
+        $this->queryBuilder
+            ->shouldReceive('get')
+            ->andReturn([]);
 
-		$this->builder = new Builder( $this->queryBuilder );
-		$this->builder->setModel( new TestBuilderModel() );
-	}
+        $this->builder = new Builder($this->queryBuilder);
+        $this->builder->setModel(new TestBuilderModel());
+    }
 
-	public function testUpdate()
-	{
-		$this->queryBuilder
-			->shouldReceive( 'raw' )
-			->with( "ST_GeogFromText('POINT(2 1)')" )
-			->andReturn( new Expression( "ST_GeogFromText('POINT(2 1)')" ) );
+    public function testUpdate()
+    {
+        $this->queryBuilder
+            ->shouldReceive('raw')
+            ->with("ST_GeogFromText('POINT(2 1)')")
+            ->andReturn(new Expression("ST_GeogFromText('POINT(2 1)')"));
 
-		$this->queryBuilder
-			->shouldReceive( 'update' )
-			->andReturn( 1 );
+        $this->queryBuilder
+            ->shouldReceive('update')
+            ->andReturn(1);
 
-		$builder = m::mock(Builder::class, [$this->queryBuilder])->makePartial();
-		$builder->shouldAllowMockingProtectedMethods();
-		$builder
-			->shouldReceive( 'addUpdatedAtColumn' )
-			->andReturn( [ 'point' => new Point( 1, 2 ) ] );
+        $builder = m::mock(Builder::class, [$this->queryBuilder])->makePartial();
+        $builder->shouldAllowMockingProtectedMethods();
+        $builder
+            ->shouldReceive('addUpdatedAtColumn')
+            ->andReturn(['point' => new Point(1, 2)]);
 
-		$builder->update( [ 'point' => new Point( 1, 2 ) ] );
-	}
+        $builder->update(['point' => new Point(1, 2)]);
+    }
 }
 
-class TestBuilderModel extends Model {
-	use PostgisTrait;
+class TestBuilderModel extends Model
+{
+    use PostgisTrait;
 
-	protected $postgisFields = [
-		'point'   => Point::class,
-		'polygon' => Polygon::class
-	];
+    protected $postgisFields = [
+        'point' => Point::class,
+        'polygon' => Polygon::class
+    ];
 }
