@@ -27,7 +27,8 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/BaseTestCase.php"
+            "tests/BaseTestCase.php",
+            "tests/Stubs/"
         ]
     },
     "license": "MIT",

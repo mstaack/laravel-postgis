@@ -7,7 +7,6 @@ class Point extends Geometry
 
     public function __construct($lat, $lng)
     {
-
         $this->lat = $lat;
         $this->lng = $lng;
     }

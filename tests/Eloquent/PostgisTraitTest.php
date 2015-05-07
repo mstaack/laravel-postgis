@@ -94,7 +94,6 @@ class TestRelatedModel extends TestModel
 
 class TestPDO extends PDO
 {
-
     public $queries = [];
     public $counter = 1;
 
