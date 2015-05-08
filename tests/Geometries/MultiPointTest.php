@@ -21,4 +21,14 @@ class MultiPointTest extends BaseTestCase
 
         $this->assertEquals('MULTIPOINT((0 0),(1 0),(1 1))', $multipoint->toWKT());
     }
+
+    public function testJsonSerialize()
+    {
+        $collection = [new Point(0, 0), new Point(0, 1), new Point(1, 1)];
+
+        $multipoint = new MultiPoint($collection);
+
+        $this->assertInstanceOf(\GeoJson\Geometry\MultiPoint::class, $multipoint->jsonSerialize());
+        $this->assertSame('{"type":"MultiPoint","coordinates":[[0,0],[0,1],[1,1]]}', json_encode($multipoint));
+    }
 }

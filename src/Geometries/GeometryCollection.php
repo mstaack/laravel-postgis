@@ -1,6 +1,7 @@
 <?php namespace Phaza\LaravelPostgis\Geometries;
 
 use Countable;
+use GeoJson\GeoJson;
 use InvalidArgumentException;
 
 class GeometryCollection extends Geometry implements Countable
@@ -70,5 +71,20 @@ class GeometryCollection extends Geometry implements Countable
     public function count()
     {
         return count($this->geometries);
+    }
+
+    /**
+     * Convert to GeoJson GeometryCollection that is jsonable to GeoJSON
+     *
+     * @return \GeoJson\Geometry\GeometryCollection
+     */
+    public function jsonSerialize()
+    {
+        $geometries = [];
+        foreach ($this->geometries as $geometry) {
+            $geometries[] = $geometry->jsonSerialize();
+        }
+
+        return new \GeoJson\Geometry\GeometryCollection($geometries);
     }
 }

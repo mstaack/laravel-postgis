@@ -7,17 +7,12 @@ use Phaza\LaravelPostgis\Geometries\Polygon;
 
 class MultiPolygonTest extends BaseTestCase
 {
-    public function testFromWKT()
-    {
-        $polygon = MultiPolygon::fromWKT(
-            'MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))'
-        );
-        $this->assertInstanceOf(MultiPolygon::class, $polygon);
+    /**
+     * @var MultiPolygon
+     */
+    private $multiPolygon;
 
-        $this->assertEquals(2, $polygon->count());
-    }
-
-    public function testToWKT()
+    protected function setUp()
     {
         $collection1 = new LineString(
             [
@@ -54,11 +49,34 @@ class MultiPolygonTest extends BaseTestCase
 
         $polygon2 = new Polygon([$collection3]);
 
-        $multipolygon = new MultiPolygon([$polygon1, $polygon2]);
+        $this->multiPolygon = new MultiPolygon([$polygon1, $polygon2]);
+    }
 
+    public function testFromWKT()
+    {
+        $polygon = MultiPolygon::fromWKT(
+            'MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))'
+        );
+        $this->assertInstanceOf(MultiPolygon::class, $polygon);
+
+        $this->assertEquals(2, $polygon->count());
+    }
+
+
+    public function testToWKT()
+    {
         $this->assertEquals(
             'MULTIPOLYGON(((0 0,1 0,1 1,0 1,0 0),(10 10,20 10,20 20,10 20,10 10)),((100 100,200 100,200 200,100 200,100 100)))',
-            $multipolygon->toWKT()
+            $this->multiPolygon->toWKT()
+        );
+    }
+
+    public function testJsonSerialize()
+    {
+        $this->assertInstanceOf(\GeoJson\Geometry\MultiPolygon::class, $this->multiPolygon->jsonSerialize());
+        $this->assertSame(
+            '{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[10,10],[10,20],[20,20],[20,10],[10,10]]],[[[100,100],[100,200],[200,200],[200,100],[100,100]]]]}',
+            json_encode($this->multiPolygon)
         );
     }
 }
