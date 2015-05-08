@@ -26,8 +26,13 @@ That's all.
 
 ## Usage
 
-A method called enablePostgis() (and disablePostgis()) is included in the Blueprint object.  
-They work on newer postgres installations, but I recommend enabling postgis manually for now.
+First of all, make sure to enable postgis.
+
+    CREATE EXTENSION postgis;
+
+To verify that postgis is enabled
+
+    SELECT postgis_full_version();
 
 ### Migrations
 
