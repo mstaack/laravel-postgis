@@ -47,8 +47,8 @@ If you don't want a model and just a migration run
 Open the created migrations with your editor.
 
 ```PHP
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Phaza\LaravelPostgis\Schema\Blueprint;
 
 class CreateLocationsTable extends Migration {
 
