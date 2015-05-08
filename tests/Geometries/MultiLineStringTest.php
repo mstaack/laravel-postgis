@@ -30,4 +30,15 @@ class MultiLineStringTest extends BaseTestCase
 
         $this->assertEquals('MULTILINESTRING((0 0,1 0,1 1,0 1,0 0))', $multilinestring->toWKT());
     }
+
+    public function testJsonSerialize()
+    {
+        $multilinestring = MultiLineString::fromWKT('MULTILINESTRING((0 0,1 1,1 2),(2 3,3 2,5 4))');
+
+        $this->assertInstanceOf(\GeoJson\Geometry\MultiLineString::class, $multilinestring->jsonSerialize());
+        $this->assertSame(
+            '{"type":"MultiLineString","coordinates":[[[0,0],[1,1],[2,1]],[[3,2],[2,3],[4,5]]]}',
+            json_encode($multilinestring)
+        );
+    }
 }
