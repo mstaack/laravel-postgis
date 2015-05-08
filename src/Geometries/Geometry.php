@@ -3,7 +3,7 @@
 use GeoIO\WKB\Parser\Parser;
 use Phaza\LaravelPostgis\Exceptions\UnknownWKTTypeException;
 
-abstract class Geometry implements GeometryInterface
+abstract class Geometry implements GeometryInterface, \JsonSerializable
 {
     protected static $wkb_types = [
         1 => Point::class,
