@@ -99,4 +99,19 @@ class MultiPolygon extends Geometry implements Countable
 
         return $polygons;
     }
+
+    /**
+     * Convert to GeoJson MultiPolygon that is jsonable to GeoJSON
+     *
+     * @return \GeoJson\Geometry\MultiPolygon
+     */
+    public function jsonSerialize()
+    {
+        $polygons = [];
+        foreach ($this->polygons as $polygon) {
+            $polygons[] = $polygon->jsonSerialize();
+        }
+
+        return new \GeoJson\Geometry\MultiPolygon($polygons);
+    }
 }
