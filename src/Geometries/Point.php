@@ -1,5 +1,7 @@
 <?php namespace Phaza\LaravelPostgis\Geometries;
 
+use GeoJson\GeoJson;
+
 class Point extends Geometry
 {
     protected $lat;
@@ -59,9 +61,9 @@ class Point extends Geometry
     }
 
     /**
-     * Specify data which should be serialized to JSON.
+     * Convert to GeoJson Point that is jsonable to GeoJSON
      *
-     * @return mixed
+     * @return \GeoJson\Geometry\Point
      */
     public function jsonSerialize()
     {
