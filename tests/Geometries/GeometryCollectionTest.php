@@ -6,6 +6,29 @@ use Phaza\LaravelPostgis\Geometries\Point;
 
 class GeometryCollectionTest extends BaseTestCase
 {
+    /**
+     * @var GeometryCollection
+     */
+    private $collection;
+
+    protected function setUp()
+    {
+        $collection = new LineString(
+            [
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(1, 1),
+                new Point(1, 0),
+                new Point(0, 0)
+            ]
+        );
+
+        $point = new Point(100, 200);
+
+        $this->collection = new GeometryCollection([$collection, $point]);
+    }
+
+
     public function testFromWKT()
     {
         /**
@@ -21,20 +44,23 @@ class GeometryCollectionTest extends BaseTestCase
 
     public function testToWKT()
     {
-        $collection = new LineString(
-            [
-                new Point(0, 0),
-                new Point(0, 1),
-                new Point(1, 1),
-                new Point(1, 0),
-                new Point(0, 0)
-            ]
+        $this->assertEquals(
+            'GEOMETRYCOLLECTION(LINESTRING(0 0,1 0,1 1,0 1,0 0),POINT(200 100))',
+            $this->collection->toWKT()
+        );
+    }
+
+    public function testJsonSerialize()
+    {
+        $this->assertInstanceOf(
+            \GeoJson\Geometry\GeometryCollection::class,
+            $this->collection->jsonSerialize()
         );
 
-        $point = new Point(100, 200);
+        $this->assertSame(
+            '{"type":"GeometryCollection","geometries":[{"type":"LineString","coordinates":[[0,0],[0,1],[1,1],[1,0],[0,0]]},{"type":"Point","coordinates":[100,200]}]}',
+            json_encode($this->collection->jsonSerialize())
+        );
 
-        $polygon = new GeometryCollection([$collection, $point]);
-
-        $this->assertEquals('GEOMETRYCOLLECTION(LINESTRING(0 0,1 0,1 1,0 1,0 0),POINT(200 100))', $polygon->toWKT());
     }
 }
