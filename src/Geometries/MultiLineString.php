@@ -62,4 +62,20 @@ class MultiLineString extends Geometry implements Countable
     {
         return count($this->linestrings);
     }
+
+    /**
+     * Convert to GeoJson Point that is jsonable to GeoJSON
+     *
+     * @return \GeoJson\Geometry\MultiLineString
+     */
+    public function jsonSerialize()
+    {
+        $linestrings = [];
+
+        foreach ($this->linestrings as $linestring) {
+            $linestrings[] = $linestring->jsonSerialize();
+        }
+
+        return new \GeoJson\Geometry\MultiLineString($linestrings);
+    }
 }

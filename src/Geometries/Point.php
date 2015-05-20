@@ -1,5 +1,7 @@
 <?php namespace Phaza\LaravelPostgis\Geometries;
 
+use GeoJson\GeoJson;
+
 class Point extends Geometry
 {
     protected $lat;
@@ -7,9 +9,8 @@ class Point extends Geometry
 
     public function __construct($lat, $lng)
     {
-
-        $this->lat = $lat;
-        $this->lng = $lng;
+        $this->lat = (float)$lat;
+        $this->lng = (float)$lng;
     }
 
     public function getLat()
@@ -19,7 +20,7 @@ class Point extends Geometry
 
     public function setLat($lat)
     {
-        $this->lat = $lat;
+        $this->lat = (float)$lat;
     }
 
     public function getLng()
@@ -29,7 +30,7 @@ class Point extends Geometry
 
     public function setLng($lng)
     {
-        $this->lng = $lng;
+        $this->lng = (float)$lng;
     }
 
     public function toPair()
@@ -41,7 +42,7 @@ class Point extends Geometry
     {
         list($lng, $lat) = explode(' ', trim($pair));
 
-        return new static($lat, $lng);
+        return new static((float)$lat, (float)$lng);
     }
 
     public function toWKT()
@@ -57,5 +58,16 @@ class Point extends Geometry
     public function __toString()
     {
         return $this->getLng() . ' ' . $this->getLat();
+    }
+
+    /**
+     * Convert to GeoJson Point that is jsonable to GeoJSON
+     *
+     * @return \GeoJson\Geometry\Point
+     */
+    public function jsonSerialize()
+    {
+        // !!! This will convert LngLat from PostGIS to ISO 6709 LatLng !!!
+        return new \GeoJson\Geometry\Point([$this->getLat(), $this->getLng()]);
     }
 }

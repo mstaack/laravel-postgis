@@ -6,8 +6,9 @@ use Countable;
 use Illuminate\Contracts\Support\Arrayable;
 use InvalidArgumentException;
 use IteratorAggregate;
+use JsonSerializable;
 
-class PointCollection implements IteratorAggregate, Arrayable, ArrayAccess, Countable
+abstract class PointCollection implements IteratorAggregate, Arrayable, ArrayAccess, Countable, JsonSerializable
 {
     /**
      * @var Point[]

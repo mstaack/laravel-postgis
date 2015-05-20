@@ -1,6 +1,5 @@
 <?php
 
-use Phaza\LaravelPostgis\Geometries\Geometry;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 class PointTest extends BaseTestCase
@@ -21,10 +20,44 @@ class PointTest extends BaseTestCase
         $this->assertEquals('POINT(2 1)', $point->toWKT());
     }
 
-    public function testToString()
+    public function testGettersAndSetters()
     {
         $point = new Point(1, 2);
+        $this->assertSame(1.0, $point->getLat());
+        $this->assertSame(2.0, $point->getLng());
 
-        $this->assertEquals('2 1', (string)$point);
+        $point->setLat('3');
+        $point->setLng('4');
+
+        $this->assertSame(3.0, $point->getLat());
+        $this->assertSame(4.0, $point->getLng());
+    }
+
+    public function testPair()
+    {
+        $point = Point::fromPair('1.5 2');
+
+        $this->assertSame(1.5, $point->getLng());
+        $this->assertSame(2.0, $point->getLat());
+
+        $this->assertSame('1.5 2', $point->toPair());
+    }
+
+    public function testToString()
+    {
+        $point = Point::fromString('1.3 2');
+
+        $this->assertSame(1.3, $point->getLng());
+        $this->assertSame(2.0, $point->getLat());
+
+        $this->assertEquals('1.3 2', (string)$point);
+    }
+
+    public function testJsonSerialize()
+    {
+        $point = new Point(1.2, 3.4);
+
+        $this->assertInstanceOf(\GeoJson\Geometry\Point::class, $point->jsonSerialize());
+        $this->assertSame('{"type":"Point","coordinates":[1.2,3.4]}', json_encode($point));
     }
 }
