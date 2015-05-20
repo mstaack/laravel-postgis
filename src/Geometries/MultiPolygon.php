@@ -15,10 +15,6 @@ class MultiPolygon extends Geometry implements Countable
      */
     public function __construct(array $polygons)
     {
-        if (count($polygons) < 2) {
-            throw new InvalidArgumentException('$polygons must contain at least two entries');
-        }
-
         $validated = array_filter($polygons, function ($value) {
             return $value instanceof Polygon;
         });
@@ -31,19 +27,19 @@ class MultiPolygon extends Geometry implements Countable
 
     public function toWKT()
     {
-        return sprintf('MULTIPOLYGON(%s)', (string)$this);
+        return sprintf('MULTIPOLYGON(%s)', (string) $this);
     }
 
     public function __toString()
     {
         return implode(',', array_map(function (Polygon $polygon) {
-            return sprintf('(%s)', (string)$polygon);
+            return sprintf('(%s)', (string) $polygon);
         }, $this->polygons));
     }
 
     public static function fromString($wktArgument)
     {
-        $parts = preg_split('/(\)\s*\)\s*,\s*\(\s*\()/', $wktArgument, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $parts    = preg_split('/(\)\s*\)\s*,\s*\(\s*\()/', $wktArgument, -1, PREG_SPLIT_DELIM_CAPTURE);
         $polygons = static::assembleParts($parts);
 
         return new static(array_map(function ($polygonString) {
@@ -67,6 +63,16 @@ class MultiPolygon extends Geometry implements Countable
     }
 
     /**
+     * Get the polygons that make up this MultiPolygon
+     *
+     * @return array|Polygon[]
+     */
+    public function getPolygons()
+    {
+        return $this->polygons;
+    }
+
+    /**
      * Make an array like this:
      * "((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1",
      * ")), ((",
@@ -85,7 +91,7 @@ class MultiPolygon extends Geometry implements Countable
     protected static function assembleParts(array $parts)
     {
         $polygons = [];
-        $count = count($parts);
+        $count    = count($parts);
 
         for ($i = 0; $i < $count; $i++) {
             if ($i % 2 !== 0) {
