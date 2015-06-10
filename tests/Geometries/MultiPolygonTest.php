@@ -93,7 +93,7 @@ class MultiPolygonTest extends BaseTestCase
     {
         $this->assertInstanceOf(\GeoJson\Geometry\MultiPolygon::class, $this->multiPolygon->jsonSerialize());
         $this->assertSame(
-            '{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[10,10],[10,20],[20,20],[20,10],[10,10]]],[[[100,100],[100,200],[200,200],[200,100],[100,100]]]]}',
+            '{"type":"MultiPolygon","coordinates":[[[[0,0],[1,0],[1,1],[0,1],[0,0]],[[10,10],[20,10],[20,20],[10,20],[10,10]]],[[[100,100],[200,100],[200,200],[100,200],[100,100]]]]}',
             json_encode($this->multiPolygon)
         );
     }

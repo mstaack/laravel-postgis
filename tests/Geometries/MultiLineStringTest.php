@@ -37,7 +37,7 @@ class MultiLineStringTest extends BaseTestCase
 
         $this->assertInstanceOf(\GeoJson\Geometry\MultiLineString::class, $multilinestring->jsonSerialize());
         $this->assertSame(
-            '{"type":"MultiLineString","coordinates":[[[0,0],[1,1],[2,1]],[[3,2],[2,3],[4,5]]]}',
+            '{"type":"MultiLineString","coordinates":[[[0,0],[1,1],[1,2]],[[2,3],[3,2],[5,4]]]}',
             json_encode($multilinestring)
         );
     }

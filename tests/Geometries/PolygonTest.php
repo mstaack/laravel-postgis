@@ -41,7 +41,7 @@ class PolygonTest extends BaseTestCase
     {
         $this->assertInstanceOf(\GeoJson\Geometry\Polygon::class, $this->polygon->jsonSerialize());
         $this->assertSame(
-            '{"type":"Polygon","coordinates":[[[0,0],[0,1],[1,1],[1,0],[0,0]]]}',
+            '{"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}',
             json_encode($this->polygon)
         );
 

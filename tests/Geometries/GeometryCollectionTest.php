@@ -58,7 +58,7 @@ class GeometryCollectionTest extends BaseTestCase
         );
 
         $this->assertSame(
-            '{"type":"GeometryCollection","geometries":[{"type":"LineString","coordinates":[[0,0],[0,1],[1,1],[1,0],[0,0]]},{"type":"Point","coordinates":[100,200]}]}',
+            '{"type":"GeometryCollection","geometries":[{"type":"LineString","coordinates":[[0,0],[1,0],[1,1],[0,1],[0,0]]},{"type":"Point","coordinates":[200,100]}]}',
             json_encode($this->collection->jsonSerialize())
         );
 

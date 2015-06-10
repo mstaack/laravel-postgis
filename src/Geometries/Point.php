@@ -67,7 +67,6 @@ class Point extends Geometry
      */
     public function jsonSerialize()
     {
-        // !!! This will convert LngLat from PostGIS to ISO 6709 LatLng !!!
-        return new \GeoJson\Geometry\Point([$this->getLat(), $this->getLng()]);
+        return new \GeoJson\Geometry\Point([$this->getLng(), $this->getLat()]);
     }
 }

@@ -58,6 +58,6 @@ class PointTest extends BaseTestCase
         $point = new Point(1.2, 3.4);
 
         $this->assertInstanceOf(\GeoJson\Geometry\Point::class, $point->jsonSerialize());
-        $this->assertSame('{"type":"Point","coordinates":[1.2,3.4]}', json_encode($point));
+        $this->assertSame('{"type":"Point","coordinates":[3.4,1.2]}', json_encode($point));
     }
 }
