@@ -6,9 +6,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * Add a point column on the table
      *
      * @param      $column
-     * @param null $srid
-     * @param int $dimensions
-     * @param bool $typmod
      * @return \Illuminate\Support\Fluent
      */
     public function point($column)
@@ -20,9 +17,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * Add a multipoint column on the table
      *
      * @param      $column
-     * @param null $srid
-     * @param int $dimensions
-     * @param bool $typmod
      * @return \Illuminate\Support\Fluent
      */
     public function multipoint($column)
@@ -34,9 +28,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * Add a polygon column on the table
      *
      * @param      $column
-     * @param null $srid
-     * @param int $dimensions
-     * @param bool $typmod
      * @return \Illuminate\Support\Fluent
      */
     public function polygon($column)
@@ -48,9 +39,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * Add a multipolygon column on the table
      *
      * @param      $column
-     * @param null $srid
-     * @param int $dimensions
-     * @param bool $typmod
      * @return \Illuminate\Support\Fluent
      */
     public function multipolygon($column)
@@ -62,9 +50,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * Add a linestring column on the table
      *
      * @param      $column
-     * @param null $srid
-     * @param int $dimensions
-     * @param bool $typmod
      * @return \Illuminate\Support\Fluent
      */
     public function linestring($column)
@@ -76,14 +61,22 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * Add a multilinestring column on the table
      *
      * @param      $column
-     * @param null $srid
-     * @param int $dimensions
-     * @param bool $typmod
      * @return \Illuminate\Support\Fluent
      */
     public function multilinestring($column)
     {
         return $this->addColumn('multilinestring', $column);
+    }
+
+    /**
+     * Add a geography column on the table
+     *
+     * @param   string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function geography($column)
+    {
+        return $this->addColumn('geography', $column);
     }
 
     /**
