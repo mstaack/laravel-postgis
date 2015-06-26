@@ -67,6 +67,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $this->assertContains('GEOGRAPHY(MULTIPOLYGON, 4326)', $statements[0]);
     }
 
+    public function testAddingGeography()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->geography('foo');
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOGRAPHY', $statements[0]);
+    }
+
     public function testAddingGeometryCollection()
     {
         $blueprint = new Blueprint('test');

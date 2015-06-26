@@ -61,6 +61,15 @@ class BlueprintTest extends BaseTestCase
         $this->blueprint->multilinestring('col');
     }
 
+    public function testGeography()
+    {
+        $this->blueprint
+            ->shouldReceive('addCommand')
+            ->with('geography', ['col', null, 2, true]);
+
+        $this->blueprint->geography('col');
+    }
+
     public function testGeometryCollection()
     {
         $this->blueprint
