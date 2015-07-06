@@ -9,8 +9,7 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to add a point geometry column
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
+     * @param \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typePoint(Fluent $column)
@@ -21,8 +20,7 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to add a point geometry column
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
+     * @param \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeMultipoint(Fluent $column)
@@ -33,8 +31,7 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to add a polygon geometry column
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
+     * @param \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typePolygon(Fluent $column)
@@ -45,8 +42,7 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to add a multipolygon geometry column
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
+     * @param \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeMultipolygon(Fluent $column)
@@ -57,8 +53,7 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to add a linestring geometry column
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
+     * @param \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeLinestring(Fluent $column)
@@ -69,13 +64,23 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to add a multilinestring geometry column
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
+     * @param \Illuminate\Support\Fluent $column
      * @return string
      */
     public function typeMultilinestring(Fluent $column)
     {
         return 'GEOGRAPHY(MULTILINESTRING, 4326)';
+    }
+
+    /**
+     * Adds a statement to add a linestring geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typeGeography(Fluent $column)
+    {
+        return 'GEOGRAPHY';
     }
 
     /**
