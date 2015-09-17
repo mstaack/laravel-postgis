@@ -31,10 +31,8 @@ trait PostgisTrait
 
     public function setRawAttributes(array $attributes, $sync = false)
     {
-        $pgfields = array_keys($this->getPostgisFields());
-
         foreach ($attributes as $attribute => &$value) {
-            if (in_array($attribute, $pgfields) && is_string($value) && strlen($value) >= 15) {
+            if (in_array($attribute, $this->getPostgisFields()) && is_string($value) && strlen($value) >= 15) {
                 $value = Geometry::fromWKB($value);
             }
         }
