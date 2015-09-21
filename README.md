@@ -102,7 +102,7 @@ other methods:
 
 All models which are to be PostGis enabled **must** use the *PostgisTrait*.
 
-You must also define an associative array called `$postgisFields` which defines
+You must also define an array called `$postgisFields` which defines
 what attributes/columns on your model are to be considered geometry objects.
 
 ```PHP
@@ -120,8 +120,8 @@ class Location extends Model
     ];
 
     protected $postgisFields = [
-        'location' => Point::class,
-        'polygon' => Polygon::class,
+        Point::class,
+        Polygon::class,
     ];
 
 }
