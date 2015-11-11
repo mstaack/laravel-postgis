@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": ">=5.5",
-        "illuminate/database": "~5.0",
+        "illuminate/database": "~5.1",
         "bosnadev/database": "~0.1",
         "geo-io/wkb-parser": "~1.0",
         "jmikola/geojson": "~1.0"
