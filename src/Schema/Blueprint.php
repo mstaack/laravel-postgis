@@ -78,6 +78,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     {
         return $this->addColumn('geography', $column, compact('geomtype', 'srid'));
     }
+    
+    /**
+     * Add a geometry column on the table
+     *
+     * @param   string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function geometry($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('geometry', $column, compact('geomtype', 'srid'));
+    }
 
     /**
      * Add a geometrycollection column on the table
