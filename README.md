@@ -14,6 +14,10 @@ Laravel postgis extension
  
  * Geometry functions on the geometry classes (contains(), equals(), distance(), etc… (HELP!))
 
+## Versions
+Use 2.* for Laravel 5.1.*  
+Use 3.* for Laravel 5.2.*
+
 ## Installation
 
     composer require phaza/laravel-postgis 
