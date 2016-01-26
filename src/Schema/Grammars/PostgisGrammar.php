@@ -17,7 +17,7 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typePoint(Fluent $column)
     {
-        // return 'GEOGRAPHY(POINT, 4326)';
+        // return 'GEOGRAPHY(POINT, 4326)'; 
         if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
             return strtoupper($column->geomtype) . '(POINT, ' . $column->srid . ')';
         } else {
