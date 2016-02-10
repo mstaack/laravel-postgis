@@ -14,6 +14,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a pointz column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointz($column)
+    {
+        return $this->addColumn('pointz', $column);
+    }
+
+    /**
      * Add a multipoint column on the table
      *
      * @param      $column
@@ -76,7 +87,7 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      */
     public function geography($column)
     {
-        return $this->addColumn('geography', $column);
+        return $this->addColumn('geometry', $column);
     }
 
     /**
