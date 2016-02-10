@@ -90,6 +90,7 @@ class CreateLocationsTable extends Migration {
 Available blueprint geometries:
 
  * point
+ * pointZ
  * multipoint
  * linestring
  * multilinestring
@@ -143,6 +144,7 @@ $location2->location instanceof Point // true
 Available geometry classes:
  
  * Point
+ * Point Z
  * MultiPoint
  * LineString
  * MultiLineString
