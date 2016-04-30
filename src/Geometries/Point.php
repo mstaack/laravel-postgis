@@ -6,11 +6,15 @@ class Point extends Geometry
 {
     protected $lat;
     protected $lng;
+    protected $alt;
+    protected $time;
 
-    public function __construct($lat, $lng)
+    public function __construct($lat, $lng, $alt = null, $time = null)
     {
-        $this->lat = (float)$lat;
-        $this->lng = (float)$lng;
+        $this->setLat($lat);
+        $this->setLng($lng);
+        $this->setAlt($alt);
+        $this->setTime($time);
     }
 
     public function getLat()
@@ -33,16 +37,34 @@ class Point extends Geometry
         $this->lng = (float)$lng;
     }
 
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    public function setAlt($alt)
+    {
+        $this->alt = (float)$alt;
+    }
+
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    public function setTime($time)
+    {
+        $this->time = (float)$time;
+    }
+
     public function toPair()
     {
-        return $this->getLng() . ' ' . $this->getLat();
+        return implode(' ', $this->getArray());
     }
 
     public static function fromPair($pair)
     {
-        list($lng, $lat) = explode(' ', trim($pair));
-
-        return new static((float)$lat, (float)$lng);
+	return new forward_static_call_array('__construct', explode(' ', trim($pair)));
     }
 
     public function toWKT()
@@ -57,7 +79,7 @@ class Point extends Geometry
 
     public function __toString()
     {
-        return $this->getLng() . ' ' . $this->getLat();
+        return $this->toPair();
     }
 
     /**
@@ -67,6 +89,20 @@ class Point extends Geometry
      */
     public function jsonSerialize()
     {
-        return new \GeoJson\Geometry\Point([$this->getLng(), $this->getLat()]);
+        return new \GeoJson\Geometry\Point($this->getArray());
+    }
+
+    protected function getArray() 
+    {
+        $points = [$this->getLng(), $this->getLat()];
+        $alt = $this->getAlt();
+        if (!is_null($alt)) {
+            $points[] = $alt;
+            $time = $this->getTime();
+            if (!is_null($time)) {
+                $points[] = $time;
+            }
+        }
+        return $points;
     }
 }

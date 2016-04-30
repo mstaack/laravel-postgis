@@ -8,9 +8,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function point($column)
+    public function point($column, $dimensions = 2)
     {
-        return $this->addColumn('point', $column);
+        return $this->addColumn('point', $column, compact('dimensions'));
     }
 
     /**
@@ -19,9 +19,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function multipoint($column)
+    public function multipoint($column, $dimensions = 2)
     {
-        return $this->addColumn('multipoint', $column);
+        return $this->addColumn('multipoint', $column, compact('dimensions'));
     }
 
     /**
@@ -52,9 +52,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function linestring($column)
+    public function linestring($column, $dimensions = 2)
     {
-        return $this->addColumn('linestring', $column);
+        return $this->addColumn('linestring', $column, compact('dimensions'));
     }
 
     /**

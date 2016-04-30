@@ -12,9 +12,10 @@ class PostgisGrammar extends PostgresGrammar
      * @param \Illuminate\Support\Fluent $column
      * @return string
      */
-    public function typePoint(Fluent $column)
+    public function typePoint(Fluent $column, Fluent $command = null)
     {
-        return 'GEOGRAPHY(POINT, 4326)';
+        $dimensions = ($command ? $command->dimensions : 2);
+        return 'GEOGRAPHY(POINT'.($column->dimensions == 3 ? 'Z' : ($column->dimensions == 4 ? 'ZM' : '')).', 4326)';
     }
 
     /**
@@ -25,7 +26,7 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultipoint(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTIPOINT, 4326)';
+        return 'GEOGRAPHY(MULTIPOINT'.($column->dimensions == 3 ? 'Z' : ($column->dimensions == 4 ? 'ZM' : '')).', 4326)';
     }
 
     /**
@@ -58,7 +59,8 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeLinestring(Fluent $column)
     {
-        return 'GEOGRAPHY(LINESTRING, 4326)';
+        $dimensions = ($column ? $column->dimensions : 2);
+        return 'GEOGRAPHY(LINESTRING'.($column->dimensions == 3 ? 'Z' : ($column->dimensions == 4 ? 'ZM' : '')).', 4326)';
     }
 
     /**
