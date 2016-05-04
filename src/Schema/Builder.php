@@ -2,7 +2,7 @@
 
 use Closure;
 
-class Builder extends \Bosnadev\Database\Schema\Builder
+class Builder extends \Illuminate\Database\Schema\PostgresBuilder
 {
     /**
      * Create a new command set with a Closure.
