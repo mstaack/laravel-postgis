@@ -3,7 +3,7 @@ Laravel postgis extension
 
 [![Build Status](https://travis-ci.org/njbarrett/laravel-postgis.svg?branch=master)](https://travis-ci.org/njbarrett/laravel-postgis.svg?branch=master)
 [![Code Climate](https://codeclimate.com/github/njbarrett/laravel-postgis/badges/gpa.svg)](https://codeclimate.com/github/njbarrett/laravel-postgis)
-[![Coverage Status](https://coveralls.io/repos/njbarrett/laravel-postgis/badge.svg)](https://coveralls.io/r/njbarrett/laravel-postgis)
+[![Coverage Status](https://coveralls.io/repos/github/njbarrett/laravel-postgis/badge.svg?branch=master)](https://coveralls.io/github/njbarrett/laravel-postgis?branch=master)
 
 ## Features
 
