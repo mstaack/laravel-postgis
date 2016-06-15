@@ -66,4 +66,18 @@ trait PostgisTrait
         }
 
     }
+
+    /**
+     * Scope a query to only include items within the given bounds.
+     *
+     * @param $query \Illuminate\Database\Eloquent\Builder the current query object.
+     * @param $field string the field name to check.
+     * @param $bounds Polygon the polygon to check for items within.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithin($query, $field, $bounds)
+    {
+        return $query->whereRaw("ST_Within($field::geometry, ST_GeomFromText('{$bounds->toWKT()}', 4326))");
+    }
 }
