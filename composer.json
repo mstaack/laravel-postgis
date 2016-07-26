@@ -10,14 +10,14 @@
     "require": {
         "php": ">=5.5",
         "illuminate/database": "~5.1.0",
-        "bosnadev/database": "~0.1",
+        "bosnadev/database": "0.12",
         "geo-io/wkb-parser": "~1.0",
         "jmikola/geojson": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5",
         "mockery/mockery": "0.9.*",
-        "satooshi/php-coveralls": "~0.6",
+        "satooshi/php-coveralls": "~1.0",
         "codeclimate/php-test-reporter": "dev-master",
         "illuminate/pagination": "~5.0"
     },
