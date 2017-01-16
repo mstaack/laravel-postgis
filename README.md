@@ -124,8 +124,8 @@ class Location extends Model
     ];
 
     protected $postgisFields = [
-        Point::class,
-        Polygon::class,
+        'location',
+        'polygon',
     ];
 
 }
