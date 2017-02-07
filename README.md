@@ -17,6 +17,7 @@ Laravel postgis extension
 ## Versions
 Use 2.* for Laravel 5.1.*  
 Use 3.* for Laravel 5.2.*
+Use 3.* for Laravel 5.3.*
 
 ## Installation
 
