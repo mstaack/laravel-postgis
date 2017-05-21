@@ -1,11 +1,14 @@
 <?php namespace Phaza\LaravelPostgis\Schema\Grammars;
 
+use Bosnadev\Database\Schema\Grammars\PostgresGrammar;
 use Illuminate\Support\Fluent;
 use Phaza\LaravelPostgis\Schema\Blueprint;
-use Bosnadev\Database\Schema\Grammars\PostgresGrammar;
 
 class PostgisGrammar extends PostgresGrammar
 {
+
+    private $allowed_geom_types = ['GEOMETRY', 'GEOGRAPHY'];
+
     /**
      * Adds a statement to add a point geometry column
      *
@@ -14,7 +17,12 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typePoint(Fluent $column)
     {
-        return 'GEOGRAPHY(POINT, 4326)';
+        // return 'GEOGRAPHY(POINT, 4326)'; 
+        if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
+            return strtoupper($column->geomtype) . '(POINT, ' . $column->srid . ')';
+        } else {
+            return dd('Error with validation of geom type or srid! (If geom type is GEOGRAPHY then the SRID must be 4326)');
+        }
     }
 
     /**
@@ -25,7 +33,12 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultipoint(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTIPOINT, 4326)';
+        // return 'GEOGRAPHY(MULTIPOINT, 4326)';
+        if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
+            return strtoupper($column->geomtype) . '(MULTIPOINT, ' . $column->srid . ')';
+        } else {
+            return dd('Error with validation of geom type or srid! (If geom type is GEOGRAPHY then the SRID must be 4326)');
+        }
     }
 
     /**
@@ -36,7 +49,12 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typePolygon(Fluent $column)
     {
-        return 'GEOGRAPHY(POLYGON, 4326)';
+        // return 'GEOGRAPHY(POLYGON, 4326)';
+        if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
+            return strtoupper($column->geomtype) . '(POLYGON, ' . $column->srid . ')';
+        } else {
+            return dd('Error with validation of geom type or srid! (If geom type is GEOGRAPHY then the SRID must be 4326)');
+        }
     }
 
     /**
@@ -47,7 +65,12 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultipolygon(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTIPOLYGON, 4326)';
+        // return 'GEOGRAPHY(MULTIPOLYGON, 4326)';
+        if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
+            return strtoupper($column->geomtype) . '(MULTIPOLYGON, ' . $column->srid . ')';
+        } else {
+            return dd('Error with validation of geom type or srid! (If geom type is GEOGRAPHY then the SRID must be 4326)');
+        }
     }
 
     /**
@@ -58,7 +81,12 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeLinestring(Fluent $column)
     {
-        return 'GEOGRAPHY(LINESTRING, 4326)';
+        // return 'GEOGRAPHY(LINESTRING, 4326)';
+        if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
+            return strtoupper($column->geomtype) . '(LINESTRING, ' . $column->srid . ')';
+        } else {
+            return dd('Error with validation of geom type or srid! (If geom type is GEOGRAPHY then the SRID must be 4326)');
+        }
     }
 
     /**
@@ -69,7 +97,12 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultilinestring(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTILINESTRING, 4326)';
+        // return 'GEOGRAPHY(MULTILINESTRING, 4326)';
+        if ((in_array(strtoupper($column->geomtype), $this->allowed_geom_types)) && (is_int((int) $column->srid))) {
+            return strtoupper($column->geomtype) . '(MULTILINESTRING, ' . $column->srid . ')';
+        } else {
+            return dd('Error with validation of geom type or srid! (If geom type is GEOGRAPHY then the SRID must be 4326)');
+        }
     }
 
     /**
@@ -81,6 +114,17 @@ class PostgisGrammar extends PostgresGrammar
     public function typeGeography(Fluent $column)
     {
         return 'GEOGRAPHY';
+    }
+
+    /**
+     * Adds a statement to add a geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typeGeometry(Fluent $column)
+    {
+        return 'GEOMETRY';
     }
 
     /**
