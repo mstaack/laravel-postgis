@@ -17,6 +17,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $this->assertContains('GEOGRAPHY(POINT, 4326)', $statements[0]);
     }
 
+    public function testAddingPointGeom()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->point('foo', 'GEOMETRY', 27700);
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY(POINT, 27700)', $statements[0]);
+    }
+
     public function testAddingLinestring()
     {
         $blueprint = new Blueprint('test');
@@ -25,6 +35,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
         $this->assertEquals(1, count($statements));
         $this->assertContains('GEOGRAPHY(LINESTRING, 4326)', $statements[0]);
+    }
+
+    public function testAddingLinestringGeom()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->linestring('foo', 'GEOMETRY', 27700);
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY(LINESTRING, 27700)', $statements[0]);
     }
 
     public function testAddingPolygon()
@@ -37,6 +57,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $this->assertContains('GEOGRAPHY(POLYGON, 4326)', $statements[0]);
     }
 
+    public function testAddingPolygonGeom()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->polygon('foo', 'GEOMETRY', 27700);
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY(POLYGON, 27700)', $statements[0]);
+    }
+
     public function testAddingMultipoint()
     {
         $blueprint = new Blueprint('test');
@@ -45,6 +75,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
         $this->assertEquals(1, count($statements));
         $this->assertContains('GEOGRAPHY(MULTIPOINT, 4326)', $statements[0]);
+    }
+
+    public function testAddingMultipointGeom()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->multipoint('foo', 'GEOMETRY', 27700);
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY(MULTIPOINT, 27700)', $statements[0]);
     }
 
     public function testAddingMultiLinestring()
@@ -57,6 +97,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $this->assertContains('GEOGRAPHY(MULTILINESTRING, 4326)', $statements[0]);
     }
 
+    public function testAddingMultiLinestringGeom()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->multilinestring('foo', 'GEOMETRY', 27700);
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY(MULTILINESTRING, 27700)', $statements[0]);
+    }
+
     public function testAddingMultiPolygon()
     {
         $blueprint = new Blueprint('test');
@@ -67,6 +117,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $this->assertContains('GEOGRAPHY(MULTIPOLYGON, 4326)', $statements[0]);
     }
 
+    public function testAddingMultiPolygonGeom()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->multipolygon('foo', 'GEOMETRY', 27700);
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY(MULTIPOLYGON, 27700)', $statements[0]);
+    }
+
     public function testAddingGeography()
     {
         $blueprint = new Blueprint('test');
@@ -75,6 +135,16 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
         $this->assertEquals(1, count($statements));
         $this->assertContains('GEOGRAPHY', $statements[0]);
+    }
+
+    public function testAddingGeometry()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->geometry('foo');
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertEquals(1, count($statements));
+        $this->assertContains('GEOMETRY', $statements[0]);
     }
 
     public function testAddingGeometryCollection()

@@ -71,7 +71,10 @@ class CreateLocationsTable extends Migration {
             $table->string('name');
             $table->string('address')->unique();
             $table->point('location');
+            $table->point('location2', 'GEOGRAPHY', 4326);
+            $table->point('location3', 'GEOMETRY', 27700);
             $table->polygon('polygon');
+            $table->polygon('polygon2', 'GEOMETRY', 27700);
             $table->timestamps();
         });
     }
