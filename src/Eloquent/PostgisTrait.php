@@ -52,7 +52,7 @@ trait PostgisTrait
             }
         }
 
-        parent::setRawAttributes($attributes, $sync);
+        return parent::setRawAttributes($attributes, $sync);
     }
 
     public function getPostgisFields()
