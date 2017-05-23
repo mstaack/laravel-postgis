@@ -8,7 +8,7 @@ use Bosnadev\Database\Schema\Grammars\PostgresGrammar;
 class PostgisGrammar extends PostgresGrammar
 {
 
-    private $allowed_geom_types = ['GEOMETRY', 'GEOGRAPHY'];
+    public static $allowed_geom_types = ['GEOGRAPHY', 'GEOMETRY'];
 
     /**
      * Adds a statement to add a point geometry column
