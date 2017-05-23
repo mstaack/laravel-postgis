@@ -9,9 +9,9 @@ Laravel postgis extension
 
  * Work with geometry classes instead of arrays. (`$myModel->myPoint = new Point(1,2)`)
  * Adds helpers in migrations. (`$table->polygon('myColumn')`)
- 
+
 ### Future plans
- 
+
  * Geometry functions on the geometry classes (contains(), equals(), distance(), etc… (HELP!))
 
 ## Versions
@@ -22,7 +22,7 @@ Laravel postgis extension
 
 ## Installation
 
-    composer require phaza/laravel-postgis 
+    composer require phaza/laravel-postgis
 
 Next add the DatabaseServiceProvider to your `config/app.php` file.
 
@@ -70,8 +70,11 @@ class CreateLocationsTable extends Migration {
             $table->increments('id');
             $table->string('name');
             $table->string('address')->unique();
-            $table->point('location');
-            $table->polygon('polygon');
+            $table->point('location'); // GEOGRAPHY POINT column with SRID of 4326 (these are the default values).
+            $table->point('location2', 'GEOGRAPHY', 4326); // GEOGRAPHY POINT column with SRID of 4326 with optional parameters.
+            $table->point('location3', 'GEOMETRY', 27700); // GEOMETRY column with SRID of 27700.
+            $table->polygon('polygon'); // GEOGRAPHY POLYGON column with SRID of 4326.
+            $table->polygon('polygon2', 'GEOMETRY', 27700); // GEOMETRY POLYGON column with SRID of 27700.
             $table->timestamps();
         });
     }
@@ -143,7 +146,7 @@ $location2->location instanceof Point // true
 ```
 
 Available geometry classes:
- 
+
  * Point
  * MultiPoint
  * LineString
