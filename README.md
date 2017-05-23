@@ -129,16 +129,48 @@ class Location extends Model
     ];
 
     protected $postgisFields = [
-        'location',
-        'polygon',
+        'location' => [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ],
+        'location2' => [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ],
+        'location3' => [
+            'geomtype' => 'geometry',
+            'srid' => 27700
+        ],
+        'polygon' => [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ],
+        'polygon2' => [
+            'geomtype' => 'geometry',
+            'srid' => 27700
+        ]
     ];
 
 }
+
+$linestring = new LineString(
+    [
+        new Point(0, 0),
+        new Point(0, 1),
+        new Point(1, 1),
+        new Point(1, 0),
+        new Point(0, 0)
+    ]
+);
 
 $location1 = new Location();
 $location1->name = 'Googleplex';
 $location1->address = '1600 Amphitheatre Pkwy Mountain View, CA 94043';
 $location1->location = new Point(37.422009, -122.084047);
+$location1->location2 = new Point(37.422009, -122.084047);
+$location1->location3 = new Point(37.422009, -122.084047);
+$location1->polygon = new Polygon([$linestring]);
+$location1->polygon2 = new Polygon([$linestring]);
 $location1->save();
 
 $location2 = Location::first();
