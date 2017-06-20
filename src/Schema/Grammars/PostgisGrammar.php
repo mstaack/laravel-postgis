@@ -100,11 +100,9 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to create the postgis extension
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
      * @return string
      */
-    public function compileEnablePostgis(Blueprint $blueprint, Fluent $command)
+    public function compileEnablePostgis()
     {
         return 'CREATE EXTENSION postgis';
     }
@@ -112,11 +110,9 @@ class PostgisGrammar extends PostgresGrammar
     /**
      * Adds a statement to drop the postgis extension
      *
-     * @param Blueprint $blueprint
-     * @param Fluent $command
      * @return string
      */
-    public function compileDisablePostgis(Blueprint $blueprint, Fluent $command)
+    public function compileDisablePostgis()
     {
         return 'DROP EXTENSION postgis';
     }
