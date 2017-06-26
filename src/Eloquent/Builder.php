@@ -16,6 +16,17 @@ class Builder extends EloquentBuilder
         return parent::update($values);
     }
 
+    public function firstOrCreate(array $attributes, array $values = Array() )
+    {
+        foreach ($values as $key => &$value) {
+            if ($value instanceof GeometryInterface) {
+                $value = $this->asWKT($value);
+            }
+        }
+
+        return parent::firstOrCreate($values);
+    }
+
     protected function getPostgisFields()
     {
         return $this->getModel()->getPostgisFields();
