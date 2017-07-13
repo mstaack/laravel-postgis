@@ -26,9 +26,9 @@ trait PostgisTrait
     {
         foreach ($this->attributes as $key => $value) {
             if ($value instanceof GeometryInterface) {
-                $attrs = $this->getPostgisType($key);
                 $this->geometries[$key] = $value; //Preserve the geometry objects prior to the insert
                 if (! $value instanceof GeometryCollection) {
+                    $attrs = $this->getPostgisType($key);
                     switch (strtoupper($attrs['geomtype'])) {
                         case 'GEOMETRY':
                             $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', '%d')", $value->toWKT(), $attrs['srid']));
@@ -68,20 +68,24 @@ trait PostgisTrait
 
     public function getPostgisType($key)
     {
-        if (property_exists($this, 'postgisFields')) {
-            if (Arr::isAssoc($this->postgisFields)) {
-                $column = $this->postgisFields[$key];
-                if (in_array(strtoupper($column['geomtype']), PostgisGrammar::$allowed_geom_types)) {
+        if (property_exists($this, 'postgisTypes')) {
+            if (Arr::isAssoc($this->postgisTypes)) {
+                $column = $this->postgisTypes[$key];
+                if (isset($column['geomtype']) && in_array(strtoupper($column['geomtype']), PostgisGrammar::$allowed_geom_types)) {
                     return $column;
+                } else {
+                    throw new UnsupportedGeomtypeException('Unsupported GeometryType in $postgisTypes for key ' . $key . ' in ' . __CLASS__);
                 }
+            } else {
+                throw new PostgisTypesMalformedException('$postgisTypes in ' . __CLASS__ . ' has to be an assoc array');
             }
-            return [
-                'geomtype' => 'geography',
-                'srid' => 4326
-            ];
-        } else {
-            throw new PostgisFieldsNotDefinedException(__CLASS__ . ' has to define $postgisFields');
         }
+
+        // Return default geography if postgisTypes does not exist (for backward compatibility)
+        return [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ];
     }
 
     public function getPostgisFields()
