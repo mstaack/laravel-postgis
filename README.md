@@ -112,7 +112,7 @@ other methods:
 All models which are to be PostGis enabled **must** use the *PostgisTrait*.
 
 You must also define an array called `$postgisFields` which defines
-what attributes/columns on your model are to be considered geometry objects.
+what attributes/columns on your model are to be considered geometry objects. By default, all attributes are of type `geography`. If you want to use `geometry` with a custom SRID, you have to define an array called `$postgisTypes`. The keys of this assoc array must match the entries in `$postgisFields` (all missing keys default to `geography`), the values are assoc arrays, too. They must have two keys: `geomtype` which is either `geography` or `geometry` and `srid` which is the desired SRID. **Note**: Custom SRID is only supported for `geometry`, not `geography`.
 
 ```PHP
 use Illuminate\Database\Eloquent\Model;
@@ -129,6 +129,14 @@ class Location extends Model
     ];
 
     protected $postgisFields = [
+        'location',
+        'location2',
+        'location3',
+        'polygon',
+        'polygon2'
+    ];
+    
+    protected $postgisTypes = [
         'location' => [
             'geomtype' => 'geography',
             'srid' => 4326
@@ -149,8 +157,7 @@ class Location extends Model
             'geomtype' => 'geometry',
             'srid' => 27700
         ]
-    ];
-
+    ]
 }
 
 $linestring = new LineString(
