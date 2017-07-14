@@ -15,4 +15,28 @@ class Builder extends \Bosnadev\Database\Schema\Builder
     {
         return new Blueprint($table, $callback);
     }
+
+    /**
+     * Enable foreign key constraints.
+     *
+     * @return bool
+     */
+    public function enablePostgis()
+    {
+        return $this->connection->statement(
+            $this->grammar->compileEnablePostgis()
+        );
+    }
+
+    /**
+     * Disable foreign key constraints.
+     *
+     * @return bool
+     */
+    public function disablePostgis()
+    {
+        return $this->connection->statement(
+            $this->grammar->compileDisablePostgis()
+        );
+    }
 }
