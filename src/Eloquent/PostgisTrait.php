@@ -3,6 +3,8 @@
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Arr;
 use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
+use Phaza\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
+use Phaza\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
 use Phaza\LaravelPostgis\Geometries\Geometry;
 use Phaza\LaravelPostgis\Geometries\GeometryInterface;
 use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
@@ -68,8 +70,16 @@ trait PostgisTrait
 
     public function getPostgisType($key)
     {
+        $default = [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ];
+
         if (property_exists($this, 'postgisTypes')) {
             if (Arr::isAssoc($this->postgisTypes)) {
+                if(!array_key_exists($key, $this->postgisTypes)) {
+                    return $default;
+                }
                 $column = $this->postgisTypes[$key];
                 if (isset($column['geomtype']) && in_array(strtoupper($column['geomtype']), PostgisGrammar::$allowed_geom_types)) {
                     return $column;
@@ -82,10 +92,7 @@ trait PostgisTrait
         }
 
         // Return default geography if postgisTypes does not exist (for backward compatibility)
-        return [
-            'geomtype' => 'geography',
-            'srid' => 4326
-        ];
+        return $default;
     }
 
     public function getPostgisFields()
