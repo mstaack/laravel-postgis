@@ -102,6 +102,7 @@ class TestPDO extends PDO
         $this->queries[] = $statement;
 
         $stmt = m::mock('PDOStatement');
+        $stmt->shouldReceive('setFetchMode')->zeroOrMoreTimes();
         $stmt->shouldReceive('bindValue')->zeroOrMoreTimes();
         $stmt->shouldReceive('execute');
         $stmt->shouldReceive('fetchAll')->andReturn([['id' => 1, 'point' => 'POINT(1 2)']]);
