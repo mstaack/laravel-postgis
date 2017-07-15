@@ -2,10 +2,14 @@
 
 use Illuminate\Support\Fluent;
 use Phaza\LaravelPostgis\Schema\Blueprint;
+use Phaza\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
 use Bosnadev\Database\Schema\Grammars\PostgresGrammar;
 
 class PostgisGrammar extends PostgresGrammar
 {
+
+    public static $allowed_geom_types = ['GEOGRAPHY', 'GEOMETRY'];
+
     /**
      * Adds a statement to add a point geometry column
      *
@@ -14,7 +18,15 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typePoint(Fluent $column)
     {
-        return 'GEOGRAPHY(POINT, 4326)';
+        $type = strtoupper($column->geomtype);
+        if ($this->isValid($column)) {
+            if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
+                throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
+            }
+            return $type . '(POINT, ' . $column->srid . ')';
+        } else {
+            throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
+        }
     }
 
     /**
@@ -25,7 +37,15 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultipoint(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTIPOINT, 4326)';
+        $type = strtoupper($column->geomtype);
+        if ($this->isValid($column)) {
+            if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
+                throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
+            }
+            return strtoupper($column->geomtype) . '(MULTIPOINT, ' . $column->srid . ')';
+        } else {
+            throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
+        }
     }
 
     /**
@@ -36,7 +56,15 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typePolygon(Fluent $column)
     {
-        return 'GEOGRAPHY(POLYGON, 4326)';
+        $type = strtoupper($column->geomtype);
+        if ($this->isValid($column)) {
+            if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
+                throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
+            }
+            return strtoupper($column->geomtype) . '(POLYGON, ' . $column->srid . ')';
+        } else {
+            throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
+        }
     }
 
     /**
@@ -47,7 +75,15 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultipolygon(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTIPOLYGON, 4326)';
+        $type = strtoupper($column->geomtype);
+        if ($this->isValid($column)) {
+            if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
+                throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
+            }
+            return strtoupper($column->geomtype) . '(MULTIPOLYGON, ' . $column->srid . ')';
+        } else {
+            throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
+        }
     }
 
     /**
@@ -58,7 +94,15 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeLinestring(Fluent $column)
     {
-        return 'GEOGRAPHY(LINESTRING, 4326)';
+        $type = strtoupper($column->geomtype);
+        if ($this->isValid($column)) {
+            if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
+                throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
+            }
+            return strtoupper($column->geomtype) . '(LINESTRING, ' . $column->srid . ')';
+        } else {
+            throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
+        }
     }
 
     /**
@@ -69,7 +113,15 @@ class PostgisGrammar extends PostgresGrammar
      */
     public function typeMultilinestring(Fluent $column)
     {
-        return 'GEOGRAPHY(MULTILINESTRING, 4326)';
+        $type = strtoupper($column->geomtype);
+        if ($this->isValid($column)) {
+            if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
+                throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
+            }
+            return strtoupper($column->geomtype) . '(MULTILINESTRING, ' . $column->srid . ')';
+        } else {
+            throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
+        }
     }
 
     /**
@@ -81,6 +133,17 @@ class PostgisGrammar extends PostgresGrammar
     public function typeGeography(Fluent $column)
     {
         return 'GEOGRAPHY';
+    }
+
+    /**
+     * Adds a statement to add a geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typeGeometry(Fluent $column)
+    {
+        return 'GEOMETRY';
     }
 
     /**
@@ -140,5 +203,15 @@ class PostgisGrammar extends PostgresGrammar
             $dimensions,
             $typmod
         );
+    }
+
+    /**
+     * Checks if the given $column is a valid geometry type
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return boolean
+     */
+    protected function isValid($column) {
+        return in_array(strtoupper($column->geomtype), PostgisGrammar::$allowed_geom_types) && is_int((int) $column->srid);
     }
 }

@@ -3,8 +3,11 @@
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Arr;
 use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
+use Phaza\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
+use Phaza\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
 use Phaza\LaravelPostgis\Geometries\Geometry;
 use Phaza\LaravelPostgis\Geometries\GeometryInterface;
+use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
 
 trait PostgisTrait
 {
@@ -24,12 +27,22 @@ trait PostgisTrait
     protected function performInsert(EloquentBuilder $query, array $options = [])
     {
         foreach ($this->attributes as $key => $value) {
-            if ($value instanceof GeometryInterface && ! $value instanceof GeometryCollection) {
+            if ($value instanceof GeometryInterface) {
                 $this->geometries[$key] = $value; //Preserve the geometry objects prior to the insert
-                $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeogFromText('%s')", $value->toWKT()));
-            }  else if ($value instanceof GeometryInterface && $value instanceof GeometryCollection) {
-                $this->geometries[$key] = $value; //Preserve the geometry objects prior to the insert
-                $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', 4326)", $value->toWKT()));
+                if (! $value instanceof GeometryCollection) {
+                    $attrs = $this->getPostgisType($key);
+                    switch (strtoupper($attrs['geomtype'])) {
+                        case 'GEOMETRY':
+                            $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', '%d')", $value->toWKT(), $attrs['srid']));
+                            break;
+                        case 'GEOGRAPHY':
+                        default:
+                            $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeogFromText('%s')", $value->toWKT()));
+                            break;
+                    }
+                } else {
+                    $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', 4326)", $value->toWKT()));
+                }
             }
         }
 
@@ -53,6 +66,33 @@ trait PostgisTrait
         }
 
         return parent::setRawAttributes($attributes, $sync);
+    }
+
+    public function getPostgisType($key)
+    {
+        $default = [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ];
+
+        if (property_exists($this, 'postgisTypes')) {
+            if (Arr::isAssoc($this->postgisTypes)) {
+                if(!array_key_exists($key, $this->postgisTypes)) {
+                    return $default;
+                }
+                $column = $this->postgisTypes[$key];
+                if (isset($column['geomtype']) && in_array(strtoupper($column['geomtype']), PostgisGrammar::$allowed_geom_types)) {
+                    return $column;
+                } else {
+                    throw new UnsupportedGeomtypeException('Unsupported GeometryType in $postgisTypes for key ' . $key . ' in ' . __CLASS__);
+                }
+            } else {
+                throw new PostgisTypesMalformedException('$postgisTypes in ' . __CLASS__ . ' has to be an assoc array');
+            }
+        }
+
+        // Return default geography if postgisTypes does not exist (for backward compatibility)
+        return $default;
     }
 
     public function getPostgisFields()

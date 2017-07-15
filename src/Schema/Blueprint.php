@@ -8,9 +8,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function point($column)
+    public function point($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('point', $column);
+        return $this->addColumn('point', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -19,9 +19,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function multipoint($column)
+    public function multipoint($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('multipoint', $column);
+        return $this->addColumn('multipoint', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -30,9 +30,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function polygon($column)
+    public function polygon($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('polygon', $column);
+        return $this->addColumn('polygon', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -41,9 +41,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function multipolygon($column)
+    public function multipolygon($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('multipolygon', $column);
+        return $this->addColumn('multipolygon', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -52,9 +52,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function linestring($column)
+    public function linestring($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('linestring', $column);
+        return $this->addColumn('linestring', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -63,9 +63,9 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function multilinestring($column)
+    public function multilinestring($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('multilinestring', $column);
+        return $this->addColumn('multilinestring', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -74,9 +74,20 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
      * @param   string  $column
      * @return \Illuminate\Support\Fluent
      */
-    public function geography($column)
+    public function geography($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
-        return $this->addColumn('geography', $column);
+        return $this->addColumn('geography', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
+     * Add a geometry column on the table
+     *
+     * @param   string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function geometry($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('geometry', $column, compact('geomtype', 'srid'));
     }
 
     /**

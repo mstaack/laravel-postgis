@@ -9,9 +9,9 @@ Laravel postgis extension
 
  * Work with geometry classes instead of arrays. (`$myModel->myPoint = new Point(1,2)`)
  * Adds helpers in migrations. (`$table->polygon('myColumn')`)
- 
+
 ### Future plans
- 
+
  * Geometry functions on the geometry classes (contains(), equals(), distance(), etc… (HELP!))
 
 ## Versions
@@ -22,7 +22,7 @@ Laravel postgis extension
 
 ## Installation
 
-    composer require phaza/laravel-postgis 
+    composer require phaza/laravel-postgis
 
 Next add the DatabaseServiceProvider to your `config/app.php` file.
 
@@ -70,8 +70,11 @@ class CreateLocationsTable extends Migration {
             $table->increments('id');
             $table->string('name');
             $table->string('address')->unique();
-            $table->point('location');
-            $table->polygon('polygon');
+            $table->point('location'); // GEOGRAPHY POINT column with SRID of 4326 (these are the default values).
+            $table->point('location2', 'GEOGRAPHY', 4326); // GEOGRAPHY POINT column with SRID of 4326 with optional parameters.
+            $table->point('location3', 'GEOMETRY', 27700); // GEOMETRY column with SRID of 27700.
+            $table->polygon('polygon'); // GEOGRAPHY POLYGON column with SRID of 4326.
+            $table->polygon('polygon2', 'GEOMETRY', 27700); // GEOMETRY POLYGON column with SRID of 27700.
             $table->timestamps();
         });
     }
@@ -109,7 +112,7 @@ other methods:
 All models which are to be PostGis enabled **must** use the *PostgisTrait*.
 
 You must also define an array called `$postgisFields` which defines
-what attributes/columns on your model are to be considered geometry objects.
+what attributes/columns on your model are to be considered geometry objects. By default, all attributes are of type `geography`. If you want to use `geometry` with a custom SRID, you have to define an array called `$postgisTypes`. The keys of this assoc array must match the entries in `$postgisFields` (all missing keys default to `geography`), the values are assoc arrays, too. They must have two keys: `geomtype` which is either `geography` or `geometry` and `srid` which is the desired SRID. **Note**: Custom SRID is only supported for `geometry`, not `geography`.
 
 ```PHP
 use Illuminate\Database\Eloquent\Model;
@@ -127,15 +130,54 @@ class Location extends Model
 
     protected $postgisFields = [
         'location',
+        'location2',
+        'location3',
         'polygon',
+        'polygon2'
     ];
-
+    
+    protected $postgisTypes = [
+        'location' => [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ],
+        'location2' => [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ],
+        'location3' => [
+            'geomtype' => 'geometry',
+            'srid' => 27700
+        ],
+        'polygon' => [
+            'geomtype' => 'geography',
+            'srid' => 4326
+        ],
+        'polygon2' => [
+            'geomtype' => 'geometry',
+            'srid' => 27700
+        ]
+    ]
 }
+
+$linestring = new LineString(
+    [
+        new Point(0, 0),
+        new Point(0, 1),
+        new Point(1, 1),
+        new Point(1, 0),
+        new Point(0, 0)
+    ]
+);
 
 $location1 = new Location();
 $location1->name = 'Googleplex';
 $location1->address = '1600 Amphitheatre Pkwy Mountain View, CA 94043';
 $location1->location = new Point(37.422009, -122.084047);
+$location1->location2 = new Point(37.422009, -122.084047);
+$location1->location3 = new Point(37.422009, -122.084047);
+$location1->polygon = new Polygon([$linestring]);
+$location1->polygon2 = new Polygon([$linestring]);
 $location1->save();
 
 $location2 = Location::first();
@@ -143,7 +185,7 @@ $location2->location instanceof Point // true
 ```
 
 Available geometry classes:
- 
+
  * Point
  * MultiPoint
  * LineString
