@@ -35,5 +35,12 @@
             "name": "Nicholas Barrett",
             "email": "njbarrett7@gmail.com"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Phaza\\LaravelPostgis\\DatabaseServiceProvider"
+            ]
+        }
+    }
 }
