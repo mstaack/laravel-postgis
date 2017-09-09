@@ -9,21 +9,10 @@ class Builder extends EloquentBuilder
     {
         foreach ($values as $key => &$value) {
             if ($value instanceof GeometryInterface) {
-                $value = $this->asWKT($value);
+                $value = $this->getModel()->getPostgisValue($key, $value);
             }
         }
 
         return parent::update($values);
-    }
-
-    protected function getPostgisFields()
-    {
-        return $this->getModel()->getPostgisFields();
-    }
-
-
-    protected function asWKT(GeometryInterface $geometry)
-    {
-        return $this->getQuery()->raw(sprintf("public.ST_GeogFromText('%s')", $geometry->toWKT()));
     }
 }

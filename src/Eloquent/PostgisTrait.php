@@ -11,7 +11,6 @@ use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
 
 trait PostgisTrait
 {
-
     public $geometries = [];
     /**
      * Create a new Eloquent query builder for the model.
@@ -29,20 +28,7 @@ trait PostgisTrait
         foreach ($this->attributes as $key => $value) {
             if ($value instanceof GeometryInterface) {
                 $this->geometries[$key] = $value; //Preserve the geometry objects prior to the insert
-                if (! $value instanceof GeometryCollection) {
-                    $attrs = $this->getPostgisType($key);
-                    switch (strtoupper($attrs['geomtype'])) {
-                        case 'GEOMETRY':
-                            $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', '%d')", $value->toWKT(), $attrs['srid']));
-                            break;
-                        case 'GEOGRAPHY':
-                        default:
-                            $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeogFromText('%s')", $value->toWKT()));
-                            break;
-                    }
-                } else {
-                    $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', 4326)", $value->toWKT()));
-                }
+                $this->attributes[$key] = $this->getPostgisValue($key, $value);
             }
         }
 
@@ -53,6 +39,24 @@ trait PostgisTrait
         }
 
         return $insert; //Return the result of the parent insert
+    }
+
+    public function getPostgisValue($key, $value)
+    {
+        if (! $value instanceof GeometryCollection) {
+            $attrs = $this->getPostgisType($key);
+            switch (strtoupper($attrs['geomtype'])) {
+                case 'GEOMETRY':
+                    return $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', '%d')", $value->toWKT(), $attrs['srid']));
+                    break;
+                case 'GEOGRAPHY':
+                default:
+                    return $this->getConnection()->raw(sprintf("public.ST_GeogFromText('%s')", $value->toWKT()));
+                    break;
+            }
+        }
+
+        return $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', 4326)", $value->toWKT()));
     }
 
     public function setRawAttributes(array $attributes, $sync = false)
