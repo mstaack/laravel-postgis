@@ -21,7 +21,7 @@ class LineStringTest extends BaseTestCase
 
     public function testFromWKT()
     {
-        $linestring = LineString::fromWKT('LINESTRING(0 0, 1 1, 2 2)');
+        $linestring = LineString::fromWkt('LINESTRING(0 0, 1 1, 2 2)');
         $this->assertInstanceOf(LineString::class, $linestring);
 
         $this->assertEquals(3, $linestring->count());
