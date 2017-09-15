@@ -40,6 +40,7 @@ class Point extends Geometry
 
     public static function fromPair($pair)
     {
+        $pair = preg_replace('/^[a-zA-Z\(\)]+/', '', trim($pair));
         list($lng, $lat) = explode(' ', trim($pair));
 
         return new static((float)$lat, (float)$lng);
