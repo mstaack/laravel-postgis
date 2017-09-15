@@ -12,11 +12,11 @@ class PolygonTest extends BaseTestCase
     {
         $collection = new LineString(
             [
-                new Point(0, 0),
-                new Point(0, 1),
                 new Point(1, 1),
-                new Point(1, 0),
-                new Point(0, 0)
+                new Point(1, 2),
+                new Point(2, 2),
+                new Point(2, 1),
+                new Point(1, 1)
             ]
         );
 
@@ -26,22 +26,24 @@ class PolygonTest extends BaseTestCase
 
     public function testFromWKT()
     {
-        $polygon = Polygon::fromWKT('POLYGON((0 0,4 0,4 4,0 4,0 0),(1 1, 2 1, 2 2, 1 2,1 1))');
+        $wkt = 'POLYGON((1 1,5 1,5 5,1 5,1 1),(2 2,3 2,3 3,2 3,2 2))';
+        $polygon = Polygon::fromWKT($wkt);
         $this->assertInstanceOf(Polygon::class, $polygon);
 
         $this->assertEquals(2, $polygon->count());
+        $this->assertEquals($wkt, $polygon->toWKT());
     }
 
     public function testToWKT()
     {
-        $this->assertEquals('POLYGON((0 0,1 0,1 1,0 1,0 0))', $this->polygon->toWKT());
+        $this->assertEquals('POLYGON((1 1,2 1,2 2,1 2,1 1))', $this->polygon->toWKT());
     }
 
     public function testJsonSerialize()
     {
         $this->assertInstanceOf(\GeoJson\Geometry\Polygon::class, $this->polygon->jsonSerialize());
         $this->assertSame(
-            '{"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}',
+            '{"type":"Polygon","coordinates":[[[1,1],[2,1],[2,2],[1,2],[1,1]]]}',
             json_encode($this->polygon)
         );
 
