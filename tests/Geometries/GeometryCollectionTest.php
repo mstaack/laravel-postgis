@@ -15,11 +15,11 @@ class GeometryCollectionTest extends BaseTestCase
     {
         $collection = new LineString(
             [
-                new Point(0, 0),
-                new Point(0, 1),
                 new Point(1, 1),
-                new Point(1, 0),
-                new Point(0, 0)
+                new Point(1, 2),
+                new Point(2, 2),
+                new Point(2, 1),
+                new Point(1, 1)
             ]
         );
 
@@ -45,7 +45,7 @@ class GeometryCollectionTest extends BaseTestCase
     public function testToWKT()
     {
         $this->assertEquals(
-            'GEOMETRYCOLLECTION(LINESTRING(0 0,1 0,1 1,0 1,0 0),POINT(200 100))',
+            'GEOMETRYCOLLECTION(LINESTRING(1 1,2 1,2 2,1 2,1 1),POINT(200 100))',
             $this->collection->toWKT()
         );
     }
@@ -58,7 +58,7 @@ class GeometryCollectionTest extends BaseTestCase
         );
 
         $this->assertSame(
-            '{"type":"GeometryCollection","geometries":[{"type":"LineString","coordinates":[[0,0],[1,0],[1,1],[0,1],[0,0]]},{"type":"Point","coordinates":[200,100]}]}',
+            '{"type":"GeometryCollection","geometries":[{"type":"LineString","coordinates":[[1,1],[2,1],[2,2],[1,2],[1,1]]},{"type":"Point","coordinates":[200,100]}]}',
             json_encode($this->collection->jsonSerialize())
         );
 
