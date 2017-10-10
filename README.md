@@ -19,16 +19,18 @@ Laravel postgis extension
 - Use 3.* for Laravel 5.2.*
 - Use 3.* for Laravel 5.3.*
 - Use 3.* for Laravel 5.4.*
+- Use 3.* for Laravel 5.5.*
 
 ## Installation
 
     composer require phaza/laravel-postgis
 
-Next add the DatabaseServiceProvider to your `config/app.php` file.
+For laravel >=5.5 that's all. This package supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
+
+If you are using Laravel < 5.5, you also need to add the DatabaseServiceProvider to your `config/app.php` file.
 
     'Phaza\LaravelPostgis\DatabaseServiceProvider',
 
-That's all.
 
 ## Usage
 
