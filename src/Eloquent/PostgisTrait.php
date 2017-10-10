@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Arr;
+use Phaza\LaravelPostgis\Eloquent\HasGeometryScopes;
 use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
 use Phaza\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
 use Phaza\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
@@ -11,7 +12,8 @@ use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
 
 trait PostgisTrait
 {
-
+    use HasGeometryScopes;
+    
     public $geometries = [];
     /**
      * Create a new Eloquent query builder for the model.
