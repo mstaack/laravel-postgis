@@ -7,7 +7,7 @@ class MultiPointTest extends BaseTestCase
 {
     public function testFromWKT()
     {
-        $multipoint = MultiPoint::fromWkt('MULTIPOINT((1 1),(2 1),(2 2))');
+        $multipoint = MultiPoint::fromWKT('MULTIPOINT((1 1),(2 1),(2 2))');
         $this->assertInstanceOf(MultiPoint::class, $multipoint);
 
         $this->assertEquals(3, $multipoint->count());
