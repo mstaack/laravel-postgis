@@ -7,7 +7,7 @@ class LineString extends PointCollection implements GeometryInterface
         return sprintf('LINESTRING(%s)', $this->toPairList());
     }
 
-    public static function fromWkt($wkt)
+    public static function fromWKT($wkt)
     {
         $wktArgument = Geometry::getWKTArgument($wkt);
 
