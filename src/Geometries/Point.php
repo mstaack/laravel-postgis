@@ -58,7 +58,7 @@ class Point extends Geometry
 
     public function __toString()
     {
-        return sprintf('%F %F', $this->getLng(), $this->getLat());
+        return $this->getLng() . ' ' . $this->getLat();
     }
 
     /**
