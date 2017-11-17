@@ -116,11 +116,9 @@ class UnderLocaleTest extends BaseTestCase
             ]
         );
 
-
         $polygon2 = new Polygon([$collection3]);
 
         $multiPolygon = new MultiPolygon([$polygon1, $polygon2]);
-        
         
         $this->assertEquals(
             'MULTIPOLYGON(((1.5 1.5,2.5 1.5,2.5 2.5,1.5 2.5,1.5 1.5),(10.5 10.5,20.5 10.5,20.5 20.5,10.5 20.5,10.5 10.5)),((100.5 100.5,200.5 100.5,200.5 200.5,100.5 200.5,100.5 100.5)))',
@@ -143,13 +141,11 @@ class UnderLocaleTest extends BaseTestCase
         $point = new Point(100.5, 200.5);
 
         $geo_collection = new GeometryCollection([$collection, $point]);
-        
-        
+
         $this->assertEquals(
             'GEOMETRYCOLLECTION(LINESTRING(1.5 1.5,2.5 1.5,2.5 2.5,1.5 2.5,1.5 1.5),POINT(200.5 100.5))',
             $geo_collection->toWKT()
         );
     }
-
 
 }

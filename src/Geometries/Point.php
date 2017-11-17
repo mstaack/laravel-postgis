@@ -35,9 +35,15 @@ class Point extends Geometry
 
     public function toPair()
     {
-        return $this->getLng() . ' ' . $this->getLat();
+        return self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
     }
-
+    
+    // normalized output among locales
+    private static function stringifyFloat($float)
+    {
+        return rtrim(rtrim(sprintf('%F', $float), '0'), '.');
+    }
+    
     public static function fromPair($pair)
     {
         $pair = preg_replace('/^[a-zA-Z\(\)]+/', '', trim($pair));
@@ -58,7 +64,7 @@ class Point extends Geometry
 
     public function __toString()
     {
-        return $this->getLng() . ' ' . $this->getLat();
+        return $this->toPair();
     }
 
     /**
