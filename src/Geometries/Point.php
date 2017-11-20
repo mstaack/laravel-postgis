@@ -38,9 +38,9 @@ class Point extends Geometry
         return self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
     }
     
-    // normalized output among locales
     private static function stringifyFloat($float)
     {
+        // normalized output among locales
         return rtrim(rtrim(sprintf('%F', $float), '0'), '.');
     }
     
