@@ -16,11 +16,11 @@ class MultiPolygonTest extends BaseTestCase
     {
         $collection1 = new LineString(
             [
-                new Point(0, 0),
-                new Point(0, 1),
                 new Point(1, 1),
-                new Point(1, 0),
-                new Point(0, 0)
+                new Point(1, 2),
+                new Point(2, 2),
+                new Point(2, 1),
+                new Point(1, 1)
             ]
         );
 
@@ -54,19 +54,19 @@ class MultiPolygonTest extends BaseTestCase
 
     public function testFromWKT()
     {
-        $polygon = MultiPolygon::fromWKT(
-            'MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))'
-        );
+        $wkt = 'MULTIPOLYGON(((1 1,2 1,2 2,1 2,1 1),(1 1,2 1,2 2,1 2,1 1)),((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))';
+        $polygon = MultiPolygon::fromWKT($wkt);
+        
         $this->assertInstanceOf(MultiPolygon::class, $polygon);
-
         $this->assertEquals(2, $polygon->count());
+        $this->assertEquals($wkt, $polygon->toWKT());
     }
 
 
     public function testToWKT()
     {
         $this->assertEquals(
-            'MULTIPOLYGON(((0 0,1 0,1 1,0 1,0 0),(10 10,20 10,20 20,10 20,10 10)),((100 100,200 100,200 200,100 200,100 100)))',
+            'MULTIPOLYGON(((1 1,2 1,2 2,1 2,1 1),(10 10,20 10,20 20,10 20,10 10)),((100 100,200 100,200 200,100 200,100 100)))',
             $this->multiPolygon->toWKT()
         );
     }
@@ -93,7 +93,7 @@ class MultiPolygonTest extends BaseTestCase
     {
         $this->assertInstanceOf(\GeoJson\Geometry\MultiPolygon::class, $this->multiPolygon->jsonSerialize());
         $this->assertSame(
-            '{"type":"MultiPolygon","coordinates":[[[[0,0],[1,0],[1,1],[0,1],[0,0]],[[10,10],[20,10],[20,20],[10,20],[10,10]]],[[[100,100],[200,100],[200,200],[100,200],[100,100]]]]}',
+            '{"type":"MultiPolygon","coordinates":[[[[1,1],[2,1],[2,2],[1,2],[1,1]],[[10,10],[20,10],[20,20],[10,20],[10,10]]],[[[100,100],[200,100],[200,200],[100,200],[100,100]]]]}',
             json_encode($this->multiPolygon)
         );
     }
