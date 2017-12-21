@@ -30,5 +30,8 @@ class DatabaseServiceProvider extends PostgresDatabaseServiceProvider
         $this->app->singleton('db', function ($app) {
             return new DatabaseManager($app, $app['db.factory']);
         });
+        $this->app->bind('db.connection', function ($app) {
+            return $app['db']->connection();
+        });
     }
 }
