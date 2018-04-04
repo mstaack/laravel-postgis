@@ -33,15 +33,24 @@ trait PostgisTrait
                     $attrs = $this->getPostgisType($key);
                     switch (strtoupper($attrs['geomtype'])) {
                         case 'GEOMETRY':
-                            $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', '%d')", $value->toWKT(), $attrs['srid']));
+                            $this->attributes[$key] = $this->getConnection()->raw(
+                              sprintf("%s.ST_GeomFromText('%s', '%d')",
+                                config('postgis.schema'), $value->toWKT(), $attrs['srid'])
+                            );
                             break;
                         case 'GEOGRAPHY':
                         default:
-                            $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeogFromText('%s')", $value->toWKT()));
+                            $this->attributes[$key] = $this->getConnection()->raw(
+                              sprintf("%s.ST_GeogFromText('%s')",
+                                config('postgis.schema'), $value->toWKT())
+                            );
                             break;
                     }
                 } else {
-                    $this->attributes[$key] = $this->getConnection()->raw(sprintf("public.ST_GeomFromText('%s', 4326)", $value->toWKT()));
+                    $this->attributes[$key] = $this->getConnection()->raw(
+                      sprintf("%s.ST_GeomFromText('%s', 4326)",
+                        config('postgis.schema'), $value->toWKT())
+                    );
                 }
             }
         }

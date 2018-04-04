@@ -10,6 +10,13 @@ use Bosnadev\Database\DatabaseServiceProvider as PostgresDatabaseServiceProvider
  */
 class DatabaseServiceProvider extends PostgresDatabaseServiceProvider
 {
+    public function boot() {
+      // Load the config
+      $config_path = __DIR__ . '/../config/postgis.php';
+      $this->publishes([$config_path => config_path('postgis.php')], 'postgis');
+      $this->mergeConfigFrom($config_path, 'postgis');
+    }
+
     /**
      * Register the service provider.
      *
