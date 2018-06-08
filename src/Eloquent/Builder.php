@@ -25,7 +25,7 @@ class Builder extends EloquentBuilder
     protected function asWKT(GeometryInterface $geometry)
     {
         return $this->getQuery()->raw(
-          sprintf("%s.ST_GeogFromText('%s')", config('postgis.schema'), $geometry->toWKT())
+          sprintf("%s.ST_GeogFromText('%s')", function_exists('config') ? config('postgis.schema') : 'public', $geometry->toWKT())
         );
 
     }

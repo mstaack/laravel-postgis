@@ -35,21 +35,21 @@ trait PostgisTrait
                         case 'GEOMETRY':
                             $this->attributes[$key] = $this->getConnection()->raw(
                               sprintf("%s.ST_GeomFromText('%s', '%d')",
-                                config('postgis.schema'), $value->toWKT(), $attrs['srid'])
+                                function_exists('config') ? config('postgis.schema') : 'public', $value->toWKT(), $attrs['srid'])
                             );
                             break;
                         case 'GEOGRAPHY':
                         default:
                             $this->attributes[$key] = $this->getConnection()->raw(
                               sprintf("%s.ST_GeogFromText('%s')",
-                                config('postgis.schema'), $value->toWKT())
+                              function_exists('config') ? config('postgis.schema') : 'public', $value->toWKT())
                             );
                             break;
                     }
                 } else {
                     $this->attributes[$key] = $this->getConnection()->raw(
                       sprintf("%s.ST_GeomFromText('%s', 4326)",
-                        config('postgis.schema'), $value->toWKT())
+                      function_exists('config') ? config('postgis.schema') : 'public', $value->toWKT())
                     );
                 }
             }
