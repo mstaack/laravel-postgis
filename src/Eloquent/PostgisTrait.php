@@ -24,6 +24,31 @@ trait PostgisTrait
         return new Builder($query);
     }
 
+    protected function geogFromText(GeometryInterface $geometry)
+    {
+        return $this->getConnection()->raw(sprintf("%s.ST_GeogFromText('%s')",
+                function_exists('config') ? config('postgis.schema') : 'public', $geometry->toWKT()));
+    }
+
+    protected function geomFromText(GeometryInterface $geometry, $srid = 4326)
+    {
+        return $this->getConnection()->raw(sprintf("%s.ST_GeomFromText('%s', '%d')",
+                function_exists('config') ? config('postgis.schema') : 'public', $geometry->toWKT(), $srid));
+    }
+
+    protected function asWKT(GeometryInterface $geometry, $attrs)
+    {
+        switch (strtoupper($attrs['geomtype'])) {
+            case 'GEOMETRY':
+                return $this->geomFromText($geometry, $attrs['srid']);
+                break;
+            case 'GEOGRAPHY':
+            default:
+                return $this->geogFromText($geometry);
+                break;
+        }
+    }
+
     protected function performInsert(EloquentBuilder $query, array $options = [])
     {
         foreach ($this->attributes as $key => $value) {
@@ -31,26 +56,9 @@ trait PostgisTrait
                 $this->geometries[$key] = $value; //Preserve the geometry objects prior to the insert
                 if (! $value instanceof GeometryCollection) {
                     $attrs = $this->getPostgisType($key);
-                    switch (strtoupper($attrs['geomtype'])) {
-                        case 'GEOMETRY':
-                            $this->attributes[$key] = $this->getConnection()->raw(
-                              sprintf("%s.ST_GeomFromText('%s', '%d')",
-                                function_exists('config') ? config('postgis.schema') : 'public', $value->toWKT(), $attrs['srid'])
-                            );
-                            break;
-                        case 'GEOGRAPHY':
-                        default:
-                            $this->attributes[$key] = $this->getConnection()->raw(
-                              sprintf("%s.ST_GeogFromText('%s')",
-                              function_exists('config') ? config('postgis.schema') : 'public', $value->toWKT())
-                            );
-                            break;
-                    }
+                    $this->attributes[$key] = $this->asWKT($value, $attrs);
                 } else {
-                    $this->attributes[$key] = $this->getConnection()->raw(
-                      sprintf("%s.ST_GeomFromText('%s', 4326)",
-                      function_exists('config') ? config('postgis.schema') : 'public', $value->toWKT())
-                    );
+                    $this->attributes[$key] = $this->geomFromText($value);
                 }
             }
         }
