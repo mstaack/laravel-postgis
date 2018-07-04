@@ -9,26 +9,21 @@ class Builder extends EloquentBuilder
     {
         foreach ($values as $key => &$value) {
             if ($value instanceof GeometryInterface) {
-                $attrs = $this->getPostgisType($key);
-                $value = $this->asWKT($value, $attrs);
+                if (is_null($this->model)) {
+                    $value = $this->asWKT($value);
+                } else {
+                    $attrs = $this->model->getPostgisType($key);
+                    $value = $this->model->asWKT($value, $attrs);
+                }
             }
         }
 
         return parent::update($values);
     }
 
-    protected function getPostgisFields()
+    protected function asWKT(GeometryInterface $geometry)
     {
-        return $this->getModel()->getPostgisFields();
-    }
-
-    protected function getPostgisType($key)
-    {
-        return $this->getModel()->getPostgisType($key);
-    }
-
-    protected function asWKT(GeometryInterface $geometry, $attrs)
-    {
-        return $this->getModel()->asWKT($geometry, $attrs);
+        return $this->getQuery()->raw(sprintf("%s.ST_GeogFromText('%s')",
+                function_exists('config') ? config('postgis.schema') : 'public', $geometry->toWKT()));
     }
 }

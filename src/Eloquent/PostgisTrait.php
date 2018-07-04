@@ -36,7 +36,7 @@ trait PostgisTrait
                 function_exists('config') ? config('postgis.schema') : 'public', $geometry->toWKT(), $srid));
     }
 
-    protected function asWKT(GeometryInterface $geometry, $attrs)
+    public function asWKT(GeometryInterface $geometry, $attrs)
     {
         switch (strtoupper($attrs['geomtype'])) {
             case 'GEOMETRY':
