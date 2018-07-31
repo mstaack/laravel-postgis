@@ -40,7 +40,7 @@ class Point extends Geometry
         return $this->alt;
     }
 
-    public function setLng($alt)
+    public function setAlt($alt)
     {
         $this->alt = (float)$alt;
     }
