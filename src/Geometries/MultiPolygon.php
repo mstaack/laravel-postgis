@@ -35,7 +35,7 @@ class MultiPolygon extends Geometry implements Countable
     {
         $wktType = 'MULTIPOLYGON';
         if($this->is3d()) $wktType .= ' Z';
-        return sprintf('%s(%s)', (string) $this);
+        return sprintf('%s(%s)', $wktType, (string) $this);
     }
 
     public function __toString()
