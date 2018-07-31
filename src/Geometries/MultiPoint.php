@@ -2,9 +2,17 @@
 
 class MultiPoint extends PointCollection implements GeometryInterface, \JsonSerializable
 {
+    public function is3d()
+    {
+        if(count($this->points) === 0) return false;
+        return $this->points[0]->is3d();
+    }
+    
     public function toWKT()
     {
-        return sprintf('MULTIPOINT(%s)', (string)$this);
+        $wktType = 'MULTIPOINT';
+        if($this->is3d()) $wktType .= ' Z';
+        return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
     public static function fromWKT($wkt)

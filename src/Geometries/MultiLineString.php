@@ -35,9 +35,17 @@ class MultiLineString extends Geometry implements Countable
         return $this->linestrings;
     }
 
+    public function is3d()
+    {
+        if(count($this->linestrings) === 0) return false;
+        return $this->linestrings[0]->is3d();
+    }
+
     public function toWKT()
     {
-        return sprintf('MULTILINESTRING(%s)', (string)$this);
+        $wktType = 'MULTILINESTRING';
+        if($this->is3d()) $wktType .= ' Z';
+        return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
     public static function fromString($wktArgument)
