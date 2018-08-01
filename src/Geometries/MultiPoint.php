@@ -25,7 +25,7 @@ class MultiPoint extends PointCollection implements GeometryInterface, \JsonSeri
     public static function fromString($wktArgument)
     {
         $matches = [];
-        preg_match_all('/\(\s*(\d+\s+\d+)\s*\)/', trim($wktArgument), $matches);
+        preg_match_all('/\(\s*(\d+\s+\d+(\s+\d+)?)\s*\)/', trim($wktArgument), $matches);
 
         if (count($matches) < 2) {
             return new static([]);
