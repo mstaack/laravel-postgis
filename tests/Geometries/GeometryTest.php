@@ -43,6 +43,38 @@ class GeometryTest extends BaseTestCase
         );
     }
 
+    public function testGetWKTArgument3d()
+    {
+        $this->assertEquals(
+            '1 1 1',
+            Geometry::getWKTArgument('POINT Z(1 1 1)')
+        );
+        $this->assertEquals(
+            '1 1 1,1 2 2,2 2 3',
+            Geometry::getWKTArgument('LINESTRING Z(1 1 1,1 2 2,2 2 3)')
+        );
+        $this->assertEquals(
+            '(1 1 1,4 1 1,4 4 1,1 4 1,1 1 1),(1 1 2, 2 1 2, 2 2 2, 1 2 2,1 1 2)',
+            Geometry::getWKTArgument('POLYGON Z((1 1 1,4 1 1,4 4 1,1 4 1,1 1 1),(1 1 2, 2 1 2, 2 2 2, 1 2 2,1 1 2))')
+        );
+        $this->assertEquals(
+            '(1 1 1),(1 2 2)',
+            Geometry::getWKTArgument('MULTIPOINT Z((1 1 1),(1 2 2))')
+        );
+        $this->assertEquals(
+            '(1 1 1,1 2 1,2 2 1),(2 3 2,3 2 2,5 4 2)',
+            Geometry::getWKTArgument('MULTILINESTRING Z((1 1 1,1 2 1,2 2 1),(2 3 2,3 2 2,5 4 2))')
+        );
+        $this->assertEquals(
+            '((1 1 1,4 1 1,4 4 1,1 4 1,1 1 1),(1 1 2,2 1 2,2 2 2,1 2 2,1 1 2)), ((-1 -1 -1,-1 -2 -1,-2 -2 -1,-2 -1 -1,-1 -1 -1))',
+            Geometry::getWKTArgument('MULTIPOLYGON Z(((1 1 1,4 1 1,4 4 1,1 4 1,1 1 1),(1 1 2,2 1 2,2 2 2,1 2 2,1 1 2)), ((-1 -1 -1,-1 -2 -1,-2 -2 -1,-2 -1 -1,-1 -1 -1)))')
+        );
+        $this->assertEquals(
+            'POINT Z(2 3 4),LINESTRING Z(2 3 4,3 4 5)',
+            Geometry::getWKTArgument('GEOMETRYCOLLECTION(POINT Z(2 3 4),LINESTRING Z(2 3 4,3 4 5))')
+        );
+    }
+
     public function testGetWKTClass()
     {
         $this->assertEquals(
@@ -72,6 +104,38 @@ class GeometryTest extends BaseTestCase
         $this->assertEquals(
             GeometryCollection::class,
             Geometry::getWKTClass('GEOMETRYCOLLECTION(POINT(2 3),LINESTRING(2 3,3 4))')
+        );
+    }
+
+    public function testGetWKTClass3d()
+    {
+        $this->assertEquals(
+            Point::class,
+            Geometry::getWKTClass('POINT Z(0 0 0)')
+        );
+        $this->assertEquals(
+            LineString::class,
+            Geometry::getWKTClass('LINESTRING Z(0 0 0,1 1 1,1 2 3)')
+        );
+        $this->assertEquals(
+            Polygon::class,
+            Geometry::getWKTClass('POLYGON Z((0 0 0 ,4 0 3,4 4 4,0 4 0,0 0 0),(1 1 1, 2 1 2, 2 2 2, 1 2 2,1 1 1))')
+        );
+        $this->assertEquals(
+            MultiPoint::class,
+            Geometry::getWKTClass('MULTIPOINT Z((0 00),(1 2 3))')
+        );
+        $this->assertEquals(
+            MultiLineString::class,
+            Geometry::getWKTClass('MULTILINESTRING Z((0 0 0 ,1 1 1,1 2 3),(2 3 4,3 2 1,5 4 3))')
+        );
+        $this->assertEquals(
+            MultiPolygon::class,
+            Geometry::getWKTClass('MULTIPOLYGON Z(((0 0 0,4 0 4,4 4 4,0 4 0,0 0 0),(1 1 1,2 1 2,2 2 2,1 2 2,1 1 1)), ((-1 -1 -1,-1 -2 -1,-2 -2 -1,-2 -1 -1,-1 -1 -1)))')
+        );
+        $this->assertEquals(
+            GeometryCollection::class,
+            Geometry::getWKTClass('GEOMETRYCOLLECTION(POINT Z(2 3 4),LINESTRING Z(2 3 4,3 4 5))')
         );
     }
 
