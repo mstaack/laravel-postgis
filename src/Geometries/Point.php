@@ -6,11 +6,13 @@ class Point extends Geometry
 {
     protected $lat;
     protected $lng;
+    protected $alt;
 
-    public function __construct($lat, $lng)
+    public function __construct($lat, $lng, $alt = null)
     {
         $this->lat = (float)$lat;
         $this->lng = (float)$lng;
+        $this->alt = isset($alt) ? (float)$alt : null;
     }
 
     public function getLat()
@@ -33,28 +35,54 @@ class Point extends Geometry
         $this->lng = (float)$lng;
     }
 
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    public function setAlt($alt)
+    {
+        $this->alt = (float)$alt;
+    }
+
+    public function is3d()
+    {
+        return isset($this->alt);
+    }
+
     public function toPair()
     {
-        return self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
+        $pair = self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
+        if($this->is3d()) {
+            $pair .= ' ' . self::stringifyFloat($this->getAlt());
+        }
+        return $pair;
     }
-    
+
     private static function stringifyFloat($float)
     {
         // normalized output among locales
         return rtrim(rtrim(sprintf('%F', $float), '0'), '.');
     }
-    
+
     public static function fromPair($pair)
     {
         $pair = preg_replace('/^[a-zA-Z\(\)]+/', '', trim($pair));
-        list($lng, $lat) = explode(' ', trim($pair));
+        $splits = explode(' ', trim($pair));
+        $lng = $splits[0];
+        $lat = $splits[1];
+        if(count($splits) > 2) {
+            $alt = $splits[2];
+        }
 
-        return new static((float)$lat, (float)$lng);
+        return new static((float)$lat, (float)$lng, isset($alt) ? (float)$alt : null);
     }
 
     public function toWKT()
     {
-        return sprintf('POINT(%s)', (string)$this);
+        $wktType = 'POINT';
+        if($this->is3d()) $wktType .= ' Z';
+        return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
     public static function fromString($wktArgument)
@@ -74,6 +102,8 @@ class Point extends Geometry
      */
     public function jsonSerialize()
     {
-        return new \GeoJson\Geometry\Point([$this->getLng(), $this->getLat()]);
+        $position = [$this->getLng(), $this->getLat()];
+        if($this->is3d()) $position[] = $this->getAlt();
+        return new \GeoJson\Geometry\Point($position);
     }
 }

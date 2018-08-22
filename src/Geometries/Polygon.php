@@ -4,10 +4,17 @@ use Countable;
 
 class Polygon extends MultiLineString implements Countable
 {
+    public function is3d()
+    {
+        if(count($this->linestrings) === 0) return false;
+        return $this->linestrings[0]->is3d();
+    }
 
     public function toWKT()
     {
-        return sprintf('POLYGON(%s)', (string)$this);
+        $wktType = 'POLYGON';
+        if($this->is3d()) $wktType .= ' Z';
+        return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
     /**

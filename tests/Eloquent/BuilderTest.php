@@ -86,6 +86,51 @@ class BuilderTest extends BaseTestCase
 
         $builder->update(['linestring' => $linestring]);
     }
+
+    public function testUpdate3d()
+    {
+        $this->queryBuilder
+          ->shouldReceive('raw')
+          ->with("public.ST_GeogFromText('POINT Z(2 1 0)')")
+          ->andReturn(new Expression("public.ST_GeogFromText('POINT Z(2 1 0)')"));
+
+        $this->queryBuilder
+          ->shouldReceive('update')
+          ->andReturn(1);
+
+        $builder = m::mock(Builder::class, [$this->queryBuilder])->makePartial();
+        $builder->shouldAllowMockingProtectedMethods();
+        $builder
+          ->shouldReceive('addUpdatedAtColumn')
+          ->andReturn(['point' => new Point(1, 2, 0)]);
+
+        $builder->update(['point' => new Point(1, 2, 0)]);
+    }
+
+    public function testUpdateLinestring3d()
+    {
+        $this->queryBuilder
+          ->shouldReceive('raw')
+          ->with("public.ST_GeogFromText('LINESTRING Z(0 0 0, 1 1 1, 2 2 2)')")
+          ->andReturn(new Expression("public.ST_GeogFromText('LINESTRING Z(0 0 0, 1 1 1, 2 2 2)')"));
+
+        $this->queryBuilder
+          ->shouldReceive('update')
+          ->andReturn(1);
+
+        $linestring = new LineString([new Point(0, 0, 0), new Point(1, 1, 1), new Point(2, 2, 2)]);
+
+        $builder = m::mock(Builder::class, [$this->queryBuilder])->makePartial();
+        $builder->shouldAllowMockingProtectedMethods();
+        $builder
+          ->shouldReceive('addUpdatedAtColumn')
+          ->andReturn(['linestring' => $linestring]);
+
+        $builder
+          ->shouldReceive('asWKT')->with($linestring)->once();
+
+        $builder->update(['linestring' => $linestring]);
+    }
 }
 
 class TestBuilderModel extends Model
