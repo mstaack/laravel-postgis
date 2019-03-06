@@ -16,10 +16,7 @@ Laravel postgis extension
 
 ## Versions
 - Use 2.* for Laravel 5.1.*
-- Use 3.* for Laravel 5.2.*
-- Use 3.* for Laravel 5.3.*
-- Use 3.* for Laravel 5.4.*
-- Use 3.* for Laravel 5.5.*
+- Use 3.* for Laravel > 5.2
 
 ## Installation
 
@@ -137,7 +134,7 @@ class Location extends Model
         'polygon',
         'polygon2'
     ];
-    
+
     protected $postgisTypes = [
         'location' => [
             'geomtype' => 'geography',
