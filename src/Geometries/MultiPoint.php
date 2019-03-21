@@ -2,6 +2,23 @@
 
 class MultiPoint extends PointCollection implements GeometryInterface, \JsonSerializable
 {
+    /**
+     * @param Point[] $points
+     */
+    public function __construct(array $points)
+    {
+        if (count($points) < 1) {
+            throw new InvalidArgumentException('$points must contain at least one entry');
+        }
+        $validated = array_filter($points, function ($value) {
+            return $value instanceof Point;
+        });
+        if (count($points) !== count($validated)) {
+            throw new InvalidArgumentException('$points must be an array of Points');
+        }
+        $this->points = $points;
+    }
+
     public function is3d()
     {
         if(count($this->points) === 0) return false;
