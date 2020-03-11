@@ -1,6 +1,7 @@
-<?php namespace Eloquent;
+<?php
 
-use BaseTestCase;
+namespace MStaack\LaravelPostgis\Tests\Eloquent;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\Expression;
@@ -10,6 +11,7 @@ use MStaack\LaravelPostgis\Eloquent\PostgisTrait;
 use MStaack\LaravelPostgis\Geometries\LineString;
 use MStaack\LaravelPostgis\Geometries\Point;
 use MStaack\LaravelPostgis\Geometries\Polygon;
+use MStaack\LaravelPostgis\Tests\BaseTestCase;
 
 class BuilderTest extends BaseTestCase
 {
@@ -39,7 +41,14 @@ class BuilderTest extends BaseTestCase
             ->andReturn([]);
 
         $this->builder = new Builder($this->queryBuilder);
-        $this->builder->setModel(new TestBuilderModel());
+        $this->builder->setModel(new class extends Model {
+            use PostgisTrait;
+            protected $postgisFields = [
+                'point' => Point::class,
+                'linestring' => LineString::class,
+                'polygon' => Polygon::class
+            ];
+        });
     }
 
     public function testUpdate()
@@ -131,15 +140,4 @@ class BuilderTest extends BaseTestCase
 
         $builder->update(['linestring' => $linestring]);
     }
-}
-
-class TestBuilderModel extends Model
-{
-    use PostgisTrait;
-
-    protected $postgisFields = [
-        'point' => Point::class,
-        'linestring' => LineString::class,
-        'polygon' => Polygon::class
-    ];
 }

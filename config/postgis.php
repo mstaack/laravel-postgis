@@ -1,7 +1,5 @@
 <?php
 
 return [
-
-  'schema' => 'public'  // Schema for the Postgis extension
-
+    'schema' => 'public'  // Schema for the Postgis extension
 ];

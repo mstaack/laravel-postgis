@@ -1,12 +1,19 @@
-Laravel postgis extension
-=========================
+Laravel Wrapper for PostgreSQL's Geo-Extension Postgis
+======================================================
 
 ![Build Status](https://github.com/mstaack/laravel-postgis/workflows/Test%20Suite/badge.svg)
 
 ## Features
 
- * Work with geometry classes instead of arrays. (`$myModel->myPoint = new Point(1,2)`)
- * Adds helpers in migrations. (`$table->polygon('myColumn')`)
+ * Work with geometry classes instead of arrays.
+```php
+$model->myPoint = new Point(1,2);  //lat, long
+```
+
+* Adds helpers in migrations.
+```php
+$table->polygon('myColumn');
+```
 
 ## Versions
 - Use 4.* for Laravel 5
@@ -14,10 +21,15 @@ Laravel postgis extension
 
 ## Warning
 This Package has been moved to a new owner and aims for Laravel 6/7  and PHP 7 support only soon!
+
+Replace all your references to the new namespace: `MStaack\LaravelPostgis`
+
 Thanks to :
 - https://github.com/njbarrett
 - https://github.com/phaza
 - https://github.com/mirzap
+
+Fluent in Laravel Packages and Postgres/Postgis? Consider contributing! We are looking for anyone that wants to help out!
 
 ## Installation
 

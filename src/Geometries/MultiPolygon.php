@@ -1,4 +1,6 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
+
+namespace MStaack\LaravelPostgis\Geometries;
 
 use Countable;
 use InvalidArgumentException;
@@ -27,27 +29,27 @@ class MultiPolygon extends Geometry implements Countable
 
     public function is3d()
     {
-        if(count($this->polygons) === 0) return false;
+        if (count($this->polygons) === 0) return false;
         return $this->polygons[0]->is3d();
     }
 
     public function toWKT()
     {
         $wktType = 'MULTIPOLYGON';
-        if($this->is3d()) $wktType .= ' Z';
-        return sprintf('%s(%s)', $wktType, (string) $this);
+        if ($this->is3d()) $wktType .= ' Z';
+        return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
     public function __toString()
     {
         return implode(',', array_map(function (Polygon $polygon) {
-            return sprintf('(%s)', (string) $polygon);
+            return sprintf('(%s)', (string)$polygon);
         }, $this->polygons));
     }
 
     public static function fromString($wktArgument)
     {
-        $parts    = preg_split('/(\)\s*\)\s*,\s*\(\s*\()/', $wktArgument, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('/(\)\s*\)\s*,\s*\(\s*\()/', $wktArgument, -1, PREG_SPLIT_DELIM_CAPTURE);
         $polygons = static::assembleParts($parts);
 
         return new static(array_map(function ($polygonString) {
@@ -99,7 +101,7 @@ class MultiPolygon extends Geometry implements Countable
     protected static function assembleParts(array $parts)
     {
         $polygons = [];
-        $count    = count($parts);
+        $count = count($parts);
 
         for ($i = 0; $i < $count; $i++) {
             if ($i % 2 !== 0) {

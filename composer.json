@@ -19,10 +19,9 @@
     }
   },
   "autoload-dev": {
-    "classmap": [
-      "tests/BaseTestCase.php",
-      "tests/Stubs/"
-    ]
+    "psr-4": {
+      "MStaack\\LaravelPostgis\\Tests\\": "tests/"
+    }
   },
   "license": "MIT",
   "authors": [

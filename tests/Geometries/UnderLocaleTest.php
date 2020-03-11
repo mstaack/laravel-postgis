@@ -1,5 +1,7 @@
 <?php
 
+namespace MStaack\LaravelPostgis\Tests\Geometries;
+
 use MStaack\LaravelPostgis\Geometries\GeometryCollection;
 use MStaack\LaravelPostgis\Geometries\LineString;
 use MStaack\LaravelPostgis\Geometries\MultiLineString;
@@ -7,6 +9,7 @@ use MStaack\LaravelPostgis\Geometries\MultiPoint;
 use MStaack\LaravelPostgis\Geometries\MultiPolygon;
 use MStaack\LaravelPostgis\Geometries\Point;
 use MStaack\LaravelPostgis\Geometries\Polygon;
+use MStaack\LaravelPostgis\Tests\BaseTestCase;
 
 class UnderLocaleTest extends BaseTestCase
 {
@@ -23,7 +26,7 @@ class UnderLocaleTest extends BaseTestCase
 
     public function setUp(): void
     {
-        if (localeconv()['decimal_point'] == '.') {
+        if (localeconv()['decimal_point'] === '.') {
             $this->markTestSkipped('The locale is not available for testing float output formatting');
         }
     }

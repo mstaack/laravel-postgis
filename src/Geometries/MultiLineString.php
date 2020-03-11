@@ -1,4 +1,6 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
+
+namespace MStaack\LaravelPostgis\Geometries;
 
 use Countable;
 use InvalidArgumentException;
@@ -37,14 +39,14 @@ class MultiLineString extends Geometry implements Countable
 
     public function is3d()
     {
-        if(count($this->linestrings) === 0) return false;
+        if (count($this->linestrings) === 0) return false;
         return $this->linestrings[0]->is3d();
     }
 
     public function toWKT()
     {
         $wktType = 'MULTILINESTRING';
-        if($this->is3d()) $wktType .= ' Z';
+        if ($this->is3d()) $wktType .= ' Z';
         return sprintf('%s(%s)', $wktType, (string)$this);
     }
 

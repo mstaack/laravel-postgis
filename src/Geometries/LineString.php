@@ -1,17 +1,19 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
+
+namespace MStaack\LaravelPostgis\Geometries;
 
 class LineString extends PointCollection implements GeometryInterface
 {
     public function is3d()
     {
-        if(count($this->points) === 0) return false;
+        if (count($this->points) === 0) return false;
         return $this->points[0]->is3d();
     }
 
     public function toWKT()
     {
         $wktType = 'LINESTRING';
-        if($this->is3d()) $wktType .= ' Z';
+        if ($this->is3d()) $wktType .= ' Z';
         return sprintf('%s(%s)', $wktType, $this->toPairList());
     }
 

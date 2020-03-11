@@ -1,4 +1,6 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
+
+namespace MStaack\LaravelPostgis\Geometries;
 
 use ArrayAccess;
 use ArrayIterator;

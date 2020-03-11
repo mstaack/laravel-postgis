@@ -1,7 +1,10 @@
 <?php
 
-use MStaack\LaravelPostgis\Geometries\Point;
+namespace MStaack\LaravelPostgis\Tests\Geometries;
+
 use MStaack\LaravelPostgis\Geometries\MultiPoint;
+use MStaack\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Tests\BaseTestCase;
 
 class MultiPointTest extends BaseTestCase
 {
@@ -12,6 +15,7 @@ class MultiPointTest extends BaseTestCase
 
         $this->assertEquals(3, $multipoint->count());
     }
+
     public function testFromWKT3d()
     {
         $multipoint = MultiPoint::fromWKT('MULTIPOINT Z((1 1 1),(2 1 3),(2 2 2))');

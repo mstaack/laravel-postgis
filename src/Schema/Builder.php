@@ -11,7 +11,7 @@ class Builder extends \Bosnadev\Database\Schema\Builder
      * @param Closure $callback
      * @return Blueprint
      */
-    protected function createBlueprint($table, Closure $callback = null)
+    public function createBlueprint($table, Closure $callback = null)
     {
         return new Blueprint($table, $callback);
     }
