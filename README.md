@@ -1,5 +1,5 @@
-Laravel postgis extension
-=========================
+Laravel Wrapper for PostgreSQL's Geo-Extension Postgis
+======================================================
 
 ![Build Status](https://github.com/mstaack/laravel-postgis/workflows/Test%20Suite/badge.svg)
 
