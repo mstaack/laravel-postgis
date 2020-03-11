@@ -8,13 +8,8 @@ Laravel postgis extension
  * Work with geometry classes instead of arrays. (`$myModel->myPoint = new Point(1,2)`)
  * Adds helpers in migrations. (`$table->polygon('myColumn')`)
 
-### Future plans
-
- * Geometry functions on the geometry classes (contains(), equals(), distance(), etc… (HELP!))
-
 ## Versions
-- Use 2.* for Laravel 5.1.*
-- Use 3.* for Laravel > 5.2
+- Use 3.* for Laravel 5/6/7
 
 ## Installation
 
@@ -23,10 +18,9 @@ Laravel postgis extension
 For laravel >=5.5 that's all. This package supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
 
 If you are using Laravel < 5.5, you also need to add the DatabaseServiceProvider to your `config/app.php` file.
-
-    'MStaack\LaravelPostgis\DatabaseServiceProvider',
-
-
+```php
+'MStaack\LaravelPostgis\DatabaseServiceProvider',
+```
 ## Usage
 
 First of all, make sure to enable postgis.
