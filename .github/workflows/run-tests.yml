@@ -32,11 +32,8 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: pecl
-          extensions: mbstring, dom, fileinfo, pgsql, redis, intl
+          extensions: mbstring, dom, fileinfo, pgsql, intl
           coverage: ${{ matrix.coverage }}
       - run: composer update --no-interaction --no-progress --no-suggest --prefer-dist --prefer-${{ matrix.release }}
       - run: |
           vendor/bin/phpunit
-        env:
-          DATABASE: ${{ matrix.database }}
-          PGSQL_PORT: ${{ job.services.pgsql.ports[5432] }}
