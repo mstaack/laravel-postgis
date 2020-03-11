@@ -1,5 +1,6 @@
 <?php
-namespace Stubs;
+
+namespace MStaack\LaravelPostgis\Tests\Stubs;
 
 class PDOStub extends \PDO
 {

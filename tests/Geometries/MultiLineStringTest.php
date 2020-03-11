@@ -1,8 +1,11 @@
 <?php
 
+namespace MStaack\LaravelPostgis\Tests\Geometries;
+
 use MStaack\LaravelPostgis\Geometries\LineString;
-use MStaack\LaravelPostgis\Geometries\Point;
 use MStaack\LaravelPostgis\Geometries\MultiLineString;
+use MStaack\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Tests\BaseTestCase;
 
 class MultiLineStringTest extends BaseTestCase
 {

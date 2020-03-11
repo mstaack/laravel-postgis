@@ -1,10 +1,12 @@
-<?php namespace Schema;
+<?php
 
-use BaseTestCase;
+namespace MStaack\LaravelPostgis\Tests\Schema;
+
 use Mockery;
 use MStaack\LaravelPostgis\PostgisConnection;
-use MStaack\LaravelPostgis\Schema\Builder;
 use MStaack\LaravelPostgis\Schema\Blueprint;
+use MStaack\LaravelPostgis\Schema\Builder;
+use MStaack\LaravelPostgis\Tests\BaseTestCase;
 
 class BuilderTest extends BaseTestCase
 {
