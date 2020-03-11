@@ -4,7 +4,6 @@ use Illuminate\Database\Connection;
 use MStaack\LaravelPostgis\PostgisConnection;
 use MStaack\LaravelPostgis\Schema\Blueprint;
 use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
-use MStaack\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
 use MStaack\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
 
 class PostgisGrammarBaseTest extends BaseTestCase
@@ -15,8 +14,8 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->point('foo');
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
-        $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY(POINT, 4326)', $statements[0]);
+        $this->assertCount(1, $statements);
+        $this->assertStringContainsString('GEOGRAPHY(POINT, 4326)', $statements[0]);
     }
 
     public function testAddingPointGeom()
@@ -24,13 +23,13 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint = new Blueprint('test');
         $blueprint->point('foo', 'GEOMETRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
-        $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY(POINT, 27700)', $statements[0]);
+        $this->assertCount(1, $statements);
+        $this->assertStringContainsString('GEOMETRY(POINT, 27700)', $statements[0]);
     }
 
     public function testAddingPointWrongSrid()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->point('foo', 'GEOGRAPHY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -39,7 +38,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
     public function testAddingPointUnsupported()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->point('foo', 'UNSUPPORTED_ENTRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -53,7 +52,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY(LINESTRING, 4326)', $statements[0]);
+        $this->assertStringContainsString('GEOGRAPHY(LINESTRING, 4326)', $statements[0]);
     }
 
     public function testAddingLinestringGeom()
@@ -62,12 +61,12 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->linestring('foo', 'GEOMETRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY(LINESTRING, 27700)', $statements[0]);
+        $this->assertStringContainsString('GEOMETRY(LINESTRING, 27700)', $statements[0]);
     }
 
     public function testAddingLinestringWrongSrid()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->linestring('foo', 'GEOGRAPHY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -76,7 +75,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
     public function testAddingLinestringUnsupported()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->linestring('foo', 'UNSUPPORTED_ENTRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -90,7 +89,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY(POLYGON, 4326)', $statements[0]);
+        $this->assertStringContainsString('GEOGRAPHY(POLYGON, 4326)', $statements[0]);
     }
 
     public function testAddingPolygonGeom()
@@ -99,12 +98,12 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->polygon('foo', 'GEOMETRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY(POLYGON, 27700)', $statements[0]);
+        $this->assertStringContainsString('GEOMETRY(POLYGON, 27700)', $statements[0]);
     }
 
     public function testAddingPolygonWrongSrid()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->polygon('foo', 'GEOGRAPHY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -113,7 +112,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
     public function testAddingPolygonUnsupported()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->polygon('foo', 'UNSUPPORTED_ENTRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -127,7 +126,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY(MULTIPOINT, 4326)', $statements[0]);
+        $this->assertStringContainsString('GEOGRAPHY(MULTIPOINT, 4326)', $statements[0]);
     }
 
     public function testAddingMultipointGeom()
@@ -136,12 +135,12 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->multipoint('foo', 'GEOMETRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY(MULTIPOINT, 27700)', $statements[0]);
+        $this->assertStringContainsString('GEOMETRY(MULTIPOINT, 27700)', $statements[0]);
     }
 
     public function testAddingMultiPointWrongSrid()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->multipoint('foo', 'GEOGRAPHY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -150,7 +149,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
     public function testAddingMultiPointUnsupported()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->multipoint('foo', 'UNSUPPORTED_ENTRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -164,7 +163,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY(MULTILINESTRING, 4326)', $statements[0]);
+        $this->assertStringContainsString('GEOGRAPHY(MULTILINESTRING, 4326)', $statements[0]);
     }
 
     public function testAddingMultiLinestringGeom()
@@ -173,12 +172,12 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->multilinestring('foo', 'GEOMETRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY(MULTILINESTRING, 27700)', $statements[0]);
+        $this->assertStringContainsString('GEOMETRY(MULTILINESTRING, 27700)', $statements[0]);
     }
 
     public function testAddingMultiLinestringWrongSrid()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->multilinestring('foo', 'GEOGRAPHY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -187,7 +186,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
     public function testAddingMultiLinestringUnsupported()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->multilinestring('foo', 'UNSUPPORTED_ENTRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -201,7 +200,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY(MULTIPOLYGON, 4326)', $statements[0]);
+        $this->assertStringContainsString('GEOGRAPHY(MULTIPOLYGON, 4326)', $statements[0]);
     }
 
     public function testAddingMultiPolygonGeom()
@@ -210,12 +209,12 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->multipolygon('foo', 'GEOMETRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY(MULTIPOLYGON, 27700)', $statements[0]);
+        $this->assertStringContainsString('GEOMETRY(MULTIPOLYGON, 27700)', $statements[0]);
     }
 
     public function testAddingMultiPolygonWrongSrid()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->multipolygon('foo', 'GEOGRAPHY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -224,7 +223,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
 
     public function testAddingMultiPolygonUnsupported()
     {
-        $this->setExpectedException(UnsupportedGeomtypeException::class);
+        $this->expectException(UnsupportedGeomtypeException::class);
         $blueprint = new Blueprint('test');
         $blueprint->multipolygon('foo', 'UNSUPPORTED_ENTRY', 27700);
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
@@ -238,7 +237,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOGRAPHY', $statements[0]);
+        $this->assertStringContainsString('GEOGRAPHY', $statements[0]);
     }
 
     public function testAddingGeometry()
@@ -247,7 +246,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $blueprint->geometry('foo');
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
         $this->assertEquals(1, count($statements));
-        $this->assertContains('GEOMETRY', $statements[0]);
+        $this->assertStringContainsString('GEOMETRY', $statements[0]);
     }
 
     public function testAddingGeometryCollection()
@@ -257,8 +256,8 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('AddGeometryColumn', $statements[0]);
-        $this->assertContains('GEOMETRYCOLLECTION', $statements[0]);
+        $this->assertStringContainsString('AddGeometryColumn', $statements[0]);
+        $this->assertStringContainsString('GEOMETRYCOLLECTION', $statements[0]);
     }
 
     public function testEnablePostgis()
@@ -268,7 +267,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('CREATE EXTENSION postgis', $statements[0]);
+        $this->assertStringContainsString('CREATE EXTENSION postgis', $statements[0]);
     }
 
     public function testDisablePostgis()
@@ -278,7 +277,7 @@ class PostgisGrammarBaseTest extends BaseTestCase
         $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
 
         $this->assertEquals(1, count($statements));
-        $this->assertContains('DROP EXTENSION postgis', $statements[0]);
+        $this->assertStringContainsString('DROP EXTENSION postgis', $statements[0]);
     }
 
     /**

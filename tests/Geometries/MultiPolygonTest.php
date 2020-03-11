@@ -13,7 +13,7 @@ class MultiPolygonTest extends BaseTestCase
     private $multiPolygon;
     private $multiPolygon3d;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $collection1 = new LineString(
             [

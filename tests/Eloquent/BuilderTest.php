@@ -20,7 +20,7 @@ class BuilderTest extends BaseTestCase
      */
     protected $queryBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->queryBuilder = m::mock(QueryBuilder::class);
         $this->queryBuilder->makePartial();

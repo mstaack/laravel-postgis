@@ -9,7 +9,7 @@ class PolygonTest extends BaseTestCase
     private $polygon;
     private $polygon3d;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $collection = new LineString(
             [
