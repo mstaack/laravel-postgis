@@ -2,8 +2,6 @@ Laravel postgis extension
 =========================
 
 ![Build Status](https://github.com/mstaack/laravel-postgis/workflows/.github/workflows/run-tests.yml/badge.svg)
-[![Code Climate](https://codeclimate.com/github/mstaack/laravel-postgis/badges/gpa.svg)](https://codeclimate.com/github/mstaack/laravel-postgis)
-[![Coverage Status](https://coveralls.io/repos/github/mstaack/laravel-postgis/badge.svg?branch=master)](https://coveralls.io/github/mstaack/laravel-postgis?branch=master)
 
 ## Features
 
