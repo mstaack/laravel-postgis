@@ -55,6 +55,17 @@ class PostgisGrammar extends PostgresGrammar
     }
 
     /**
+     * Adds a statement to add a multipolygonz geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typeMultiPolygonZ(Fluent $column)
+    {
+        return $this->createTypeDefinition($column, 'MULTIPOLYGONZ');
+    }
+
+    /**
      * Adds a statement to add a linestring geometry column
      *
      * @param \Illuminate\Support\Fluent $column
