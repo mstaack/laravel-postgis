@@ -3,7 +3,7 @@
     "description": "Postgis extensions for laravel. Aims to make it easy to work with geometries from laravel models",
     "require": {
         "php": ">=5.5",
-        "illuminate/database": "^5.2|^6.0",
+        "illuminate/database": "^5.2|^6.0|^7.0",
         "geo-io/wkb-parser": "^1.0",
         "jmikola/geojson": "^1.0",
         "bosnadev/database": "0.19.*"
