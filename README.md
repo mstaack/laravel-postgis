@@ -15,14 +15,13 @@ $model->myPoint = new Point(1,2);  //lat, long
 $table->polygon('myColumn');
 ```
 
-## Versions
-- Use 4.* for Laravel 5
-- Use 5.* for Laravel 6/7
-
 ## Warning
 This Package has been moved to a new owner and aims for Laravel 6/7  and PHP 7 support only soon!
 
-Replace all your references to the new namespace: `MStaack\LaravelPostgis`
+Replace all your references to the new namespace:
+```
+MStaack\LaravelPostgis
+```
 
 Thanks to :
 - https://github.com/njbarrett
@@ -32,7 +31,13 @@ Thanks to :
 Fluent in Laravel Packages and Postgres/Postgis? Consider contributing! We are looking for anyone that wants to help out!
 
 ## Installation
+- Use 3.* for Laravel 5
 
+```bash
+composer require "mstaack/laravel-postgis:3.*"
+```
+
+- Use 5.* for Laravel 6/7
 ```bash
 composer require mstaack/laravel-postgis
 ```
