@@ -47,6 +47,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a multipolygonz column on the table
+     *
+     * @param $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function multipolygonz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('multipolygonz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
      * Add a linestring column on the table
      *
      * @param      $column
