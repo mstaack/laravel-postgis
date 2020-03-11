@@ -1,49 +1,47 @@
 name: Test Suite
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
-        matrix:
-          php: [7.4, 7.3, 7.2, 7.1]
-          laravel: [7.*, 6.*]
-          dependency-version: [prefer-lowest, prefer-stable]
-          include:
-            - laravel: 7.*
-              testbench: 5.*
-            - laravel: 6.*
-              testbench: 4.*
+      matrix:
+        php: [7.4, 7.3, 7.2]
+        database: [pgsql]
+        release: [stable, lowest]
+        include:
+          - php: 7.4
+            release: stable
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+    services:
+      postgres:
+        image: kartoza/postgis:12.1
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DBNAME: postgres
+        ports:
+          - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
         with:
           path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
-          keys: |
-            dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-
-            dependencies-laravel-${{ matrix.laravel }}-php-
-            dependencies-laravel-
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v1
+          key: php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
+      - uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php }}
-          extensions: mbstring, dom, fileinfo, pgsql
-
-      - name: Install dependencies
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-
-      - name: Execute tests
-        run: vendor/bin/phpunit
+          tools: pecl
+          extensions: bcmath, ctype, json, mbstring, openssl, pdo, pdo_${{ matrix.database }}, tokenizer, xml
+          coverage: ${{ matrix.coverage }}
+      - run: composer update --no-interaction --no-progress --no-suggest --prefer-dist --prefer-${{ matrix.release }}
+      - run: |
+          PHPUNIT_FLAGS=$([ "${{ matrix.coverage }}" == "xdebug" ] && echo "--coverage-clover=coverage.xml" || echo "")
+          vendor/bin/phpunit $PHPUNIT_FLAGS
+        env:
+          DATABASE: ${{ matrix.database }}
+          PGSQL_PORT: ${{ job.services.pgsql.ports[5432] }}
