@@ -17,7 +17,6 @@ This Package has been moved to a new owner and aims for Laravel 6/7  and PHP 7 s
 Thanks to :
 - https://github.com/njbarrett
 - https://github.com/phaza
-And all other contributers!
 
 ## Installation
 
