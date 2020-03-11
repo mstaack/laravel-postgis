@@ -1,7 +1,8 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
+
+namespace MStaack\LaravelPostgis\Geometries;
 
 use Countable;
-use GeoJson\GeoJson;
 use InvalidArgumentException;
 
 class GeometryCollection extends Geometry implements Countable

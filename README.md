@@ -5,8 +5,15 @@ Laravel postgis extension
 
 ## Features
 
- * Work with geometry classes instead of arrays. (`$myModel->myPoint = new Point(1,2)`)
- * Adds helpers in migrations. (`$table->polygon('myColumn')`)
+ * Work with geometry classes instead of arrays.
+```php
+$model->myPoint = new Point(1,2);  //lat, long
+```
+
+* Adds helpers in migrations.
+```php
+$table->polygon('myColumn');
+```
 
 ## Versions
 - Use 4.* for Laravel 5
@@ -18,6 +25,8 @@ Thanks to :
 - https://github.com/njbarrett
 - https://github.com/phaza
 - https://github.com/mirzap
+
+Fluent in Laravel Packages and Postgres/Postgis? Consider contributing! We are looking for anyone that wants to help out!
 
 ## Installation
 

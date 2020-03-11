@@ -1,6 +1,11 @@
-<?php namespace MStaack\LaravelPostgis;
+<?php
 
-class PostgisConnection extends \Bosnadev\Database\PostgresConnection
+namespace MStaack\LaravelPostgis;
+
+use Bosnadev\Database\PostgresConnection;
+use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
+
+class PostgisConnection extends PostgresConnection
 {
     public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
     {
@@ -18,13 +23,13 @@ class PostgisConnection extends \Bosnadev\Database\PostgresConnection
      */
     protected function getDefaultSchemaGrammar()
     {
-        return $this->withTablePrefix(new Schema\Grammars\PostgisGrammar);
+        return $this->withTablePrefix(new PostgisGrammar());
     }
 
 
     public function getSchemaBuilder()
     {
-        if (is_null($this->schemaGrammar)) {
+        if ($this->schemaGrammar === null) {
             $this->useDefaultSchemaGrammar();
         }
 

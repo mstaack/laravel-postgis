@@ -1,19 +1,21 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
 
-use Countable;
+namespace MStaack\LaravelPostgis\Geometries;
 
-class Polygon extends MultiLineString implements Countable
+use GeoJson\Geometry\LinearRing;
+
+class Polygon extends MultiLineString
 {
     public function is3d()
     {
-        if(count($this->linestrings) === 0) return false;
+        if (count($this->linestrings) === 0) return false;
         return $this->linestrings[0]->is3d();
     }
 
     public function toWKT()
     {
         $wktType = 'POLYGON';
-        if($this->is3d()) $wktType .= ' Z';
+        if ($this->is3d()) $wktType .= ' Z';
         return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
@@ -26,7 +28,7 @@ class Polygon extends MultiLineString implements Countable
     {
         $linearrings = [];
         foreach ($this->linestrings as $linestring) {
-            $linearrings[] = new \GeoJson\Geometry\LinearRing($linestring->jsonSerialize()->getCoordinates());
+            $linearrings[] = new LinearRing($linestring->jsonSerialize()->getCoordinates());
         }
 
         return new \GeoJson\Geometry\Polygon($linearrings);

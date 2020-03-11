@@ -1,6 +1,6 @@
-<?php namespace MStaack\LaravelPostgis\Geometries;
+<?php
 
-use GeoJson\GeoJson;
+namespace MStaack\LaravelPostgis\Geometries;
 
 class Point extends Geometry
 {
@@ -53,7 +53,7 @@ class Point extends Geometry
     public function toPair()
     {
         $pair = self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
-        if($this->is3d()) {
+        if ($this->is3d()) {
             $pair .= ' ' . self::stringifyFloat($this->getAlt());
         }
         return $pair;
@@ -71,7 +71,7 @@ class Point extends Geometry
         $splits = explode(' ', trim($pair));
         $lng = $splits[0];
         $lat = $splits[1];
-        if(count($splits) > 2) {
+        if (count($splits) > 2) {
             $alt = $splits[2];
         }
 
@@ -81,7 +81,7 @@ class Point extends Geometry
     public function toWKT()
     {
         $wktType = 'POINT';
-        if($this->is3d()) $wktType .= ' Z';
+        if ($this->is3d()) $wktType .= ' Z';
         return sprintf('%s(%s)', $wktType, (string)$this);
     }
 
@@ -103,7 +103,7 @@ class Point extends Geometry
     public function jsonSerialize()
     {
         $position = [$this->getLng(), $this->getLat()];
-        if($this->is3d()) $position[] = $this->getAlt();
+        if ($this->is3d()) $position[] = $this->getAlt();
         return new \GeoJson\Geometry\Point($position);
     }
 }
