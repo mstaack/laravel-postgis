@@ -12,9 +12,18 @@ Laravel postgis extension
 - Use 4.* for Laravel 5
 - Use 5.* for Laravel 6/7
 
+## Warning
+This Package has been moved to a new owner and aims for Laravel 6/7  and PHP 7 support only soon!
+Thanks to :
+- https://github.com/njbarrett
+- https://github.com/phaza
+And all other contributers!
+
 ## Installation
 
-    composer require mstaack/laravel-postgis
+```bash
+composer require mstaack/laravel-postgis
+```
 
 For laravel >=5.5 that's all. This package supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
 
