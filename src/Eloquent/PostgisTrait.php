@@ -1,13 +1,13 @@
-<?php namespace Phaza\LaravelPostgis\Eloquent;
+<?php namespace MStaack\LaravelPostgis\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Support\Arr;
-use Phaza\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
-use Phaza\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
-use Phaza\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
-use Phaza\LaravelPostgis\Geometries\Geometry;
-use Phaza\LaravelPostgis\Geometries\GeometryInterface;
-use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
+use MStaack\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
+use MStaack\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
+use MStaack\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
+use MStaack\LaravelPostgis\Geometries\Geometry;
+use MStaack\LaravelPostgis\Geometries\GeometryInterface;
+use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
 
 trait PostgisTrait
 {
@@ -17,7 +17,7 @@ trait PostgisTrait
      * Create a new Eloquent query builder for the model.
      *
      * @param  \Illuminate\Database\Query\Builder $query
-     * @return \Phaza\LaravelPostgis\Eloquent\Builder
+     * @return \MStaack\LaravelPostgis\Eloquent\Builder
      */
     public function newEloquentBuilder($query)
     {
