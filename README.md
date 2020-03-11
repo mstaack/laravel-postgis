@@ -9,7 +9,8 @@ Laravel postgis extension
  * Adds helpers in migrations. (`$table->polygon('myColumn')`)
 
 ## Versions
-- Use 3.* for Laravel 5/6/7
+- Use 4.* for Laravel 5
+- Use 5.* for Laravel 6/7
 
 ## Installation
 
