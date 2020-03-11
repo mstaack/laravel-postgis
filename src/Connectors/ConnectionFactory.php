@@ -1,7 +1,7 @@
-<?php namespace Phaza\LaravelPostgis\Connectors;
+<?php namespace MStaack\LaravelPostgis\Connectors;
 
 use PDO;
-use Phaza\LaravelPostgis\PostgisConnection;
+use MStaack\LaravelPostgis\PostgisConnection;
 
 class ConnectionFactory extends \Bosnadev\Database\Connectors\ConnectionFactory
 {

@@ -1,4 +1,4 @@
-<?php namespace Phaza\LaravelPostgis\Schema;
+<?php namespace MStaack\LaravelPostgis\Schema;
 
 use Closure;
 

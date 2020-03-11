@@ -1,4 +1,4 @@
-<?php namespace Phaza\LaravelPostgis\Geometries;
+<?php namespace MStaack\LaravelPostgis\Geometries;
 
 class MultiPoint extends PointCollection implements GeometryInterface, \JsonSerializable
 {
@@ -24,7 +24,7 @@ class MultiPoint extends PointCollection implements GeometryInterface, \JsonSeri
         if(count($this->points) === 0) return false;
         return $this->points[0]->is3d();
     }
-    
+
     public function toWKT()
     {
         $wktType = 'MULTIPOINT';
