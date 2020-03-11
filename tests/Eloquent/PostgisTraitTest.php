@@ -18,13 +18,13 @@ class PostgisTraitTest extends BaseTestCase
      */
     protected $queries;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->model = new TestModel();
         $this->queries = &$this->model->getConnection()->getPdo()->queries;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->model->getConnection()->getPdo()->resetQueries();
     }
@@ -34,7 +34,7 @@ class PostgisTraitTest extends BaseTestCase
         $this->model->point = new Point(1, 2);
         $this->model->save();
 
-        $this->assertContains("public.ST_GeogFromText('POINT(2 1)')", $this->queries[0]);
+        $this->assertStringContainsString("public.ST_GeogFromText('POINT(2 1)')", $this->queries[0]);
     }
 
     public function testInsertPointGeometryHasCorrectSql()
@@ -42,7 +42,7 @@ class PostgisTraitTest extends BaseTestCase
         $this->model->point2 = new Point(1, 2);
         $this->model->save();
 
-        $this->assertContains("public.ST_GeomFromText('POINT(2 1)', '27700')", $this->queries[0]);
+        $this->assertStringContainsString("public.ST_GeomFromText('POINT(2 1)', '27700')", $this->queries[0]);
     }
 
     public function testUpdatePointHasCorrectSql()
@@ -51,7 +51,7 @@ class PostgisTraitTest extends BaseTestCase
         $this->model->point = new Point(2, 4);
         $this->model->save();
 
-        $this->assertContains("public.ST_GeogFromText('POINT(4 2)')", $this->queries[0]);
+        $this->assertStringContainsString("public.ST_GeogFromText('POINT(4 2)')", $this->queries[0]);
     }
 
     public function testInsertPoint3dHasCorrectSql()
@@ -59,7 +59,7 @@ class PostgisTraitTest extends BaseTestCase
         $this->model->point = new Point(1, 2, 3);
         $this->model->save();
 
-        $this->assertContains("public.ST_GeogFromText('POINT Z(2 1 3)')", $this->queries[0]);
+        $this->assertStringContainsString("public.ST_GeogFromText('POINT Z(2 1 3)')", $this->queries[0]);
     }
 
     public function testInsertPoint3dGeometryHasCorrectSql()
@@ -67,7 +67,7 @@ class PostgisTraitTest extends BaseTestCase
         $this->model->point2 = new Point(1, 2, 3);
         $this->model->save();
 
-        $this->assertContains("public.ST_GeomFromText('POINT Z(2 1 3)', '27700')", $this->queries[0]);
+        $this->assertStringContainsString("public.ST_GeomFromText('POINT Z(2 1 3)', '27700')", $this->queries[0]);
     }
 
     public function testUpdatePoint3dHasCorrectSql()
@@ -76,7 +76,7 @@ class PostgisTraitTest extends BaseTestCase
         $this->model->point = new Point(2, 4, 6);
         $this->model->save();
 
-        $this->assertContains("public.ST_GeogFromText('POINT Z(4 2 6)')", $this->queries[0]);
+        $this->assertStringContainsString("public.ST_GeogFromText('POINT Z(4 2 6)')", $this->queries[0]);
     }
 }
 

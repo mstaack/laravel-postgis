@@ -8,7 +8,7 @@ class LineStringTest extends BaseTestCase
     private $points;
     private $points3d;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->points = [new Point(1, 1), new Point(2, 2), new Point(3, 3)];
         $this->points3d = [new Point(1, 1, 1), new Point(2, 2, 2), new Point(3, 3, 3)];
