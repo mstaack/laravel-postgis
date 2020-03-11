@@ -1,7 +1,7 @@
 Laravel postgis extension
 =========================
 
-![Build Status](https://github.com/mstaack/laravel-postgis/workflows/.github/workflows/run-tests.yml/badge.svg)
+![Build Status](https://github.com/mstaack/laravel-postgis/workflows/Test%20Suite/badge.svg)
 
 ## Features
 
