@@ -21,6 +21,9 @@ $table->polygon('myColumn');
 
 ## Warning
 This Package has been moved to a new owner and aims for Laravel 6/7  and PHP 7 support only soon!
+
+Replace all your references to the new namespace: `MStaack\LaravelPostgis`
+
 Thanks to :
 - https://github.com/njbarrett
 - https://github.com/phaza
