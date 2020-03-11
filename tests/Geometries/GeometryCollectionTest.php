@@ -1,8 +1,8 @@
 <?php
 
-use Phaza\LaravelPostgis\Geometries\GeometryCollection;
-use Phaza\LaravelPostgis\Geometries\LineString;
-use Phaza\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Geometries\GeometryCollection;
+use MStaack\LaravelPostgis\Geometries\LineString;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class GeometryCollectionTest extends BaseTestCase
 {

@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Database\Connection;
-use Phaza\LaravelPostgis\PostgisConnection;
-use Phaza\LaravelPostgis\Schema\Blueprint;
-use Phaza\LaravelPostgis\Schema\Grammars\PostgisGrammar;
-use Phaza\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
-use Phaza\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
+use MStaack\LaravelPostgis\PostgisConnection;
+use MStaack\LaravelPostgis\Schema\Blueprint;
+use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
+use MStaack\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
+use MStaack\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
 
 class PostgisGrammarBaseTest extends BaseTestCase
 {

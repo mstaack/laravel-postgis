@@ -1,46 +1,46 @@
 <?php
 
-use Phaza\LaravelPostgis\Geometries\Point;
-use Phaza\LaravelPostgis\Geometries\MultiPoint;
-use Phaza\LaravelPostgis\Geometries\LineString;
-use Phaza\LaravelPostgis\Geometries\MultiLineString;
-use Phaza\LaravelPostgis\Geometries\Polygon;
-use Phaza\LaravelPostgis\Geometries\MultiPolygon;
-use Phaza\LaravelPostgis\Geometries\GeometryCollection;
+use MStaack\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Geometries\MultiPoint;
+use MStaack\LaravelPostgis\Geometries\LineString;
+use MStaack\LaravelPostgis\Geometries\MultiLineString;
+use MStaack\LaravelPostgis\Geometries\Polygon;
+use MStaack\LaravelPostgis\Geometries\MultiPolygon;
+use MStaack\LaravelPostgis\Geometries\GeometryCollection;
 
 class UnderLocaleTest extends BaseTestCase
 {
-    
+
     public static function setUpBeforeClass()
     {
         setlocale(LC_NUMERIC, 'fr_FR.utf-8');
     }
-    
+
     public static function tearDownAfterClass()
     {
         setlocale(LC_NUMERIC, null);
     }
-    
+
     public function setUp()
     {
         if(localeconv()['decimal_point'] == '.') {
             $this->markTestSkipped('The locale is not available for testing float output formatting');
         }
     }
-    
+
     public function testPointToWKT()
     {
         $point = new Point(1.5, 2.5);
         $this->assertEquals('POINT(2.5 1.5)', $point->toWKT());
     }
-    
+
     public function testMultiPointToWKT()
     {
         $multipoint = new MultiPoint([new Point(1.5, 1.5), new Point(1.5, 2.5), new Point(2.5, 2.5)]);
 
         $this->assertEquals('MULTIPOINT((1.5 1.5),(2.5 1.5),(2.5 2.5))', $multipoint->toWKT());
     }
-    
+
     public function testLineStringToWKT()
     {
         $linestring = new LineString([new Point(1.5, 1.5), new Point(2.5, 2.5), new Point(3.5, 3.5)]);
@@ -64,7 +64,7 @@ class UnderLocaleTest extends BaseTestCase
 
         $this->assertSame('MULTILINESTRING((1.5 1.5,2.5 1.5,2.5 2.5,1.5 2.5,1.5 1.5))', $multilinestring->toWKT());
     }
-    
+
     public function testPolygonToWKT()
     {
         $collection = new LineString(
@@ -78,10 +78,10 @@ class UnderLocaleTest extends BaseTestCase
         );
 
         $polygon = new Polygon([$collection]);
-        
+
         $this->assertEquals('POLYGON((1.5 1.5,2.5 1.5,2.5 2.5,1.5 2.5,1.5 1.5))', $polygon->toWKT());
     }
-    
+
     public function testMultiPolygonToWKT()
     {
         $collection1 = new LineString(
@@ -119,13 +119,13 @@ class UnderLocaleTest extends BaseTestCase
         $polygon2 = new Polygon([$collection3]);
 
         $multiPolygon = new MultiPolygon([$polygon1, $polygon2]);
-        
+
         $this->assertEquals(
             'MULTIPOLYGON(((1.5 1.5,2.5 1.5,2.5 2.5,1.5 2.5,1.5 1.5),(10.5 10.5,20.5 10.5,20.5 20.5,10.5 20.5,10.5 10.5)),((100.5 100.5,200.5 100.5,200.5 200.5,100.5 200.5,100.5 100.5)))',
             $multiPolygon->toWKT()
         );
     }
-    
+
     public function testGeometryCollectionToWKT()
     {
         $collection = new LineString(

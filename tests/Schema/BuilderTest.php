@@ -2,9 +2,9 @@
 
 use BaseTestCase;
 use Mockery;
-use Phaza\LaravelPostgis\PostgisConnection;
-use Phaza\LaravelPostgis\Schema\Builder;
-use Phaza\LaravelPostgis\Schema\Blueprint;
+use MStaack\LaravelPostgis\PostgisConnection;
+use MStaack\LaravelPostgis\Schema\Builder;
+use MStaack\LaravelPostgis\Schema\Blueprint;
 
 class BuilderTest extends BaseTestCase
 {

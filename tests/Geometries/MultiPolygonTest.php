@@ -1,9 +1,9 @@
 <?php
 
-use Phaza\LaravelPostgis\Geometries\LineString;
-use Phaza\LaravelPostgis\Geometries\MultiPolygon;
-use Phaza\LaravelPostgis\Geometries\Point;
-use Phaza\LaravelPostgis\Geometries\Polygon;
+use MStaack\LaravelPostgis\Geometries\LineString;
+use MStaack\LaravelPostgis\Geometries\MultiPolygon;
+use MStaack\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Geometries\Polygon;
 
 class MultiPolygonTest extends BaseTestCase
 {
@@ -94,7 +94,7 @@ class MultiPolygonTest extends BaseTestCase
     {
         $wkt = 'MULTIPOLYGON(((1 1,2 1,2 2,1 2,1 1),(1 1,2 1,2 2,1 2,1 1)),((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))';
         $polygon = MultiPolygon::fromWKT($wkt);
-        
+
         $this->assertInstanceOf(MultiPolygon::class, $polygon);
         $this->assertEquals(2, $polygon->count());
         $this->assertEquals($wkt, $polygon->toWKT());
@@ -104,7 +104,7 @@ class MultiPolygonTest extends BaseTestCase
     {
         $wkt = 'MULTIPOLYGON Z(((1 1 1,2 1 3,2 2 2,1 2 0,1 1 1),(1 1 1,2 1 3,2 2 2,1 2 0,1 1)),((-1 -1 -1,-1 -2 -3,-2 -2 -2,-2 -1 0,-1 -1 -1)))';
         $polygon = MultiPolygon::fromWKT($wkt);
-        
+
         $this->assertInstanceOf(MultiPolygon::class, $polygon);
         $this->assertEquals(2, $polygon->count());
         $this->assertEquals($wkt, $polygon->toWKT());

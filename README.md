@@ -1,9 +1,9 @@
 Laravel postgis extension
 =========================
 
-[![Build Status](https://travis-ci.org/njbarrett/laravel-postgis.svg?branch=master)](https://travis-ci.org/njbarrett/laravel-postgis.svg?branch=master)
-[![Code Climate](https://codeclimate.com/github/njbarrett/laravel-postgis/badges/gpa.svg)](https://codeclimate.com/github/njbarrett/laravel-postgis)
-[![Coverage Status](https://coveralls.io/repos/github/njbarrett/laravel-postgis/badge.svg?branch=master)](https://coveralls.io/github/njbarrett/laravel-postgis?branch=master)
+![Build Status](https://github.com/mstaack/laravel-postgis/workflows/.github/workflows/run-tests.yml/badge.svg)
+[![Code Climate](https://codeclimate.com/github/mstaack/laravel-postgis/badges/gpa.svg)](https://codeclimate.com/github/mstaack/laravel-postgis)
+[![Coverage Status](https://coveralls.io/repos/github/mstaack/laravel-postgis/badge.svg?branch=master)](https://coveralls.io/github/mstaack/laravel-postgis?branch=master)
 
 ## Features
 
@@ -20,13 +20,13 @@ Laravel postgis extension
 
 ## Installation
 
-    composer require phaza/laravel-postgis
+    composer require mstaack/laravel-postgis
 
 For laravel >=5.5 that's all. This package supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
 
 If you are using Laravel < 5.5, you also need to add the DatabaseServiceProvider to your `config/app.php` file.
 
-    'Phaza\LaravelPostgis\DatabaseServiceProvider',
+    'MStaack\LaravelPostgis\DatabaseServiceProvider',
 
 
 ## Usage
@@ -53,7 +53,7 @@ Open the created migrations with your editor.
 
 ```PHP
 use Illuminate\Database\Migrations\Migration;
-use Phaza\LaravelPostgis\Schema\Blueprint;
+use MStaack\LaravelPostgis\Schema\Blueprint;
 
 class CreateLocationsTable extends Migration {
 
@@ -115,8 +115,8 @@ what attributes/columns on your model are to be considered geometry objects. By 
 
 ```PHP
 use Illuminate\Database\Eloquent\Model;
-use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Phaza\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Eloquent\PostgisTrait;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class Location extends Model
 {
