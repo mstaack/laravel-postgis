@@ -69,8 +69,8 @@ class Point extends Geometry
     {
         $pair = preg_replace('/^[a-zA-Z\(\)]+/', '', trim($pair));
         $splits = explode(' ', trim($pair));
-        $lng = $splits[0];
-        $lat = $splits[1];
+        $lat = $splits[0];
+        $lng = $splits[1];
         if (count($splits) > 2) {
             $alt = $splits[2];
         }
