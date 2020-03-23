@@ -52,7 +52,7 @@ class Point extends Geometry
 
     public function toPair()
     {
-        $pair = self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
+        $pair = self::stringifyFloat($this->getLat()) . ' ' . self::stringifyFloat($this->getLng());
         if ($this->is3d()) {
             $pair .= ' ' . self::stringifyFloat($this->getAlt());
         }
