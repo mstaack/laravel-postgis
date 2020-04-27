@@ -62,7 +62,13 @@ class Point extends Geometry
     private static function stringifyFloat($float)
     {
         // normalized output among locales
-        return rtrim(rtrim(sprintf('%F', $float), '0'), '.');
+        $precision = function_exists('config') ? config('postgis.schema') : null;
+        if ($precision) {
+            $format = '%.' . $precision . 'F';
+        } else {
+            $format = '%F';
+        }
+        return rtrim(rtrim(sprintf($format, $float), '0'), '.');
     }
 
     public static function fromPair($pair)
