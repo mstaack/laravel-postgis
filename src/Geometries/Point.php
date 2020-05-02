@@ -62,7 +62,7 @@ class Point extends Geometry
     private static function stringifyFloat($float)
     {
         // normalized output among locales
-        $precision = function_exists('config') ? config('postgis.schema') : null;
+        $precision = function_exists('config') ? config('postgis.float_precision') : null;
         if ($precision) {
             $format = '%.' . $precision . 'F';
         } else {
