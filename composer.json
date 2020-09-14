@@ -1,26 +1,12 @@
 {
   "name": "mstaack/laravel-postgis",
   "description": "Postgis extensions for laravel. Aims to make it easy to work with geometries from laravel models",
-  "repositories": [
-    {
-        "type":"package",
-        "package": {
-            "name": "bosnadev/database",
-            "version":"master",
-            "source": {
-                "url": "git@github.com:dena-a/database.git",
-                "type": "git",
-                "reference":"master"
-            }
-        }
-    }
-  ],
   "require": {
     "php": ">=7.1",
     "illuminate/database": "^6.0|^7.0|^8.0",
     "geo-io/wkb-parser": "^1.0",
     "jmikola/geojson": "^1.0",
-    "bosnadev/database": "dev-master"
+    "bosnadev/database": "0.20.*"
   },
   "require-dev": {
     "illuminate/pagination": "^6.0|^7.0|^8.0",
