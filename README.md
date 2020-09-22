@@ -16,7 +16,7 @@ $table->polygon('myColumn');
 ```
 
 ## Warning
-This Package has been moved to a new owner and aims for Laravel 6/7  and PHP 7 support only soon!
+This Package has been moved to a new owner and aims for Laravel 6/7/8  and PHP 7 support only soon!
 
 Replace all your references to the new namespace:
 ```
@@ -37,7 +37,7 @@ Fluent in Laravel Packages and Postgres/Postgis? Consider contributing! We are l
 composer require "mstaack/laravel-postgis:3.*"
 ```
 
-- Use 5.* for Laravel 6/7
+- Use 5.* for Laravel 6/7/8
 ```bash
 composer require mstaack/laravel-postgis
 ```
