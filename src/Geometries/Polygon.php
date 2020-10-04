@@ -2,8 +2,6 @@
 
 namespace MStaack\LaravelPostgis\Geometries;
 
-use GeoJson\Geometry\LinearRing;
-
 class Polygon extends MultiLineString
 {
     public function is3d()
@@ -28,7 +26,7 @@ class Polygon extends MultiLineString
     {
         $linearrings = [];
         foreach ($this->linestrings as $linestring) {
-            $linearrings[] = new LinearRing($linestring->jsonSerialize()->getCoordinates());
+            $linearrings[] = new \GeoJson\Geometry\LinearRing($linestring->jsonSerialize()->getCoordinates());
         }
 
         return new \GeoJson\Geometry\Polygon($linearrings);
