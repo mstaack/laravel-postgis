@@ -154,6 +154,16 @@ class PostgisGrammar extends PostgresGrammar
     }
 
     /**
+     * Adds a statement to drop the postgis extension, if it exists
+     *
+     * @return string
+     */
+    public function compileDisablePostgisIfExists()
+    {
+        return 'DROP EXTENSION IF EXISTS postgis';
+    }
+
+    /**
      * Adds a statement to add a geometry column
      *
      * @param Blueprint $blueprint

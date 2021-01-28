@@ -54,4 +54,17 @@ class Builder extends \Bosnadev\Database\Schema\Builder
             $this->grammar->compileDisablePostgis()
         );
     }
+
+    /**
+     * Disable postgis on this database.
+     * WIll drop the extension in the database if it exists.
+     *
+     * @return bool
+     */
+    public function disablePostgisIfExists()
+    {
+        return $this->connection->statement(
+            $this->grammar->compileDisablePostgisIfExists()
+        );
+    }
 }

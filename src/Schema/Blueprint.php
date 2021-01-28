@@ -148,4 +148,15 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
         return $this->addCommand('disablePostgis');
     }
 
+    /**
+     * Disable postgis on this database.
+     * WIll drop the extension in the database if it exists.
+     *
+     * @return \Illuminate\Support\Fluent
+     */
+    public function disablePostgisIfExists()
+    {
+        return $this->addCommand('disablePostgisIfExists');
+    }
+
 }
