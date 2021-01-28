@@ -50,11 +50,57 @@ If you are using Laravel < 5.5, you also need to add the DatabaseServiceProvider
 ```
 ## Usage
 
-First of all, make sure to enable postgis.
+To start, ensure you have PostGIS enabled in your database - you can do this in a Laravel migration or manually via SQL.
+
+### Enable PostGIS via a Laravel migration
+
+Create a new migration file by running
+
+    php artisan make:migration enable_postgis
+
+Update the newly created migration file to call the `enablePostgisIfNotExists()` and `disablePostgisIfExists()` methods on the `Schema` facade. For example:
+
+```PHP
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
+
+class EnablePostgis extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::enablePostgisIfNotExists();
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::disablePostgisIfExists();
+    }
+}
+```
+
+These methods are safe to use and will only enable / disable the PostGIS extension if relevant - they won't cause an error if PostGIS is / isn't already enabled.
+
+If you prefer, you can use the `enablePostgis()` method which will throw an error if PostGIS is already enabled, and the `disablePostgis()` method twhich will throw an error if PostGIS isn't enabled. 
+
+### Enable PostGIS manually
+
+Use an SQL client to connect to your database and run the following command:
 
     CREATE EXTENSION postgis;
 
-To verify that postgis is enabled
+To verify that PostGIS is enabled you can run:
 
     SELECT postgis_full_version();
 
