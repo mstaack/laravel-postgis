@@ -274,6 +274,16 @@ class PostgisGrammarTest extends BaseTestCase
         $this->assertStringContainsString('CREATE EXTENSION postgis', $statements[0]);
     }
 
+    public function testEnablePostgisIfNotExists()
+    {
+        $blueprint = new Blueprint('test');
+        $blueprint->enablePostgisIfNotExists();
+        $statements = $blueprint->toSql($this->getConnection(), $this->getGrammar());
+
+        $this->assertCount(1, $statements);;
+        $this->assertStringContainsString('CREATE EXTENSION IF NOT EXISTS postgis', $statements[0]);
+    }
+
     public function testDisablePostgis()
     {
         $blueprint = new Blueprint('test');
