@@ -127,13 +127,36 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Enable postgis on this database.
+     * Will create the extension in the database if it doesn't already exist.
+     *
+     * @return \Illuminate\Support\Fluent
+     */
+    public function enablePostgisIfNotExists()
+    {
+        return $this->addCommand('enablePostgisIfNotExists');
+    }
+
+    /**
      * Disable postgis on this database.
      * WIll drop the extension in the database.
+     *
      * @return \Illuminate\Support\Fluent
      */
     public function disablePostgis()
     {
         return $this->addCommand('disablePostgis');
+    }
+
+    /**
+     * Disable postgis on this database.
+     * WIll drop the extension in the database if it exists.
+     *
+     * @return \Illuminate\Support\Fluent
+     */
+    public function disablePostgisIfExists()
+    {
+        return $this->addCommand('disablePostgisIfExists');
     }
 
 }

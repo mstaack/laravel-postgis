@@ -134,6 +134,16 @@ class PostgisGrammar extends PostgresGrammar
     }
 
     /**
+     * Adds a statement to create the postgis extension, if it doesn't already exist
+     *
+     * @return string
+     */
+    public function compileEnablePostgisIfNotExists()
+    {
+        return 'CREATE EXTENSION IF NOT EXISTS postgis';
+    }
+
+    /**
      * Adds a statement to drop the postgis extension
      *
      * @return string
@@ -141,6 +151,16 @@ class PostgisGrammar extends PostgresGrammar
     public function compileDisablePostgis()
     {
         return 'DROP EXTENSION postgis';
+    }
+
+    /**
+     * Adds a statement to drop the postgis extension, if it exists
+     *
+     * @return string
+     */
+    public function compileDisablePostgisIfExists()
+    {
+        return 'DROP EXTENSION IF EXISTS postgis';
     }
 
     /**

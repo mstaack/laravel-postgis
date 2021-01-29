@@ -90,6 +90,15 @@ class BlueprintTest extends BaseTestCase
         $this->blueprint->enablePostgis();
     }
 
+    public function testEnablePostgisIfNotExists()
+    {
+        $this->blueprint
+            ->shouldReceive('addCommand')
+            ->with('enablePostgis', []);
+
+        $this->blueprint->enablePostgisIfNotExists();
+    }
+
     public function testDisablePostgis()
     {
         $this->blueprint
@@ -97,5 +106,14 @@ class BlueprintTest extends BaseTestCase
             ->with('disablePostgis', []);
 
         $this->blueprint->disablePostgis();
+    }
+
+    public function testDisablePostgisIfExists()
+    {
+        $this->blueprint
+            ->shouldReceive('addCommand')
+            ->with('disablePostgis', []);
+
+        $this->blueprint->disablePostgisIfExists();
     }
 }
