@@ -16,6 +16,14 @@ class MultiPointTest extends BaseTestCase
         $this->assertEquals(3, $multipoint->count());
     }
 
+    public function testFromWKTWithFloatingPoint()
+    {
+        $multipoint = MultiPoint::fromWKT('MULTIPOINT((1.0 1.0),(2.0 1.0),(2.0 2.0))');
+        $this->assertInstanceOf(MultiPoint::class, $multipoint);
+
+        $this->assertEquals(3, $multipoint->count());
+    }
+
     public function testFromWKTWithoutNestedParentesis()
     {
         $multipoint = MultiPoint::fromWKT('MULTIPOINT(1 1, 2 1, 2 2)');
