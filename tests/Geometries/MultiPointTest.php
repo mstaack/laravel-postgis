@@ -32,6 +32,14 @@ class MultiPointTest extends BaseTestCase
         $this->assertEquals(3, $multipoint->count());
     }
 
+    public function testFromWKT3dWithoutNestedParentesis()
+    {
+        $multipoint = MultiPoint::fromWKT('MULTIPOINT Z(1 1 1, 2 1 3, 2 2 2)');
+        $this->assertInstanceOf(MultiPoint::class, $multipoint);
+
+        $this->assertEquals(3, $multipoint->count());
+    }
+
     public function testToWKT()
     {
         $collection = [new Point(1, 1), new Point(1, 2), new Point(2, 2)];
