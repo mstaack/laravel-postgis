@@ -13,6 +13,13 @@ class DatabaseServiceProvider extends PostgresDatabaseServiceProvider
         // Load the config
         $config_path = __DIR__ . '/../config/postgis.php';
         $this->publishes([$config_path => config_path('postgis.php')], 'postgis');
+
+        if (!class_exists('EnablePostgis')) {
+            $this->publishes([
+                __DIR__ . '/../database/migrations/enable_postgis.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_enable_postgis.php'),
+            ], 'migrations');
+        }
+
         $this->mergeConfigFrom($config_path, 'postgis');
     }
 
