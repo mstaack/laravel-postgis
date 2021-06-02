@@ -54,45 +54,21 @@ To start, ensure you have PostGIS enabled in your database - you can do this in 
 
 ### Enable PostGIS via a Laravel migration
 
-Create a new migration file by running
+You need to publish the migration to easily enable PostGIS:
 
-    php artisan make:migration enable_postgis
+```sh
+php artisan vendor:publish --provider="MStaack\LaravelPostgis\DatabaseServiceProvider" --tag="migrations"
+```
 
-Update the newly created migration file to call the `enablePostgisIfNotExists()` and `disablePostgisIfExists()` methods on the `Schema` facade. For example:
+And then you run the migrations:
 
-```PHP
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
-
-class EnablePostgis extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::enablePostgisIfNotExists();
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::disablePostgisIfExists();
-    }
-}
+```sh
+php artisan migrate
 ```
 
 These methods are safe to use and will only enable / disable the PostGIS extension if relevant - they won't cause an error if PostGIS is / isn't already enabled.
 
-If you prefer, you can use the `enablePostgis()` method which will throw an error if PostGIS is already enabled, and the `disablePostgis()` method twhich will throw an error if PostGIS isn't enabled. 
+If you prefer, you can use the `enablePostgis()` method which will throw an error if PostGIS is already enabled, and the `disablePostgis()` method twhich will throw an error if PostGIS isn't enabled.
 
 ### Enable PostGIS manually
 
