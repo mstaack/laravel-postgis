@@ -1,6 +1,7 @@
 <?php
 
 namespace MStaack\LaravelPostgis\Geometries;
+use InvalidArgumentException;
 
 class MultiPoint extends PointCollection implements GeometryInterface, \JsonSerializable
 {
