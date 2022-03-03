@@ -1,6 +1,7 @@
 <?php
 
 namespace MStaack\LaravelPostgis\Geometries;
+use InvalidArgumentException;
 
 class MultiPoint extends PointCollection implements GeometryInterface, \JsonSerializable
 {
@@ -43,8 +44,15 @@ class MultiPoint extends PointCollection implements GeometryInterface, \JsonSeri
 
     public static function fromString($wktArgument)
     {
+        if (!strpos(trim($wktArgument), '(')) {
+            $points = explode(',', $wktArgument);
+            $wktArgument = implode(',', array_map(function ($pair) {
+                return '(' . trim($pair) . ')';
+            }, $points));
+        };
+
         $matches = [];
-        preg_match_all('/\(\s*(\d+\s+\d+(\s+\d+)?)\s*\)/', trim($wktArgument), $matches);
+        preg_match_all('/\(\s*([+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)+\s+[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)+(\s+[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)+)?)\s*\)/', trim($wktArgument), $matches);
 
         if (count($matches) < 2) {
             return new static([]);
