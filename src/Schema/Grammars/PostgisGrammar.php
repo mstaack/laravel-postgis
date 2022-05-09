@@ -77,6 +77,17 @@ class PostgisGrammar extends PostgresGrammar
     }
 
     /**
+     * Adds a statement to add a linestringz geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typeLinestringZ(Fluent $column)
+    {
+        return $this->createTypeDefinition($column, 'LINESTRINGZ');
+    }
+
+    /**
      * Adds a statement to add a multilinestring geometry column
      *
      * @param \Illuminate\Support\Fluent $column

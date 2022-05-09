@@ -69,6 +69,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a linestringz column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestringz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('linestringz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
      * Add a multilinestring column on the table
      *
      * @param      $column
