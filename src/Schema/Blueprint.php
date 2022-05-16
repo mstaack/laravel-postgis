@@ -14,6 +14,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a point column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('pointz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
      * Add a multipoint column on the table
      *
      * @param      $column
