@@ -6,6 +6,7 @@ use MStaack\LaravelPostgis\Exceptions\PostgisFieldsNotDefinedException;
 use MStaack\LaravelPostgis\Exceptions\PostgisTypesMalformedException;
 use MStaack\LaravelPostgis\Exceptions\UnsupportedGeomtypeException;
 use MStaack\LaravelPostgis\Geometries\Geometry;
+use MStaack\LaravelPostgis\Geometries\GeometryCollection;
 use MStaack\LaravelPostgis\Geometries\GeometryInterface;
 use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
 
