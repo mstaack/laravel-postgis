@@ -22,6 +22,17 @@ class PostgisGrammar extends PostgresGrammar
     }
 
     /**
+     * Adds a statement to add a pointz geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typePointZ(Fluent $column)
+    {
+        return $this->createTypeDefinition($column, 'POINTZ');
+    }
+
+    /**
      * Adds a statement to add a point geometry column
      *
      * @param \Illuminate\Support\Fluent $column
@@ -74,6 +85,17 @@ class PostgisGrammar extends PostgresGrammar
     public function typeLinestring(Fluent $column)
     {
         return $this->createTypeDefinition($column, 'LINESTRING');
+    }
+
+    /**
+     * Adds a statement to add a linestringz geometry column
+     *
+     * @param \Illuminate\Support\Fluent $column
+     * @return string
+     */
+    public function typeLinestringZ(Fluent $column)
+    {
+        return $this->createTypeDefinition($column, 'LINESTRINGZ');
     }
 
     /**
