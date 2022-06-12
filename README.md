@@ -233,3 +233,22 @@ Available geometry classes:
  * Polygon
  * MultiPolygon
  * GeometryCollection
+
+## Publishing config
+A configuration file exists for overriding default values. To add to your project, run:
+
+```sh
+php artisan vendor:publish --provider="MStaack\LaravelPostgis\DatabaseServiceProvider" --tag="postgis"
+```
+### Coordinate precision
+The precision of stored/displayed coordinated can be customised in the config.
+
+
+```php
+# config/postgis.php
+return [
+    ...
+    'precision' => 6,
+];
+```
+See http://wiki.gis.com/wiki/index.php/Decimal_degrees#Accuracy for more information
