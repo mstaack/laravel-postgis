@@ -126,4 +126,20 @@ class PointTest extends BaseTestCase
         $this->assertInstanceOf(\GeoJson\Geometry\Point::class, $point->jsonSerialize());
         $this->assertSame('{"type":"Point","coordinates":[3.4,1.2,5.6]}', json_encode($point));
     }
+
+    public function testPointPrecisionDefault()
+    {
+        $point = new Point(-37.8745505,144.9102885,12.38);
+
+        $this->assertSame('144.910289 -37.87455 12.38', $point->toPair());
+
+    }
+
+    public function testPointPrecision10()
+    {
+        $point = new Point(-37.87455051578,144.91028850798,7.38257341563);
+        $point->setPrecision(10);
+
+        $this->assertSame('144.910288508 -37.8745505158 7.3825734156', $point->toPair());
+    }
 }

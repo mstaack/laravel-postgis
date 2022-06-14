@@ -7,12 +7,26 @@ class Point extends Geometry
     protected $lat;
     protected $lng;
     protected $alt;
+    protected $precision;
 
     public function __construct($lat, $lng, $alt = null)
     {
         $this->lat = (float)$lat;
         $this->lng = (float)$lng;
         $this->alt = isset($alt) ? (float)$alt : null;
+        $this->setPrecision(
+            function_exists('config') ? config('postgis.precision') : 6
+        );
+    }
+
+    public function setPrecision($precision)
+    {
+        $precision = filter_var($precision, FILTER_VALIDATE_INT);
+        if (!is_int($precision)) {
+            throw new \UnexpectedValueException('Precision must be an integer');
+        }
+
+        $this->precision = $precision;
     }
 
     public function getLat()
@@ -52,17 +66,18 @@ class Point extends Geometry
 
     public function toPair()
     {
-        $pair = self::stringifyFloat($this->getLng()) . ' ' . self::stringifyFloat($this->getLat());
+        $pair = $this->stringifyFloat($this->getLng()) . ' ' . $this->stringifyFloat($this->getLat());
         if ($this->is3d()) {
-            $pair .= ' ' . self::stringifyFloat($this->getAlt());
+            $pair .= ' ' . $this->stringifyFloat($this->getAlt());
         }
         return $pair;
     }
 
-    private static function stringifyFloat($float)
+    private function stringifyFloat($float)
     {
         // normalized output among locales
-        return rtrim(rtrim(sprintf('%F', $float), '0'), '.');
+
+        return rtrim(rtrim(sprintf("%.{$this->precision}F", $float), '0'), '.');
     }
 
     public static function fromPair($pair)
