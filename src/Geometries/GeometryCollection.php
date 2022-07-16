@@ -69,7 +69,7 @@ class GeometryCollection extends Geometry implements Countable
         );
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->geometries);
     }
@@ -79,7 +79,7 @@ class GeometryCollection extends Geometry implements Countable
      *
      * @return \GeoJson\Geometry\GeometryCollection
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): \GeoJson\Geometry\GeometryCollection
     {
         $geometries = [];
         foreach ($this->geometries as $geometry) {

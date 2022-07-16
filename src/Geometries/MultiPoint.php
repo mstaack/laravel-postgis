@@ -77,7 +77,7 @@ class MultiPoint extends PointCollection implements GeometryInterface, \JsonSeri
      *
      * @return \GeoJson\Geometry\MultiPoint
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): \GeoJson\Geometry\MultiPoint
     {
         $points = [];
         foreach ($this->points as $point) {
