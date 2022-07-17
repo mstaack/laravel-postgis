@@ -67,7 +67,7 @@ class MultiPolygon extends Geometry implements Countable
      *       <p>
      *       The return value is cast to an integer.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->polygons);
     }
@@ -121,7 +121,7 @@ class MultiPolygon extends Geometry implements Countable
      *
      * @return \GeoJson\Geometry\MultiPolygon
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): \GeoJson\Geometry\MultiPolygon
     {
         $polygons = [];
         foreach ($this->polygons as $polygon) {

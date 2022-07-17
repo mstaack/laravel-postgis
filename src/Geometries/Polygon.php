@@ -4,14 +4,8 @@ namespace MStaack\LaravelPostgis\Geometries;
 
 use GeoJson\Geometry\LinearRing;
 
-class Polygon extends MultiLineString
+class Polygon extends LineStringCollection
 {
-    public function is3d()
-    {
-        if (count($this->linestrings) === 0) return false;
-        return $this->linestrings[0]->is3d();
-    }
-
     public function toWKT()
     {
         $wktType = 'POLYGON';
@@ -24,7 +18,7 @@ class Polygon extends MultiLineString
      *
      * @return \GeoJson\Geometry\Polygon
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): \GeoJson\Geometry\Polygon
     {
         $linearrings = [];
         foreach ($this->linestrings as $linestring) {

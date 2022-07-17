@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use InvalidArgumentException;
 use IteratorAggregate;
 use JsonSerializable;
+use Traversable;
 
 abstract class PointCollection implements IteratorAggregate, Arrayable, ArrayAccess, Countable, JsonSerializable
 {
@@ -46,7 +47,7 @@ abstract class PointCollection implements IteratorAggregate, Arrayable, ArrayAcc
         return $this->points;
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->points);
     }
@@ -70,7 +71,7 @@ abstract class PointCollection implements IteratorAggregate, Arrayable, ArrayAcc
         array_splice($this->points, $offset, 0, [$point]);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->points[$offset]);
     }
@@ -79,12 +80,12 @@ abstract class PointCollection implements IteratorAggregate, Arrayable, ArrayAcc
      * @param mixed $offset
      * @return null|Point
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): ?Point
     {
         return $this->offsetExists($offset) ? $this->points[$offset] : null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!($value instanceof Point)) {
             throw new InvalidArgumentException('$value must be an instance of Point');
@@ -97,12 +98,12 @@ abstract class PointCollection implements IteratorAggregate, Arrayable, ArrayAcc
         }
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->points[$offset]);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->points);
     }
