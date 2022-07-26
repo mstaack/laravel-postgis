@@ -115,6 +115,7 @@ class Point extends Geometry
      *
      * @return \GeoJson\Geometry\Point
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): \GeoJson\Geometry\Point
     {
         $position = [$this->getLng(), $this->getLat()];
