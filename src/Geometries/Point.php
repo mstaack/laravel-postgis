@@ -73,7 +73,7 @@ class Point extends Geometry
         return $pair;
     }
 
-    private function stringifyFloat($float)
+    public function stringifyFloat($float)
     {
         // normalized output among locales
 

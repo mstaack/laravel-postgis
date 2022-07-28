@@ -14,7 +14,18 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
-     * Add a point column on the table
+     * Add a pointm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('pointm', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
+     * Add a pointz column on the table
      *
      * @param      $column
      * @return \Illuminate\Support\Fluent
@@ -22,6 +33,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     public function pointz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
         return $this->addColumn('pointz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
+     * Add a pointzm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointzm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('pointzm', $column, compact('geomtype', 'srid'));
     }
 
     /**
@@ -80,6 +102,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a linestringm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestringm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('linestringm', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
      * Add a linestringz column on the table
      *
      * @param      $column
@@ -88,6 +121,17 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     public function linestringz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
         return $this->addColumn('linestringz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
+     * Add a linestringzm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestringzm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    {
+        return $this->addColumn('linestringzm', $column, compact('geomtype', 'srid'));
     }
 
     /**
