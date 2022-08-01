@@ -32,20 +32,7 @@ class PointM extends Point
 
     public function toPair()
     {
-        $points = array_filter([
-            $this->getLng(),
-            $this->getLat(),
-            $this->is3d() ? $this->getAlt() : null,
-            $this->getMeasure(),
-        ]);
-
-        $pair = array_map(function ($point) {
-            return $this->stringifyFloat($point);
-        },
-            $points
-        );
-
-        return implode(' ', $pair);
+        return parent::toPair() . ' ' . $this->stringifyFloat($this->getMeasure());
     }
 
     public static function fromPair($pair)

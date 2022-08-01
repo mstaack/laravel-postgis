@@ -1,5 +1,7 @@
 <?php namespace MStaack\LaravelPostgis\Schema;
 
+use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
+
 class Blueprint extends \Bosnadev\Database\Schema\Blueprint
 {
     /**
@@ -14,17 +16,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
-     * Add a pointm column on the table
-     *
-     * @param      $column
-     * @return \Illuminate\Support\Fluent
-     */
-    public function pointm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
-    {
-        return $this->addColumn('pointm', $column, compact('geomtype', 'srid'));
-    }
-
-    /**
      * Add a pointz column on the table
      *
      * @param      $column
@@ -36,14 +27,25 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a pointm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointm($column)
+    {
+        return $this->addColumn('pointm', $column, ['geomtype' => 'GEOMETRY']);
+    }
+
+    /**
      * Add a pointzm column on the table
      *
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function pointzm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    public function pointzm($column)
     {
-        return $this->addColumn('pointzm', $column, compact('geomtype', 'srid'));
+        return $this->addColumn('pointzm', $column, ['geomtype' => 'GEOMETRY']);
     }
 
     /**
@@ -102,17 +104,6 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
-     * Add a linestringm column on the table
-     *
-     * @param      $column
-     * @return \Illuminate\Support\Fluent
-     */
-    public function linestringm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
-    {
-        return $this->addColumn('linestringm', $column, compact('geomtype', 'srid'));
-    }
-
-    /**
      * Add a linestringz column on the table
      *
      * @param      $column
@@ -124,14 +115,25 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
+     * Add a linestringm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestringm($column)
+    {
+        return $this->addColumn('linestringm', $column, ['geomtype' => 'GEOMETRY']);
+    }
+
+    /**
      * Add a linestringzm column on the table
      *
      * @param      $column
      * @return \Illuminate\Support\Fluent
      */
-    public function linestringzm($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
+    public function linestringzm($column)
     {
-        return $this->addColumn('linestringzm', $column, compact('geomtype', 'srid'));
+        return $this->addColumn('linestringzm', $column, ['geomtype' => 'GEOMETRY']);
     }
 
     /**
