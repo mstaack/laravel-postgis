@@ -27,7 +27,7 @@ class GeometryCollectionTest extends BaseTestCase
                 new Point(1, 2),
                 new Point(2, 2),
                 new Point(2, 1),
-                new Point(1, 1),
+                new Point(1, 1)
             ]
         );
 
@@ -41,7 +41,7 @@ class GeometryCollectionTest extends BaseTestCase
                 new Point(1, 2, 3),
                 new Point(2, 2, 2),
                 new Point(2, 1, 0),
-                new Point(1, 1, 1),
+                new Point(1, 1, 1)
             ]
         );
 
@@ -55,7 +55,7 @@ class GeometryCollectionTest extends BaseTestCase
                 new PointM(1.2, 2, 1),
                 new PointM(1.3, 2, 2),
                 new PointM(1.4, 1, 2),
-                new PointM(1.5, 1, 1),
+                new PointM(1.5, 1, 1)
             ]
         );
 
@@ -69,7 +69,7 @@ class GeometryCollectionTest extends BaseTestCase
                 new PointM(1.2, 2, 1, 3),
                 new PointM(1.3, 2, 2, 2),
                 new PointM(1.4, 1, 2, 0),
-                new PointM(1.5, 1, 1, 1),
+                new PointM(1.5, 1, 1, 1)
             ]
         );
 
