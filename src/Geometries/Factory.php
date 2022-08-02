@@ -7,7 +7,7 @@ class Factory implements \GeoIO\Factory
     public function createPoint($dimension, array $coordinates, $srid = null)
     {
         return $this->hasMeasure($dimension)
-            ? new PointM($coordinates['y'], $coordinates['x'], $coordinates['m'], $coordinates['z'] ?? null)
+            ? new PointM($coordinates['m'], $coordinates['x'], $coordinates['y'], $coordinates['z'] ?? null)
             : new Point($coordinates['y'], $coordinates['x'], $coordinates['z'] ?? null);
     }
 
