@@ -15,7 +15,7 @@ class Point extends Geometry
         $this->lng = (float)$lng;
         $this->alt = isset($alt) ? (float)$alt : null;
         $this->setPrecision(
-            function_exists('config') ? config('postgis.precision') : 6
+            function_exists('config') ? config('postgis.precision', 6) : 6
         );
     }
 
