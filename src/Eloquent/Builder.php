@@ -21,6 +21,24 @@ class Builder extends EloquentBuilder
         return parent::update($values);
     }
 
+    public function upsert(array $values, $uniqueBy, $update = null)
+    {
+        foreach ($values as &$row) {
+            foreach ($row as $column => &$value) {
+                if ($value instanceof GeometryInterface) {
+                    if (is_null($this->model)) {
+                        $value = $this->asWKT($value);
+                    } else {
+                        $attrs = $this->model->getPostgisType($column);
+                        $value = $this->model->asWKT($value, $attrs);
+                    }
+                }
+            }
+        }
+
+        return parent::upsert($values, $uniqueBy, $update);
+    }
+
     protected function asWKT(GeometryInterface $geometry)
     {
         return $this->getQuery()->raw(sprintf("%s.ST_GeogFromText('%s')",
