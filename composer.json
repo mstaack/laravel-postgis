@@ -1,51 +1,51 @@
 {
-  "name": "mstaack/laravel-postgis",
-  "description": "Postgis extensions for laravel. Aims to make it easy to work with geometries from laravel models",
-  "require": {
-    "php": ">=7.1",
-    "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
-    "geo-io/wkb-parser": "^1.0",
-    "jmikola/geojson": "^1.0",
-    "bosnadev/database": "^0.21|master"
-  },
-  "require-dev": {
-    "illuminate/pagination": "^6.0|^7.0|^8.0|^9.0",
-    "phpunit/phpunit": ">=8.5.23",
-    "mockery/mockery": "^1.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "MStaack\\LaravelPostgis\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "MStaack\\LaravelPostgis\\Tests\\": "tests/"
-    }
-  },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Peter Haza",
-      "email": "peter.haza@gmail.com"
+    "name": "mstaack/laravel-postgis",
+    "description": "Postgis extensions for laravel. Aims to make it easy to work with geometries from laravel models",
+    "require": {
+        "php": ">=7.1",
+        "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "geo-io/wkb-parser": "^1.0",
+        "jmikola/geojson": "^1.0",
+        "bosnadev/database": "^0.21|master"
     },
-    {
-      "name": "Nicholas Barrett",
-      "email": "njbarrett7@gmail.com"
+    "require-dev": {
+        "illuminate/pagination": "^6.0|^7.0|^8.0|^9.0|^10.0",
+        "phpunit/phpunit": ">=8.5.23",
+        "mockery/mockery": "^1.3"
     },
-    {
-      "name": "Max Matteo Staack",
-      "email": "maxmatteostaack@gmail.com"
+    "autoload": {
+        "psr-4": {
+            "MStaack\\LaravelPostgis\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MStaack\\LaravelPostgis\\Tests\\": "tests/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter Haza",
+            "email": "peter.haza@gmail.com"
+        },
+        {
+            "name": "Nicholas Barrett",
+            "email": "njbarrett7@gmail.com"
+        },
+        {
+            "name": "Max Matteo Staack",
+            "email": "maxmatteostaack@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MStaack\\LaravelPostgis\\DatabaseServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
     }
-  ],
-  "extra": {
-    "laravel": {
-      "providers": [
-        "MStaack\\LaravelPostgis\\DatabaseServiceProvider"
-      ]
-    }
-  },
-  "scripts": {
-    "test": "./vendor/bin/phpunit"
-  }
 }
