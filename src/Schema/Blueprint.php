@@ -1,5 +1,7 @@
 <?php namespace MStaack\LaravelPostgis\Schema;
 
+use MStaack\LaravelPostgis\Schema\Grammars\PostgisGrammar;
+
 class Blueprint extends \Bosnadev\Database\Schema\Blueprint
 {
     /**
@@ -14,7 +16,7 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     }
 
     /**
-     * Add a point column on the table
+     * Add a pointz column on the table
      *
      * @param      $column
      * @return \Illuminate\Support\Fluent
@@ -22,6 +24,28 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     public function pointz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
         return $this->addColumn('pointz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
+     * Add a pointm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointm($column)
+    {
+        return $this->addColumn('pointm', $column, ['geomtype' => 'GEOMETRY']);
+    }
+
+    /**
+     * Add a pointzm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function pointzm($column)
+    {
+        return $this->addColumn('pointzm', $column, ['geomtype' => 'GEOMETRY']);
     }
 
     /**
@@ -88,6 +112,28 @@ class Blueprint extends \Bosnadev\Database\Schema\Blueprint
     public function linestringz($column, $geomtype = 'GEOGRAPHY', $srid = '4326')
     {
         return $this->addColumn('linestringz', $column, compact('geomtype', 'srid'));
+    }
+
+    /**
+     * Add a linestringm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestringm($column)
+    {
+        return $this->addColumn('linestringm', $column, ['geomtype' => 'GEOMETRY']);
+    }
+
+    /**
+     * Add a linestringzm column on the table
+     *
+     * @param      $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function linestringzm($column)
+    {
+        return $this->addColumn('linestringzm', $column, ['geomtype' => 'GEOMETRY']);
     }
 
     /**

@@ -14,7 +14,9 @@ abstract class Geometry implements GeometryInterface, \JsonSerializable
         4 => MultiPoint::class,
         5 => MultiLineString::class,
         6 => MultiPolygon::class,
-        7 => GeometryCollection::class
+        7 => GeometryCollection::class,
+        8 => PointM::class,
+        9 => LineStringM::class
     ];
 
     public static function getWKTArgument($value)
@@ -35,10 +37,20 @@ abstract class Geometry implements GeometryInterface, \JsonSerializable
             case 'POINTZ':
             case 'POINT Z':
                 return Point::class;
+            case 'POINTM':
+            case 'POINT M':
+            case 'POINTZM':
+            case 'POINT ZM':
+                return PointM::class;
             case 'LINESTRING':
             case 'LINESTRINGZ':
             case 'LINESTRING Z':
                 return LineString::class;
+            case 'LINESTRINGM':
+            case 'LINESTRING M':
+            case 'LINESTRINGZM':
+            case 'LINESTRING ZM':
+                return LineStringM::class;
             case 'POLYGON':
             case 'POLYGONZ':
             case 'POLYGON Z':

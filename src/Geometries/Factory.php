@@ -6,17 +6,23 @@ class Factory implements \GeoIO\Factory
 {
     public function createPoint($dimension, array $coordinates, $srid = null)
     {
-        return new Point($coordinates['y'], $coordinates['x'], $coordinates['z'] ?? null);
+        return $this->hasMeasure($dimension)
+            ? new PointM($coordinates['m'], $coordinates['x'], $coordinates['y'], $coordinates['z'] ?? null)
+            : new Point($coordinates['y'], $coordinates['x'], $coordinates['z'] ?? null);
     }
 
     public function createLineString($dimension, array $points, $srid = null)
     {
-        return new LineString($points);
+        return $this->hasMeasure($dimension)
+            ? new LineStringM($points)
+            : new LineString($points);
     }
 
     public function createLinearRing($dimension, array $points, $srid = null)
     {
-        return new LineString($points);
+        return $this->hasMeasure($dimension)
+            ? new LineStringM($points)
+            : new LineString($points);
     }
 
     public function createPolygon($dimension, array $lineStrings, $srid = null)
@@ -42,5 +48,11 @@ class Factory implements \GeoIO\Factory
     public function createGeometryCollection($dimension, array $geometries, $srid = null)
     {
         return new GeometryCollection($geometries);
+    }
+
+    /** @return bool */
+    public function hasMeasure($dimension)
+    {
+        return in_array($dimension, ['4D', '3DM']);
     }
 }
