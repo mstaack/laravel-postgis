@@ -3,6 +3,10 @@ Laravel Wrapper for PostgreSQL's Geo-Extension Postgis
 
 ![Build Status](https://github.com/mstaack/laravel-postgis/workflows/Test%20Suite/badge.svg)
 
+
+# DEPRECATED
+Consider using: https://github.com/clickbar/laravel-magellan
+
 ## Features
 
  * Work with geometry classes instead of arrays.
